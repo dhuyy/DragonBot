@@ -5,7 +5,8 @@ import lc.kra.system.mouse.event.GlobalMouseAdapter;
 import lc.kra.system.mouse.event.GlobalMouseEvent;
 
 public class MouseHook {
-  private static MouseHook instance = new MouseHook();
+  private static final MouseHook instance = new MouseHook();
+
   private GlobalMouseHook globalMouseHook;
 
   private MouseHook() {

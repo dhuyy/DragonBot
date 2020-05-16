@@ -6,7 +6,7 @@ import com.dhuy.dragonbot.modules.Cavebot;
 import com.dhuy.dragonbot.modules.Healing;
 
 public class App {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
     threadPool.submit(new Cavebot("Cavebot"));
