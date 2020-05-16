@@ -1,8 +1,5 @@
 package com.dhuy.dragonbot.modules;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,15 +10,18 @@ import com.dhuy.dragonbot.global.ScreenshotCache;
 import com.dhuy.dragonbot.global.ThreadPool;
 import com.dhuy.dragonbot.util.ApplicationWindow;
 import com.dhuy.dragonbot.util.FileSystem;
+import com.dhuy.dragonbot.util.Keyboard;
 
 public class Screenshot {
   ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
   ThreadPoolExecutor threadPoolExecutor = ThreadPool.getInstance().getExecutor();
 
+  private Keyboard keyboard;
   private FileSystem fileSystem;
   private ApplicationWindow appWindow;
 
   public Screenshot() {
+    keyboard = new Keyboard();
     fileSystem = new FileSystem();
     appWindow = new ApplicationWindow();
 
@@ -33,8 +33,7 @@ public class Screenshot {
     try {
       String screenshotPath = null;
 
-      new Robot().keyPress(KeyEvent.VK_F12);
-      new Robot().keyRelease(KeyEvent.VK_F12);
+      keyboard.type("F12");
 
       boolean hasFoundNewScreenshot = true;
       while (hasFoundNewScreenshot) {
@@ -63,8 +62,6 @@ public class Screenshot {
           e.printStackTrace();
         }
       });
-    } catch (AWTException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {

@@ -16,10 +16,18 @@ public class Keyboard {
       e.printStackTrace();
     }
   }
+  
+  public void type(String stringKey) {
+    int keyCode = getKeyCode(stringKey);
+    
+    robot.keyPress(keyCode);
+    robot.keyRelease(keyCode);
+    robot.delay(50);
+  }
 
-  public void type(String word) {
+  public void writeWord(String word) {
     for (int i = 0; i < word.length(); i++) {
-      int keyCode = keyEventMap.getKeyEvent(word.charAt(i));
+      int keyCode = keyEventMap.getKeyCodeFromChar(word.charAt(i));
 
       if (keyCode != KeyEvent.CHAR_UNDEFINED) {
         robot.keyPress(keyCode);
@@ -27,5 +35,9 @@ public class Keyboard {
         robot.delay(50);
       }
     }
+  }
+
+  private int getKeyCode(String fnKey) {
+    return keyEventMap.getKeyCode(fnKey);
   }
 }

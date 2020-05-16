@@ -1,5 +1,9 @@
 package com.dhuy.dragonbot.util;
 
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
@@ -54,5 +58,13 @@ public class ApplicationWindow {
         return true;
       }
     }, null);
+  }
+
+  public int getWindowsTaskbarHeight() {
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Rectangle windowSize =
+        GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+
+    return screenSize.height - windowSize.height;
   }
 }

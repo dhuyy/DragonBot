@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 public class KeyEventMapping {
   public KeyEventMapping() {}
 
-  public int getKeyEvent(char c) {
+  public int getKeyCodeFromChar(char c) {
     if (c == 'A' || c == 'a')
       return KeyEvent.VK_A;
     else if (c == 'B' || c == 'b')
@@ -88,5 +88,34 @@ public class KeyEventMapping {
       return KeyEvent.VK_PERIOD;
     else
       return 0;
+  }
+
+  public int getKeyCode(String stringKey) {
+    if (stringKey == "F1")
+      return KeyEvent.VK_F1;
+    else if (stringKey == "F2")
+      return KeyEvent.VK_F2;
+    else if (stringKey == "F3")
+      return KeyEvent.VK_F3;
+    else if (stringKey == "F4")
+      return KeyEvent.VK_F4;
+    else if (stringKey == "F5")
+      return KeyEvent.VK_F5;
+    else if (stringKey == "F6")
+      return KeyEvent.VK_F6;
+    else if (stringKey == "F7")
+      return KeyEvent.VK_F7;
+    else if (stringKey == "F8")
+      return KeyEvent.VK_F8;
+    else if (stringKey == "F9")
+      return KeyEvent.VK_F9;
+    else if (stringKey == "F10")
+      return KeyEvent.VK_F10;
+    else if (stringKey == "F11")
+      return KeyEvent.VK_F11;
+    else if (stringKey == "F12")
+      return KeyEvent.VK_F12;
+    else
+      return KeyEvent.VK_UNDEFINED;
   }
 }
