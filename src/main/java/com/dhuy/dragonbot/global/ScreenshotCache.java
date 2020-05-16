@@ -9,8 +9,8 @@ public class ScreenshotCache {
   BufferedImage currentScreenshotValue;
 
   private ScreenshotCache() {
-    this.currentScreenshotKey = "<NOT_LOADED>";
-    this.currentScreenshotValue = null;
+    currentScreenshotKey = "<NOT_LOADED>";
+    currentScreenshotValue = null;
   }
 
   public static ScreenshotCache getInstance() {

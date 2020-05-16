@@ -6,6 +6,7 @@ import lc.kra.system.keyboard.event.GlobalKeyEvent;
 
 public class KeyboardHook {
   private static KeyboardHook instance = new KeyboardHook();
+  
   private GlobalKeyboardHook keyboardHook;
 
   private KeyboardHook() {

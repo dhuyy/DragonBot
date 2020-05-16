@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class ThreadPool {
   private static ThreadPool instance = new ThreadPool();
+  
   private ThreadPoolExecutor executor;
 
   private ThreadPool() {

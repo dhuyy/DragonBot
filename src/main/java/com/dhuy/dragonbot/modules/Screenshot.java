@@ -18,8 +18,8 @@ public class Screenshot {
   ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
   ThreadPoolExecutor threadPoolExecutor = ThreadPool.getInstance().getExecutor();
 
-  private ApplicationWindow appWindow;
   private FileSystem fileSystem;
+  private ApplicationWindow appWindow;
 
   public Screenshot() {
     fileSystem = new FileSystem();
@@ -36,13 +36,13 @@ public class Screenshot {
       new Robot().keyPress(KeyEvent.VK_F12);
       new Robot().keyRelease(KeyEvent.VK_F12);
 
-      boolean hasFoundNewestScreenshot = true;
-      while (hasFoundNewestScreenshot) {
+      boolean hasFoundNewScreenshot = true;
+      while (hasFoundNewScreenshot) {
         screenshotPath = fileSystem.getLastModifiedScreenshot();
 
         if (screenshotPath != null
             && !screenshotPath.equals(screenshotCache.getCurrentScreenshotKey())) {
-          hasFoundNewestScreenshot = false;
+          hasFoundNewScreenshot = false;
         }
 
         Thread.sleep(1000);

@@ -3,7 +3,7 @@ package com.dhuy.dragonbot.global;
 public class Constants {
   private static Constants instance = new Constants();
 
-  public static final String TIBIA_SCREENSHOT_RELATIVE_DIRECTORY =
+  private static final String TIBIA_SCREENSHOT_RELATIVE_DIRECTORY =
       "\\AppData\\Local\\Tibia\\packages\\Tibia\\screenshots";
 
   private String homeDirectoryPath;
@@ -31,15 +31,7 @@ public class Constants {
     return homeDirectoryPath;
   }
 
-  public void setHomeDirectoryPath(String homeDirectoryPath) {
-    this.homeDirectoryPath = homeDirectoryPath;
-  }
-
   public String getTibiaScreenshotAbsoluteDirectory() {
     return tibiaScreenshotAbsoluteDirectory;
-  }
-
-  public void setTibiaScreenshotAbsoluteDirectory(String tibiaScreenshotAbsoluteDirectory) {
-    this.tibiaScreenshotAbsoluteDirectory = tibiaScreenshotAbsoluteDirectory;
   }
 }
