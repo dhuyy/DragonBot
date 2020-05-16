@@ -1,7 +1,7 @@
 package com.dhuy.dragonbot.global;
 
 public class Constants {
-  private static final Constants instance = new Constants();
+  private static Constants instance = new Constants();
 
   public static final String TIBIA_SCREENSHOT_RELATIVE_DIRECTORY =
       "\\AppData\\Local\\Tibia\\packages\\Tibia\\screenshots";
@@ -16,6 +16,14 @@ public class Constants {
   }
 
   public static Constants getInstance() {
+    if (instance == null) {
+      synchronized (Constants.class) {
+        if (instance == null) {
+          instance = new Constants();
+        }
+      }
+    }
+
     return instance;
   }
 

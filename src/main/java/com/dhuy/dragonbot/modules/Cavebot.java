@@ -1,25 +1,23 @@
 package com.dhuy.dragonbot.modules;
 
-public class Cavebot implements Runnable {
-  private String name = null;
+import com.dhuy.dragonbot.global.ScreenshotCache;
 
-  public Cavebot(String name) {
-    this.name = name;
-  }
+public class Cavebot {
+  ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
-  public String getName() {
-    return this.name;
-  }
+  public Cavebot() {}
 
-  public void run() {
+  public void execute() {
     try {
-      Thread.sleep(500);
+      String screenshotKey = screenshotCache.getCurrentScreenshotKey();
 
-      System.out.println("Code that process Cavebot responsibility.");
+      if (screenshotKey != null) {
+        // INCLUDE THE CAVEBOT CODE IN HERE
+      }
+
+      Thread.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-
-    System.out.println(name + " module execution has been finished.");
   }
 }

@@ -5,7 +5,7 @@ import lc.kra.system.mouse.event.GlobalMouseAdapter;
 import lc.kra.system.mouse.event.GlobalMouseEvent;
 
 public class MouseHook {
-  private static final MouseHook instance = new MouseHook();
+  private static MouseHook instance = new MouseHook();
 
   private GlobalMouseHook globalMouseHook;
 
@@ -14,6 +14,14 @@ public class MouseHook {
   }
 
   public static MouseHook getInstance() {
+    if (instance == null) {
+      synchronized (MouseHook.class) {
+        if (instance == null) {
+          instance = new MouseHook();
+        }
+      }
+    }
+
     return instance;
   }
 

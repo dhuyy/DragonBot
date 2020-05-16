@@ -5,7 +5,7 @@ import lc.kra.system.keyboard.event.GlobalKeyAdapter;
 import lc.kra.system.keyboard.event.GlobalKeyEvent;
 
 public class KeyboardHook {
-  private static final KeyboardHook instance = new KeyboardHook();
+  private static KeyboardHook instance = new KeyboardHook();
   private GlobalKeyboardHook keyboardHook;
 
   private KeyboardHook() {
@@ -14,6 +14,14 @@ public class KeyboardHook {
   }
 
   public static KeyboardHook getInstance() {
+    if (instance == null) {
+      synchronized (KeyboardHook.class) {
+        if (instance == null) {
+          instance = new KeyboardHook();
+        }
+      }
+    }
+
     return instance;
   }
 
