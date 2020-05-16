@@ -1,25 +1,23 @@
 package com.dhuy.dragonbot.modules;
 
-public class Healing implements Runnable {
-  private String name = null;
+import com.dhuy.dragonbot.global.ScreenshotCache;
 
-  public Healing(String name) {
-    this.name = name;
-  }
+public class Healing {
+  ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
-  public String getName() {
-    return this.name;
-  }
+  public Healing() {}
 
-  public void run() {
+  public void execute() {
     try {
-      Thread.sleep(1000);
+      String screenshotKey = screenshotCache.getCurrentScreenshotKey();
 
-      System.out.println("Code that process Healing responsibility.");
+      if (screenshotKey != null) {
+        // INCLUDE THE HEALING CODE IN HERE
+      }
+
+      Thread.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-
-    System.out.println(name + " module execution has been finished.");
   }
 }

@@ -1,17 +1,20 @@
 package com.dhuy.dragonbot;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import com.dhuy.dragonbot.modules.Cavebot;
-import com.dhuy.dragonbot.modules.Healing;
+import com.dhuy.dragonbot.global.KeyboardHook;
+import com.dhuy.dragonbot.global.ThreadPool;
+import com.dhuy.dragonbot.modules.CavebotTask;
+import com.dhuy.dragonbot.modules.HealingTask;
+import com.dhuy.dragonbot.modules.ScreenshotTask;
 
 public class App {
   public static void main(String[] args) {
-    ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+    KeyboardHook keyboardHook = KeyboardHook.getInstance();
+    keyboardHook.register(keyboardHook.getPauseAppHook());
 
-    threadPool.submit(new Cavebot("Cavebot"));
-    threadPool.submit(new Healing("Healing"));
-
-    threadPool.shutdown();
+    ThreadPoolExecutor threadPoolExecutor = ThreadPool.getInstance().getExecutor();
+    threadPoolExecutor.submit(new ScreenshotTask());
+    threadPoolExecutor.submit(new HealingTask());
+    threadPoolExecutor.submit(new CavebotTask());
   }
 }
