@@ -8,12 +8,13 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
-import com.dhuy.dragonbot.global.Constants;
+import com.dhuy.dragonbot.global.Store;
 
 public class FileSystem {
+  public FileSystem() {}
+
   public String getLastModifiedScreenshot() {
-    Constants constants = Constants.getInstance();
-    Path dir = Paths.get(constants.getTibiaScreenshotAbsoluteDirectory());
+    Path dir = Paths.get(Store.getInstance().getTibiaScreenshotAbsoluteDirectory());
 
     Optional<Path> lastFilePath;
     try {
@@ -33,10 +34,10 @@ public class FileSystem {
   }
 
   public void cleanupScreenshots() {
-    Constants constants = Constants.getInstance();
-
     try {
-      final File screenshotDirectory = new File(constants.getTibiaScreenshotAbsoluteDirectory());
+      final File screenshotDirectory =
+          new File(Store.getInstance().getTibiaScreenshotAbsoluteDirectory());
+
       FileUtils.cleanDirectory(screenshotDirectory);
     } catch (IOException e) {
       e.printStackTrace();

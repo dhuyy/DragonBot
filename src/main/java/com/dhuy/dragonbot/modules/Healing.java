@@ -3,7 +3,7 @@ package com.dhuy.dragonbot.modules;
 import com.dhuy.dragonbot.global.ScreenshotCache;
 
 public class Healing {
-  ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
+  private ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
   public Healing() {}
 
