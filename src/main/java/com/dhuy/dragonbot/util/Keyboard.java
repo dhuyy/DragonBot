@@ -16,13 +16,13 @@ public class Keyboard {
       e.printStackTrace();
     }
   }
-  
+
   public void type(String stringKey) {
     int keyCode = getKeyCode(stringKey);
-    
+
     robot.keyPress(keyCode);
     robot.keyRelease(keyCode);
-    robot.delay(50);
+    robot.delay(250);
   }
 
   public void writeWord(String word) {

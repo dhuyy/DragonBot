@@ -14,3 +14,7 @@
 # Maven
 log/
 target/
+
+# Scripts
+scripts/*.mv
+scripts/*.mv.db

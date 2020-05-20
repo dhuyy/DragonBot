@@ -9,7 +9,7 @@ public class ScreenshotCache {
   BufferedImage currentScreenshotValue;
 
   private ScreenshotCache() {
-    currentScreenshotKey = "<NOT_LOADED>";
+    currentScreenshotKey = null;
     currentScreenshotValue = null;
   }
 

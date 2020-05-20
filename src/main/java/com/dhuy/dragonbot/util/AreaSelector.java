@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class AreaSelector {
-  Rectangle captureRect;
+  public Rectangle captureRect;
 
   public AreaSelector() {}
 
@@ -32,8 +32,6 @@ public class AreaSelector {
     JPanel panel = new JPanel(new BorderLayout());
     panel.add(screenScroll, BorderLayout.CENTER);
 
-    final JLabel selectionLabel = new JLabel();
-
     repaint(screen, screenCopy);
     screenLabel.repaint();
 
@@ -44,7 +42,6 @@ public class AreaSelector {
       public void mouseMoved(MouseEvent me) {
         start = me.getPoint();
         repaint(screen, screenCopy);
-        selectionLabel.setText("Start Point: " + start);
         screenLabel.repaint();
       }
 
@@ -54,11 +51,10 @@ public class AreaSelector {
         captureRect = new Rectangle(start, new Dimension(end.x - start.x, end.y - start.y));
         repaint(screen, screenCopy);
         screenLabel.repaint();
-        selectionLabel.setText("Rectangle: " + captureRect);
       }
     });
 
-    JOptionPane.showMessageDialog(null, panel, "Drag a rectangle in the screenshot",
+    JOptionPane.showMessageDialog(null, panel, "Selecione a área do Minimap e aperte OK",
         JOptionPane.PLAIN_MESSAGE);
 
     return captureRect;

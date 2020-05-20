@@ -115,6 +115,8 @@ public class KeyEventMapping {
       return KeyEvent.VK_F11;
     else if (stringKey == "F12")
       return KeyEvent.VK_F12;
+    else if (stringKey == "ESC")
+      return KeyEvent.VK_ESCAPE;
     else
       return KeyEvent.VK_UNDEFINED;
   }
