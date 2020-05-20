@@ -27,13 +27,13 @@ public class Screenshot {
 
       keyboard.type("F12");
 
-      boolean hasNotFoundNewScreenshot = true;
-      while (hasNotFoundNewScreenshot) {
+      boolean hasFoundLastCreatedScreenshot = false;
+      while (!hasFoundLastCreatedScreenshot) {
         screenshotPath = fileSystem.getLastModifiedScreenshot();
 
         if (screenshotPath != null
             && !screenshotPath.equals(screenshotCache.getCurrentScreenshotKey())) {
-          hasNotFoundNewScreenshot = false;
+          hasFoundLastCreatedScreenshot = true;
         }
       }
 

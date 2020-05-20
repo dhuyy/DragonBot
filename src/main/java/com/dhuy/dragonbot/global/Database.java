@@ -35,8 +35,8 @@ public class Database {
   }
 
   public void createDatabase(String databaseName) {
-    dbConnection.open(databaseName);
     try {
+      dbConnection.open(databaseName);
       dbConnection.getStatement().execute(sqlQuery.getCreateDatabaseQuery());
     } catch (SQLException e) {
       e.printStackTrace();
@@ -53,6 +53,7 @@ public class Database {
 
       preparedStatement.setBinaryStream(1, baseImageBinary);
       preparedStatement.setBinaryStream(2, goalImageBinary);
+
       preparedStatement.execute();
     } catch (SQLException e) {
       e.printStackTrace();

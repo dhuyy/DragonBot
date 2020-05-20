@@ -30,7 +30,7 @@ public class Store {
   private Store() {
     homeDirectoryPath = System.getProperty("user.home");
     tibiaScreenshotAbsoluteDirectory =
-        homeDirectoryPath.concat(TIBIA_SCREENSHOT_RELATIVE_DIRECTORY);
+        homeDirectoryPath.concat(Store.TIBIA_SCREENSHOT_RELATIVE_DIRECTORY);
     windowsTitleBarHeight = 0;
     minimapLeftSpace = 0;
     minimapArea = null;

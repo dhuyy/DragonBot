@@ -37,6 +37,7 @@ public class FileSystem {
     try {
       final File screenshotDirectory =
           new File(Store.getInstance().getTibiaScreenshotAbsoluteDirectory());
+
       FileUtils.cleanDirectory(screenshotDirectory);
     } catch (IOException e) {
       e.printStackTrace();

@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class AreaSelector {
-  public Rectangle captureRect;
+  private Rectangle captureRect;
 
   public AreaSelector() {}
 

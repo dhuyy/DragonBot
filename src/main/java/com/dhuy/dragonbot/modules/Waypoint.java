@@ -30,15 +30,15 @@ public class Waypoint {
 
     int[] crossCoord = imageProcessor.findSubimage(currentMinimap, currentCross);
 
-    BufferedImage goalImage =
-        currentMinimap.getSubimage(crossCoord[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL,
-            crossCoord[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL, Store.WAYPOINT_BLOCK_SIZE,
-            Store.WAYPOINT_BLOCK_SIZE);
     BufferedImage baseImage = currentMinimap.getSubimage(
         crossCoord[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL
             - Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT,
         crossCoord[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL, Store.WAYPOINT_BLOCK_SIZE,
         Store.WAYPOINT_BLOCK_SIZE);
+    BufferedImage goalImage =
+        currentMinimap.getSubimage(crossCoord[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL,
+            crossCoord[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL, Store.WAYPOINT_BLOCK_SIZE,
+            Store.WAYPOINT_BLOCK_SIZE);
 
     database.insertWaypoint(baseImage, goalImage);
   }

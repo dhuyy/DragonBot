@@ -17,7 +17,6 @@ public class DBConnection {
   private Connection connection = null;
   private Statement statement = null;
 
-
   private DBConnection() {
     try {
       Class.forName(JDBC_DRIVER);

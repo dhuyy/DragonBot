@@ -44,8 +44,8 @@ public class Cavebot {
         BufferedImage goalImage = imageProcessor
             .getBufferedImageFromByteArray(goalImageBlob.getBytes(1, (int) goalImageBlob.length()));
 
-        boolean hasNotHitWaypoint = true;
-        while (hasNotHitWaypoint) {
+        boolean hasReachedWaypoint = false;
+        while (!hasReachedWaypoint) {
           keyboard.type("ESC");
 
           screenshotModule.execute(this.getClass().getName());
@@ -59,10 +59,10 @@ public class Cavebot {
               currentMinimap.getSubimage(waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT,
                   waypoint[1], Store.WAYPOINT_BLOCK_SIZE, Store.WAYPOINT_BLOCK_SIZE);
 
-          double isInTheRightSpot = imageProcessor.compareImages(goalImage, currentGoalImage);
+          double hasGoalImagesMatched = imageProcessor.compareImages(goalImage, currentGoalImage);
 
-          if (isInTheRightSpot == 0) {
-            hasNotHitWaypoint = false;
+          if (hasGoalImagesMatched == 0) {
+            hasReachedWaypoint = true;
           } else {
             mouse.clickOn(
                 waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT
