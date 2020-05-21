@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.dhuy.dragonbot.global.Database;
 import com.dhuy.dragonbot.global.ScreenshotCache;
 import com.dhuy.dragonbot.global.Store;
+import com.dhuy.dragonbot.util.Character;
 import com.dhuy.dragonbot.util.ImageProcessor;
 import com.dhuy.dragonbot.util.Keyboard;
 import com.dhuy.dragonbot.util.Mouse;
@@ -17,12 +18,14 @@ public class Cavebot {
   private Database database = Database.getInstance();
   private ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
+  private Character character;
   private Mouse mouse;
   private Keyboard keyboard;
   private ImageProcessor imageProcessor;
   private Screenshot screenshotModule;
 
   public Cavebot() {
+    character = new Character();
     mouse = new Mouse();
     keyboard = new Keyboard();
     imageProcessor = new ImageProcessor();
@@ -39,6 +42,7 @@ public class Cavebot {
         Blob baseImageBlob = resultSet.getBlob("BASE_IMAGE");
         Blob goalImageBlob = resultSet.getBlob("GOAL_IMAGE");
 
+        BufferedImage currentCross = store.getMinimapCross();
         BufferedImage baseImage = imageProcessor
             .getBufferedImageFromByteArray(baseImageBlob.getBytes(1, (int) baseImageBlob.length()));
         BufferedImage goalImage = imageProcessor
@@ -59,18 +63,30 @@ public class Cavebot {
               currentMinimap.getSubimage(waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT,
                   waypoint[1], Store.WAYPOINT_BLOCK_SIZE, Store.WAYPOINT_BLOCK_SIZE);
 
-          double hasGoalImagesMatched = imageProcessor.compareImages(goalImage, currentGoalImage);
+          double hasGoalImagesMatchedPercentage =
+              imageProcessor.compareImages(goalImage, currentGoalImage) * 100;
 
-          if (hasGoalImagesMatched == 0) {
+          if (hasGoalImagesMatchedPercentage <= 1) {
             hasReachedWaypoint = true;
           } else {
+            int[] initialPoint = imageProcessor.findSubimage(currentMinimap, currentCross);
+            int[] finalPoint = imageProcessor.findSubimage(currentMinimap, currentGoalImage);
+
+            double distanceToReachWaypoint = Math.sqrt(Math.pow(
+                finalPoint[0] - (initialPoint[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL), 2)
+                + Math.pow(
+                    finalPoint[1] - (initialPoint[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL),
+                    2));
+            long walkingSpeedInMilliseconds = character.getWalkingSpeedInMilliseconds(
+                Store.GRASS_TILE_SPEED_WALKING, distanceToReachWaypoint);
+
             mouse.clickOn(
                 waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT
                     + Store.WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS + store.getMinimapLeftSpace(),
                 waypoint[1] + Store.WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS + Store.MAP_TOP_PADDING
                     + store.getWindowsTitleBarHeight());
 
-            Thread.sleep(4000);
+            Thread.sleep(walkingSpeedInMilliseconds);
           }
         }
       }
