@@ -6,7 +6,9 @@ import java.awt.image.BufferedImage;
 public class Store {
   private static Store instance = new Store();
 
-  public static final int WAYPOINT_BLOCK_SIZE = 14;
+  public static final int CHARACTER_SPEED_BASE = 270;
+  public static final int GRASS_TILE_SPEED_WALKING = 150;
+  public static final int WAYPOINT_BLOCK_SIZE = 18;
   public static final int WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS = WAYPOINT_BLOCK_SIZE / 2 - 1;
   public static final int WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL = WAYPOINT_BLOCK_SIZE / 2 - 3;
   public static final int MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT = WAYPOINT_BLOCK_SIZE;

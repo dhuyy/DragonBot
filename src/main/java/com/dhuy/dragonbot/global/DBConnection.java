@@ -14,6 +14,8 @@ public class DBConnection {
   private static final String USER = "dragonbot";
   private static final String PASS = "";
 
+  private static final String TRACE_LEVEL_FILE = ";TRACE_LEVEL_FILE=0";
+
   private Connection connection = null;
   private Statement statement = null;
 
@@ -40,7 +42,8 @@ public class DBConnection {
   public void open(String databaseName) {
     try {
       System.out.println("Connecting to database...");
-      connection = DriverManager.getConnection(DB_URL.concat(databaseName), USER, PASS);
+      connection = DriverManager.getConnection(DB_URL.concat(databaseName).concat(TRACE_LEVEL_FILE),
+          USER, PASS);
 
       System.out.println("Creating database statement...");
       statement = connection.createStatement();
