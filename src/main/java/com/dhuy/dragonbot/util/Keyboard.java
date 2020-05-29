@@ -2,18 +2,24 @@ package com.dhuy.dragonbot.util;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import com.dhuy.dragonbot.global.Log;
 
 public class Keyboard {
+  private Log log;
   private Robot robot;
   private KeyEventMapping keyEventMap;
 
   public Keyboard() {
+    log = Log.getInstance();
+
     try {
       robot = new Robot();
       keyEventMap = new KeyEventMapping();
     } catch (AWTException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
   }
 
@@ -39,5 +45,12 @@ public class Keyboard {
 
   private int getKeyCode(String fnKey) {
     return keyEventMap.getKeyCode(fnKey);
+  }
+
+  public void collectLoot() {
+    robot.keyPress(KeyEvent.VK_SHIFT);
+    robot.mousePress(InputEvent.BUTTON3_MASK);
+    robot.mouseRelease(InputEvent.BUTTON3_MASK);
+    robot.keyRelease(KeyEvent.VK_SHIFT);
   }
 }

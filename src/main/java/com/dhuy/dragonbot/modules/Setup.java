@@ -2,34 +2,49 @@ package com.dhuy.dragonbot.modules;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import javax.imageio.ImageIO;
+import com.dhuy.dragonbot.global.Database;
 import com.dhuy.dragonbot.global.KeyboardHook;
-import com.dhuy.dragonbot.global.ScreenshotCache;
+import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
+import com.dhuy.dragonbot.model.Waypoint;
 import com.dhuy.dragonbot.util.ApplicationWindow;
-import com.dhuy.dragonbot.util.FileSystem;
+import com.dhuy.dragonbot.util.AreaSelector;
+import com.dhuy.dragonbot.util.ImageProcessor;
 
 public class Setup {
   private Store store = Store.getInstance();
+  private Database database = Database.getInstance();
   private KeyboardHook keyboardHook = KeyboardHook.getInstance();
-  private ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
+  private AreaSelector areaSelector;
   private ApplicationWindow appWindow;
   private Screenshot screenshotModule;
-  private FileSystem fileSystem;
+  private ImageProcessor imageProcessor;
+  private Log log;
 
   public Setup() {
+    areaSelector = new AreaSelector();
     appWindow = new ApplicationWindow();
     screenshotModule = new Screenshot();
-    fileSystem = new FileSystem();
-
-    fileSystem.cleanupScreenshots();
+    imageProcessor = new ImageProcessor();
+    log = Log.getInstance();
   }
 
-  private void calculateMinimapLeftSpace() {
+  private void calculateMinimapAndBattleLeftSpace() {
     int[] screenSize = appWindow.getScreenSize();
 
     store.setMinimapLeftSpace(screenSize[0] - Store.MAP_INNER_WIDTH - Store.MAP_RIGHT_PADDING);
+    store.setBattleLeftSpace(screenSize[0] - Store.BATTLE_INNER_WIDTH);
   }
+
 
   private void calculateTitleBarHeight(BufferedImage setupScreenshot) {
     int titleBarHeight = appWindow.getWindowsTitleBarHeight(setupScreenshot.getHeight(),
@@ -38,15 +53,59 @@ public class Setup {
     store.setWindowsTitleBarHeight(titleBarHeight);
   }
 
+  public void storeWaypointsInMemory() {
+    try {
+      ResultSet resultSet = database.getAllWaypoints();
+      LinkedList<Waypoint> waypointList = new LinkedList<Waypoint>();
+
+      while (resultSet.next()) {
+        int rowId = resultSet.getInt("ID");
+
+        Blob baseImageBlob = resultSet.getBlob("BASE_IMAGE");
+        BufferedImage baseImage = imageProcessor
+            .getBufferedImageFromByteArray(baseImageBlob.getBytes(1, (int) baseImageBlob.length()));
+
+        Blob goalImageBlob = resultSet.getBlob("GOAL_IMAGE");
+        BufferedImage goalImage = imageProcessor
+            .getBufferedImageFromByteArray(goalImageBlob.getBytes(1, (int) goalImageBlob.length()));
+
+        waypointList.add(new Waypoint(rowId, baseImage, goalImage));
+      }
+
+      store.setWaypointList(waypointList);
+      log.getLogger().info(
+          log.getMessage(this, "(" + waypointList.size() + ") waypoints carregados na memória"));
+    } catch (SQLException e) {
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+    }
+  }
+
   public void execute() {
     appWindow.restore();
 
-    screenshotModule.execute(this.getClass().getName());
+    BufferedImage currentScreenshot = screenshotModule.execute(this);
 
-    calculateMinimapLeftSpace();
+    Rectangle battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
+        "Selecione a área superior esquerda do Battle List");
+    // Rectangle characterPositionArea =
+    // areaSelector.getSelectedArea(currentScreenshot);
+    // Rectangle battleWindowArea = new Rectangle(1741, 354, 64, 57);
+    Rectangle characterPositionArea = new Rectangle(866, 462, 1, 1);
+
+    store.setCharacterPositionArea(characterPositionArea);
+    store.setBattleWindowArea(battleWindowArea);
+
+    try {
+      store.setMinimapCross(ImageIO.read(new File(Store.MINIMAP_CROSS_ZOOM_4X_PATH)));
+      store.setBattleListCrop(ImageIO.read(new File(Store.BATTLE_LIST_CROP_PATH)));
+    } catch (IOException e) {
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+    }
+
+    calculateMinimapAndBattleLeftSpace();
     store.setMinimapArea(new Rectangle(store.getMinimapLeftSpace(), Store.MAP_TOP_PADDING,
         Store.MAP_INNER_WIDTH, Store.MAP_INNER_HEIGHT));
-    calculateTitleBarHeight(screenshotCache.getCurrentScreenshotValue());
+    calculateTitleBarHeight(currentScreenshot);
 
     keyboardHook.register(keyboardHook.getEnableCaptureWaypointHook());
   }

@@ -7,11 +7,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import com.dhuy.dragonbot.global.Log;
 
 public class ImageProcessor {
-  public ImageProcessor() {}
+  private Log log;
+
+  public ImageProcessor() {
+    log = Log.getInstance();
+  }
 
   public InputStream getInputStreamFromBufferedImage(BufferedImage original) {
     try {
@@ -20,7 +26,7 @@ public class ImageProcessor {
 
       return new ByteArrayInputStream(outputStream.toByteArray());
     } catch (IOException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
 
     return null;
@@ -85,7 +91,7 @@ public class ImageProcessor {
   /**
    * Calculates the difference between two ARGB colors (BufferedImage.TYPE_INT_ARGB).
    */
-  private double compareARGB(int rgb1, int rgb2) {
+  public double compareARGB(int rgb1, int rgb2) {
     double r1 = (rgb1 >> 16 & 0xFF) / 255.0;
     double r2 = (rgb2 >> 16 & 0xFF) / 255.0;
     double g1 = (rgb1 >> 8 & 0xFF) / 255.0;

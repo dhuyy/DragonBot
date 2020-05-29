@@ -18,3 +18,6 @@ target/
 # Scripts
 scripts/*.mv
 scripts/*.mv.db
+
+# Logs
+logs/*.log

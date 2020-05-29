@@ -1,6 +1,7 @@
 package com.dhuy.dragonbot.global;
 
-import com.dhuy.dragonbot.modules.Screenshot;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import com.dhuy.dragonbot.modules.Waypoint;
 import lc.kra.system.keyboard.GlobalKeyboardHook;
 import lc.kra.system.keyboard.event.GlobalKeyAdapter;
@@ -11,19 +12,19 @@ public class KeyboardHook {
 
   private GlobalKeyboardHook keyboardHook;
   private Waypoint waypoint;
-  private GlobalKeyAdapter pauseAppHook;
+  private GlobalKeyAdapter exitAppHook;
   private GlobalKeyAdapter enableCaptureWaypointHook;
   private DBConnection dbConnection;
-  private Screenshot screenshotModule;
+  private Log log;
 
   private KeyboardHook() {
     keyboardHook = new GlobalKeyboardHook(false); // Use false here to switch to hook instead of raw
                                                   // input
     waypoint = new Waypoint();
-    screenshotModule = new Screenshot();
     dbConnection = DBConnection.getInstance();
+    log = Log.getInstance();
 
-    setPauseAppHook();
+    setExitAppHook();
     setEnableCaptureWaypointHook();
   }
 
@@ -47,16 +48,23 @@ public class KeyboardHook {
     keyboardHook.removeKeyListener(keyAdapter);
   }
 
-  public GlobalKeyAdapter getPauseAppHook() {
-    return pauseAppHook;
+  public GlobalKeyAdapter getExitAppHook() {
+    return exitAppHook;
   }
 
-  private void setPauseAppHook() {
-    pauseAppHook = new GlobalKeyAdapter() {
+  private void setExitAppHook() {
+    exitAppHook = new GlobalKeyAdapter() {
       @Override
       public void keyReleased(GlobalKeyEvent event) {
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_PAUSE) {
-          dbConnection.close();
+          try {
+            if (dbConnection.getConnection() != null && !dbConnection.getConnection().isClosed()) {
+              dbConnection.close();
+            }
+          } catch (SQLException e) {
+            log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+          }
+
           keyboardHook.shutdownHook();
 
           System.exit(0);
@@ -74,7 +82,6 @@ public class KeyboardHook {
       @Override
       public void keyReleased(GlobalKeyEvent event) {
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_HOME) {
-          screenshotModule.execute(this.getClass().getName());
           waypoint.captureWaypoint();
         }
 

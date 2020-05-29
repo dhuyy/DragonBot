@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 public class DBConnection {
   private static DBConnection instance = new DBConnection();
@@ -16,14 +17,17 @@ public class DBConnection {
 
   private static final String TRACE_LEVEL_FILE = ";TRACE_LEVEL_FILE=0";
 
+  private Log log;
   private Connection connection = null;
   private Statement statement = null;
 
   private DBConnection() {
+    log = Log.getInstance();
+
     try {
       Class.forName(JDBC_DRIVER);
     } catch (Exception e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
   }
 
@@ -41,26 +45,26 @@ public class DBConnection {
 
   public void open(String databaseName) {
     try {
-      System.out.println("Connecting to database...");
+      log.getLogger().info(log.getMessage(this, "Connecting to database..."));
       connection = DriverManager.getConnection(DB_URL.concat(databaseName).concat(TRACE_LEVEL_FILE),
           USER, PASS);
 
-      System.out.println("Creating database statement...");
+      log.getLogger().info(log.getMessage(this, "Creating database statement..."));
       statement = connection.createStatement();
     } catch (SQLException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
   }
 
   public void close() {
     try {
-      System.out.println("Closing database statement...");
+      log.getLogger().info(log.getMessage(this, "Closing database statement..."));
       statement.close();
 
-      System.out.println("Closing database connection...");
+      log.getLogger().info(log.getMessage(this, "Closing database connection..."));
       connection.close();
     } catch (SQLException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
   }
 
