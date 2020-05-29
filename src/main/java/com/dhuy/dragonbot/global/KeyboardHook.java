@@ -3,6 +3,7 @@ package com.dhuy.dragonbot.global;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import com.dhuy.dragonbot.modules.Waypoint;
+import com.dhuy.dragonbot.util.Notification;
 import lc.kra.system.keyboard.GlobalKeyboardHook;
 import lc.kra.system.keyboard.event.GlobalKeyAdapter;
 import lc.kra.system.keyboard.event.GlobalKeyEvent;
@@ -16,6 +17,7 @@ public class KeyboardHook {
   private GlobalKeyAdapter enableCaptureWaypointHook;
   private DBConnection dbConnection;
   private Log log;
+  private Notification notification;
 
   private KeyboardHook() {
     keyboardHook = new GlobalKeyboardHook(false); // Use false here to switch to hook instead of raw
@@ -23,6 +25,7 @@ public class KeyboardHook {
     waypoint = new Waypoint();
     dbConnection = DBConnection.getInstance();
     log = Log.getInstance();
+    notification = new Notification();
 
     setExitAppHook();
     setEnableCaptureWaypointHook();
@@ -67,6 +70,14 @@ public class KeyboardHook {
 
           keyboardHook.shutdownHook();
 
+          notification.displayTray("DragonBot", "Fechando bot...");
+
+          try {
+            Thread.sleep(3000);
+          } catch (InterruptedException e) {
+            log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+          }
+
           System.exit(0);
         }
       }
@@ -83,10 +94,7 @@ public class KeyboardHook {
       public void keyReleased(GlobalKeyEvent event) {
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_HOME) {
           waypoint.captureWaypoint();
-        }
-
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_END) {
-          unregister(enableCaptureWaypointHook);
+          notification.displayTray("DragonBot", "Waypoint Adicionado - Tipo: Normal");
         }
       }
     };

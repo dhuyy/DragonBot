@@ -6,7 +6,8 @@ public class Character {
   public Character() {}
 
   public long getWalkingSpeedInMilliseconds(int tileSpeedWalking, double distanceToReachWaypoint) {
-    double characterBaseSpeed = Store.CHARACTER_SPEED_BASE + (2 * (58 - 1));
+    double characterBaseSpeed =
+        Store.CHARACTER_SPEED_BASE + (2 * (Store.getInstance().getCharacterLevel() - 1));
     double sqmPerSecond = tileSpeedWalking / characterBaseSpeed;
     double walkingSpeed = sqmPerSecond * distanceToReachWaypoint;
 
