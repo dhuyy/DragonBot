@@ -84,7 +84,18 @@ public class AppInitialization {
 
       String characterName = JOptionPane.showInputDialog("Qual o nome do personagem?");
       if (characterName == null) {
-        log.getLogger().info(log.getMessage(this, "Nome de personagem inválido. Fechando bot..."));
+        log.getLogger()
+            .info(log.getMessage(this, "Não escolheu o nome do personagem. Fechando bot..."));
+        System.exit(0);
+      }
+
+      try {
+        int characterLevel =
+            Integer.parseInt(JOptionPane.showInputDialog("Qual o level do personagem?"));
+
+        store.setCharacterLevel(characterLevel);
+      } catch (NumberFormatException e) {
+        log.getLogger().info(log.getMessage(this, "Level do personagem inválido. Fechando bot..."));
         System.exit(0);
       }
 

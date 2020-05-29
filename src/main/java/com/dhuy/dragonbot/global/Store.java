@@ -45,6 +45,7 @@ public class Store {
   private BufferedImage battleListCrop;
   private String scriptName;
   private String characterName;
+  private int characterLevel;
   private long startTimeWaypoint;
   private long intervalToReachWaypoint;
 
@@ -65,6 +66,7 @@ public class Store {
     battleListCrop = null;
     scriptName = null;
     characterName = null;
+    characterLevel = 0;
     startTimeWaypoint = 0;
     intervalToReachWaypoint = -1;
   }
@@ -191,6 +193,14 @@ public class Store {
 
   public void setCharacterName(String characterName) {
     this.characterName = characterName;
+  }
+
+  public int getCharacterLevel() {
+    return characterLevel;
+  }
+
+  public void setCharacterLevel(int characterLevel) {
+    this.characterLevel = characterLevel;
   }
 
   public long getStartTimeWaypoint() {
