@@ -3,16 +3,25 @@ package com.dhuy.dragonbot.util;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.logging.Level;
+import com.dhuy.dragonbot.global.Log;
 
 public class Mouse {
+  private Log log;
   private Robot robot;
 
   public Mouse() {
+    log = Log.getInstance();
+
     try {
       robot = new Robot();
     } catch (AWTException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
+  }
+
+  public void move(int x, int y) {
+    robot.mouseMove(x, y);
   }
 
   public void clickOn(int x, int y) {

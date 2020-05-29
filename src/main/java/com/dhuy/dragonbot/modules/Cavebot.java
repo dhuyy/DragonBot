@@ -2,11 +2,7 @@ package com.dhuy.dragonbot.modules;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.sql.Blob;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import com.dhuy.dragonbot.global.Database;
-import com.dhuy.dragonbot.global.ScreenshotCache;
+import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.util.Character;
 import com.dhuy.dragonbot.util.ImageProcessor;
@@ -15,14 +11,14 @@ import com.dhuy.dragonbot.util.Mouse;
 
 public class Cavebot {
   private Store store = Store.getInstance();
-  private Database database = Database.getInstance();
-  private ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
   private Character character;
-  private Mouse mouse;
   private Keyboard keyboard;
+  private Mouse mouse;
   private ImageProcessor imageProcessor;
   private Screenshot screenshotModule;
+  private Looting looting;
+  private Log log;
 
   public Cavebot() {
     character = new Character();
@@ -30,70 +26,68 @@ public class Cavebot {
     keyboard = new Keyboard();
     imageProcessor = new ImageProcessor();
     screenshotModule = new Screenshot();
+    looting = new Looting();
+    log = Log.getInstance();
   }
 
-  public void execute() {
-    try {
-      Rectangle minimapArea = store.getMinimapArea();
+  public long execute() {
+    Rectangle minimapArea = store.getMinimapArea();
 
-      ResultSet resultSet = database.getAllWaypoints();
+    BufferedImage currentCross = store.getMinimapCross();
+    BufferedImage baseImage =
+        store.getWaypointList().get(store.getCurrentWaypointIndex()).getBaseImage();
+    BufferedImage goalImage =
+        store.getWaypointList().get(store.getCurrentWaypointIndex()).getGoalImage();
 
-      while (resultSet.next()) {
-        Blob baseImageBlob = resultSet.getBlob("BASE_IMAGE");
-        Blob goalImageBlob = resultSet.getBlob("GOAL_IMAGE");
+    keyboard.type("ESC");
 
-        BufferedImage currentCross = store.getMinimapCross();
-        BufferedImage baseImage = imageProcessor
-            .getBufferedImageFromByteArray(baseImageBlob.getBytes(1, (int) baseImageBlob.length()));
-        BufferedImage goalImage = imageProcessor
-            .getBufferedImageFromByteArray(goalImageBlob.getBytes(1, (int) goalImageBlob.length()));
+    BufferedImage currentScreenshot = screenshotModule.execute(this);
 
-        boolean hasReachedWaypoint = false;
-        while (!hasReachedWaypoint) {
-          keyboard.type("ESC");
+    BufferedImage currentMinimap = currentScreenshot.getSubimage(minimapArea.x, minimapArea.y,
+        minimapArea.width, minimapArea.height);
 
-          screenshotModule.execute(this.getClass().getName());
+    int[] waypoint = imageProcessor.findSubimage(currentMinimap, baseImage);
 
-          BufferedImage currentMinimap = screenshotCache.getCurrentScreenshotValue()
-              .getSubimage(minimapArea.x, minimapArea.y, minimapArea.width, minimapArea.height);
+    BufferedImage currentGoalImage =
+        currentMinimap.getSubimage(waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT,
+            waypoint[1], Store.WAYPOINT_BLOCK_SIZE, Store.WAYPOINT_BLOCK_SIZE);
 
-          int[] waypoint = imageProcessor.findSubimage(currentMinimap, baseImage);
+    int[] initialPoint = imageProcessor.findSubimage(currentMinimap, currentCross);
+    int[] finalPoint = imageProcessor.findSubimage(currentMinimap, currentGoalImage);
 
-          BufferedImage currentGoalImage =
-              currentMinimap.getSubimage(waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT,
-                  waypoint[1], Store.WAYPOINT_BLOCK_SIZE, Store.WAYPOINT_BLOCK_SIZE);
+    double distanceToReachWaypoint = Math.sqrt(
+        Math.pow(finalPoint[0] - (initialPoint[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL), 2)
+            + Math.pow(
+                finalPoint[1] - (initialPoint[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL), 2));
+    long walkingSpeedInMilliseconds = character
+        .getWalkingSpeedInMilliseconds(Store.GRASS_TILE_SPEED_WALKING, distanceToReachWaypoint);
 
-          double hasGoalImagesMatchedPercentage =
-              imageProcessor.compareImages(goalImage, currentGoalImage) * 100;
+    double hasGoalImagesMatchedPercentage =
+        imageProcessor.compareImages(goalImage, currentGoalImage) * 100;
 
-          if (hasGoalImagesMatchedPercentage <= 1) {
-            hasReachedWaypoint = true;
-          } else {
-            int[] initialPoint = imageProcessor.findSubimage(currentMinimap, currentCross);
-            int[] finalPoint = imageProcessor.findSubimage(currentMinimap, currentGoalImage);
+    if (hasGoalImagesMatchedPercentage <= 1) {
+      log.getLogger().info(log.getMessage(this, "Chegou no waypoint"));
 
-            double distanceToReachWaypoint = Math.sqrt(Math.pow(
-                finalPoint[0] - (initialPoint[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL), 2)
-                + Math.pow(
-                    finalPoint[1] - (initialPoint[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL),
-                    2));
-            long walkingSpeedInMilliseconds = character.getWalkingSpeedInMilliseconds(
-                Store.GRASS_TILE_SPEED_WALKING, distanceToReachWaypoint);
+      int currentWaypointIndex = store.getCurrentWaypointIndex();
+      int nextWaypointIndex = currentWaypointIndex + 1;
 
-            mouse.clickOn(
-                waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT
-                    + Store.WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS + store.getMinimapLeftSpace(),
-                waypoint[1] + Store.WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS + Store.MAP_TOP_PADDING
-                    + store.getWindowsTitleBarHeight());
-
-            Thread.sleep(walkingSpeedInMilliseconds);
-          }
-        }
+      if (nextWaypointIndex == store.getWaypointList().size()) {
+        store.setCurrentWaypointIndex(0);
+      } else {
+        store.setCurrentWaypointIndex(nextWaypointIndex);
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    } else {
+      log.getLogger().info(log.getMessage(this, "Ainda não chegou no waypoint"));
+
+      looting.execute();
+
+      mouse.clickOn(
+          waypoint[0] + Store.MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT
+              + Store.WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS + store.getMinimapLeftSpace(),
+          waypoint[1] + Store.WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS + Store.MAP_TOP_PADDING
+              + store.getWindowsTitleBarHeight());
     }
+
+    return walkingSpeedInMilliseconds;
   }
 }

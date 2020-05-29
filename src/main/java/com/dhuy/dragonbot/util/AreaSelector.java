@@ -20,7 +20,7 @@ public class AreaSelector {
 
   public AreaSelector() {}
 
-  public Rectangle getSelectedArea(final BufferedImage screen) {
+  public Rectangle getSelectedArea(final BufferedImage screen, String windowTitle) {
     final BufferedImage screenCopy =
         new BufferedImage(screen.getWidth(), screen.getHeight(), screen.getType());
     final JLabel screenLabel = new JLabel(new ImageIcon(screenCopy));
@@ -54,8 +54,7 @@ public class AreaSelector {
       }
     });
 
-    JOptionPane.showMessageDialog(null, panel, "Selecione a área do Minimap e aperte OK",
-        JOptionPane.PLAIN_MESSAGE);
+    JOptionPane.showMessageDialog(null, panel, windowTitle, JOptionPane.PLAIN_MESSAGE);
 
     return captureRect;
   }

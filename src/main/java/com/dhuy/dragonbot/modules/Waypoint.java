@@ -3,19 +3,19 @@ package com.dhuy.dragonbot.modules;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import com.dhuy.dragonbot.global.Database;
-import com.dhuy.dragonbot.global.ScreenshotCache;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.util.ImageProcessor;
 
 public class Waypoint {
   private Store store = Store.getInstance();
-  private ScreenshotCache screenshotCache = ScreenshotCache.getInstance();
 
   private ImageProcessor imageProcessor;
   private Database database;
+  private Screenshot screenshotModule;
 
   public Waypoint() {
     imageProcessor = new ImageProcessor();
+    screenshotModule = new Screenshot();
 
     database = Database.getInstance();
   }
@@ -23,7 +23,8 @@ public class Waypoint {
   public void captureWaypoint() {
     Rectangle minimapArea = store.getMinimapArea();
 
-    BufferedImage currentScreenshot = screenshotCache.getCurrentScreenshotValue();
+    BufferedImage currentScreenshot = screenshotModule.execute(this);
+
     BufferedImage currentMinimap = currentScreenshot.getSubimage(minimapArea.x, minimapArea.y,
         minimapArea.width, minimapArea.height);
     BufferedImage currentCross = store.getMinimapCross();

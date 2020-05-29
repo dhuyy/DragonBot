@@ -5,17 +5,20 @@ import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import com.dhuy.dragonbot.util.ImageProcessor;
 import com.dhuy.dragonbot.util.SQLQuery;
 
 public class Database {
   private static Database instance = new Database();
 
+  private Log log;
   private SQLQuery sqlQuery;
   private ImageProcessor imageProcessor;
   private DBConnection dbConnection;
 
   private Database() {
+    log = Log.getInstance();
     sqlQuery = new SQLQuery();
     imageProcessor = new ImageProcessor();
 
@@ -39,7 +42,7 @@ public class Database {
       dbConnection.open(databaseName);
       dbConnection.getStatement().execute(sqlQuery.getCreateDatabaseQuery());
     } catch (SQLException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
   }
 
@@ -56,7 +59,7 @@ public class Database {
 
       preparedStatement.execute();
     } catch (SQLException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
   }
 
@@ -64,7 +67,7 @@ public class Database {
     try {
       return dbConnection.getStatement().executeQuery(sqlQuery.getSelectAllWaypointsQuery());
     } catch (SQLException e) {
-      e.printStackTrace();
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }
 
     return null;
