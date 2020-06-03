@@ -1,55 +1,61 @@
 package com.dhuy.dragonbot.modules;
 
-import java.awt.Rectangle;
 import java.util.logging.Level;
 import com.dhuy.dragonbot.global.Log;
-import com.dhuy.dragonbot.global.Store;
+import com.dhuy.dragonbot.util.Character;
 import com.dhuy.dragonbot.util.Keyboard;
-import com.dhuy.dragonbot.util.Mouse;
 
 public class Looting {
-  private Store store = Store.getInstance();
+  private static final int MINOR_ACTIONS_DELAY = 75;
 
-  private Mouse mouse;
-  private Keyboard keyboard;
   private Log log;
+  private Keyboard keyboard;
+  private Character character;
 
   public Looting() {
-    mouse = new Mouse();
-    keyboard = new Keyboard();
     log = Log.getInstance();
+
+    keyboard = new Keyboard();
+    character = new Character();
   }
 
   public void execute() {
+    character.moveMouseToCharacterNorthWest();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterNorth();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterNorthEast();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterEast();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterSouthEast();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterSouth();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterSouthWest();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY);
+
+    character.moveMouseToCharacterWest();
+    keyboard.pressShiftAndBackButton();
+    delay(MINOR_ACTIONS_DELAY * 2);
+  }
+
+  private void delay(int ms) {
     try {
-      Rectangle characterPosition = store.getCharacterPositionArea();
-
-      int DELAY = 75;
-
-      mouse.move(characterPosition.x - 70, (characterPosition.y + 23) - 70);
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x, (characterPosition.y + 23) - 70);
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x + 70, (characterPosition.y + 23) - 70);
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x + 70, (characterPosition.y + 23));
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x + 70, (characterPosition.y + 23) + 70);
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x, (characterPosition.y + 23) + 70);
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x - 70, (characterPosition.y + 23) + 70);
-      keyboard.collectLoot();
-      Thread.sleep(DELAY);
-      mouse.move(characterPosition.x - 70, (characterPosition.y + 23));
-      keyboard.collectLoot();
-      Thread.sleep(DELAY * 2);
+      Thread.sleep(ms);
     } catch (InterruptedException e) {
       log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
     }

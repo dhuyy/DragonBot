@@ -11,6 +11,7 @@ import com.dhuy.dragonbot.util.Mouse;
 public class Hunting {
   private Store store = Store.getInstance();
 
+  private Cavebot cavebot;
   private ImageProcessor imageProcessor;
   private Mouse mouse;
   private Screenshot screenshotModule;
@@ -18,6 +19,7 @@ public class Hunting {
   private Log log;
 
   public Hunting() {
+    cavebot = new Cavebot();
     imageProcessor = new ImageProcessor();
     mouse = new Mouse();
     screenshotModule = new Screenshot();
@@ -49,18 +51,12 @@ public class Hunting {
         log.getLogger().info(log.getMessage(this, "Não tem monstro no battle list"));
 
         if (store.getIntervalToReachWaypoint() == -1) {
-          long intervalToReachWaypoint = new Cavebot().execute();
-
-          store.setIntervalToReachWaypoint(intervalToReachWaypoint);
-          store.setStartTimeWaypoint(System.currentTimeMillis());
+          cavebot.execute();
         } else {
           long currentTime = (System.currentTimeMillis() - store.getStartTimeWaypoint());
 
           if (store.getIntervalToReachWaypoint() <= currentTime) {
-            long intervalToReachWaypoint = new Cavebot().execute();
-
-            store.setIntervalToReachWaypoint(intervalToReachWaypoint);
-            store.setStartTimeWaypoint(System.currentTimeMillis());
+            cavebot.execute();
           }
         }
       } else {

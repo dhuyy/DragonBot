@@ -46,7 +46,8 @@ public class Database {
     }
   }
 
-  public void insertWaypoint(BufferedImage baseImage, BufferedImage goalImage) {
+  public void insertWaypoint(int type, int direction, BufferedImage baseImage,
+      BufferedImage goalImage) {
     try {
       PreparedStatement preparedStatement = DBConnection.getInstance().getConnection()
           .prepareStatement(sqlQuery.getInsertWaypointQuery());
@@ -54,8 +55,10 @@ public class Database {
       InputStream baseImageBinary = imageProcessor.getInputStreamFromBufferedImage(baseImage);
       InputStream goalImageBinary = imageProcessor.getInputStreamFromBufferedImage(goalImage);
 
-      preparedStatement.setBinaryStream(1, baseImageBinary);
-      preparedStatement.setBinaryStream(2, goalImageBinary);
+      preparedStatement.setInt(1, type);
+      preparedStatement.setInt(2, direction);
+      preparedStatement.setBinaryStream(3, baseImageBinary);
+      preparedStatement.setBinaryStream(4, goalImageBinary);
 
       preparedStatement.execute();
     } catch (SQLException e) {

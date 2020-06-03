@@ -5,7 +5,7 @@
 
 	<groupId>com.dhuy.dragonbot</groupId>
 	<artifactId>dragonbot</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>DragonBot</name>
@@ -86,6 +86,11 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.200</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.dorkbox</groupId>
+			<artifactId>Notify</artifactId>
+			<version>3.7</version>
 		</dependency>
 	</dependencies>
 </project>

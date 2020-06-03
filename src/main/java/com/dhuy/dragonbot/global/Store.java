@@ -8,12 +8,12 @@ import com.dhuy.dragonbot.model.Waypoint;
 public class Store {
   private static Store instance = new Store();
 
-  public static final int CHARACTER_SPEED_BASE = 270;
-  public static final int GRASS_TILE_SPEED_WALKING = 150;
   public static final int WAYPOINT_BLOCK_SIZE = 16;
   public static final int WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS = WAYPOINT_BLOCK_SIZE / 2 - 1;
   public static final int WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL = WAYPOINT_BLOCK_SIZE / 2 - 3;
   public static final int MAP_SPACING_FROM_BASE_TO_GOAL_WAYPOINT = WAYPOINT_BLOCK_SIZE;
+  public static final int MINIMAP_CROSS_ZOOM_WIDTH = 6;
+  public static final int MINIMAP_CROSS_ZOOM_HEIGHT = 6;
   public static final int MAP_INNER_WIDTH = 106;
   public static final int BATTLE_INNER_WIDTH = 176;
   public static final int MAP_INNER_HEIGHT = 109;
@@ -29,6 +29,10 @@ public class Store {
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y = 15;
   public static final int BATTLE_PIXEL_RGB_WITHOUT_MONSTER_VISIBLE_COLOR = -12303292;
   public static final int BATTLE_PIXEL_RGB_MONSTER_BEING_ATTACKED_COLOR = -65536;
+  public static final int SPACING_FROM_CHARACTER_POSITION_TO_CLOSEST_SQM = 70;
+  public static final int DEFAULT_DIRECTION = 4; // WEST
+  public static final int CHARACTER_SPEED_BASE = 270;
+  public static final int GRASS_TILE_SPEED_WALKING = 150;
 
   private LinkedList<Waypoint> waypointList;
   private int currentWaypointIndex;
@@ -48,6 +52,7 @@ public class Store {
   private int characterLevel;
   private long startTimeWaypoint;
   private long intervalToReachWaypoint;
+  private int currentDirection;
 
   private Store() {
     waypointList = new LinkedList<Waypoint>();
@@ -69,6 +74,7 @@ public class Store {
     characterLevel = 0;
     startTimeWaypoint = 0;
     intervalToReachWaypoint = -1;
+    currentDirection = DEFAULT_DIRECTION;
   }
 
   public static Store getInstance() {
@@ -217,5 +223,13 @@ public class Store {
 
   public void setIntervalToReachWaypoint(long intervalToReachWaypoint) {
     this.intervalToReachWaypoint = intervalToReachWaypoint;
+  }
+
+  public int getCurrentDirection() {
+    return currentDirection;
+  }
+
+  public void setCurrentDirection(int currentDirection) {
+    this.currentDirection = currentDirection;
   }
 }

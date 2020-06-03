@@ -4,12 +4,14 @@ public class SQLQuery {
   public SQLQuery() {}
 
   public String getCreateDatabaseQuery() {
-    return "CREATE TABLE IF NOT EXISTS waypoints"
-        + "(id INT PRIMARY KEY AUTO_INCREMENT, base_image BLOB, goal_image BLOB)";
+    return "CREATE TABLE IF NOT EXISTS waypoints(id INT PRIMARY KEY AUTO_INCREMENT, "
+        + "type ENUM('WALK', 'ROPE', 'SHOVEL', 'LADDER', 'HOLE'), "
+        + "direction ENUM('NO_DIRECTION', 'NORTH', 'EAST', 'SOUTH', 'WEST'), base_image BLOB, "
+        + "goal_image BLOB)";
   }
 
   public String getInsertWaypointQuery() {
-    return "INSERT INTO waypoints(base_image, goal_image) VALUES(?, ?)";
+    return "INSERT INTO waypoints(type, direction, base_image, goal_image) VALUES(?, ?, ?, ?)";
   }
 
   public String getSelectAllWaypointsQuery() {

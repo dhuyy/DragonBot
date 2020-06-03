@@ -60,16 +60,22 @@ public class Setup {
 
       while (resultSet.next()) {
         int rowId = resultSet.getInt("ID");
+        int type = resultSet.getInt("TYPE");
+        int direction = resultSet.getInt("DIRECTION");
 
-        Blob baseImageBlob = resultSet.getBlob("BASE_IMAGE");
-        BufferedImage baseImage = imageProcessor
-            .getBufferedImageFromByteArray(baseImageBlob.getBytes(1, (int) baseImageBlob.length()));
+        if (type == 0) {
+          Blob baseImageBlob = resultSet.getBlob("BASE_IMAGE");
+          BufferedImage baseImage = imageProcessor.getBufferedImageFromByteArray(
+              baseImageBlob.getBytes(1, (int) baseImageBlob.length()));
 
-        Blob goalImageBlob = resultSet.getBlob("GOAL_IMAGE");
-        BufferedImage goalImage = imageProcessor
-            .getBufferedImageFromByteArray(goalImageBlob.getBytes(1, (int) goalImageBlob.length()));
+          Blob goalImageBlob = resultSet.getBlob("GOAL_IMAGE");
+          BufferedImage goalImage = imageProcessor.getBufferedImageFromByteArray(
+              goalImageBlob.getBytes(1, (int) goalImageBlob.length()));
 
-        waypointList.add(new Waypoint(rowId, baseImage, goalImage));
+          waypointList.add(new Waypoint(rowId, type, direction, baseImage, goalImage));
+        } else {
+          waypointList.add(new Waypoint(rowId, type, direction, null, null));
+        }
       }
 
       store.setWaypointList(waypointList);
@@ -80,20 +86,24 @@ public class Setup {
     }
   }
 
-  public void execute() {
+  public void execute(int mode) {
     appWindow.restore();
 
     BufferedImage currentScreenshot = screenshotModule.execute(this);
 
-    Rectangle battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
-        "Selecione a área superior esquerda do Battle List");
+    if (mode == 1) {
+      Rectangle battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
+          "Selecione a área superior esquerda do Battle List");
+      // Rectangle battleWindowArea = new Rectangle(1741, 354, 64, 57);
+
+      store.setBattleWindowArea(battleWindowArea);
+    }
+
     // Rectangle characterPositionArea =
     // areaSelector.getSelectedArea(currentScreenshot);
-    // Rectangle battleWindowArea = new Rectangle(1741, 354, 64, 57);
     Rectangle characterPositionArea = new Rectangle(866, 462, 1, 1);
 
     store.setCharacterPositionArea(characterPositionArea);
-    store.setBattleWindowArea(battleWindowArea);
 
     try {
       store.setMinimapCross(ImageIO.read(new File(Store.MINIMAP_CROSS_ZOOM_4X_PATH)));

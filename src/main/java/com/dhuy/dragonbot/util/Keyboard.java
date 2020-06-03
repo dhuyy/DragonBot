@@ -47,7 +47,7 @@ public class Keyboard {
     return keyEventMap.getKeyCode(fnKey);
   }
 
-  public void collectLoot() {
+  public void pressShiftAndBackButton() {
     robot.keyPress(KeyEvent.VK_SHIFT);
     robot.mousePress(InputEvent.BUTTON3_MASK);
     robot.mouseRelease(InputEvent.BUTTON3_MASK);
