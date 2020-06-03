@@ -144,8 +144,8 @@ public class KeyboardHook {
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_PRIOR) {
           waypoint.captureRopeWaypoint();
 
-          notification.show("______ Waypoint Adicionado ______ Tipo: ROPE - Map Base: "
-              .concat(getDirectionString(store.getCurrentDirection())), HIDE_NOTIFICATION_AFTER);
+          notification.show("______ Waypoint Adicionado ______ Tipo: ROPE",
+              HIDE_NOTIFICATION_AFTER);
         }
 
         /**
