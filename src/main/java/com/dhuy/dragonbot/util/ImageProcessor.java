@@ -20,6 +20,10 @@ public class ImageProcessor {
   }
 
   public InputStream getInputStreamFromBufferedImage(BufferedImage original) {
+    if (original == null) {
+      return null;
+    }
+
     try {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       ImageIO.write(original, "png", outputStream);

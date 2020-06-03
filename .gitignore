@@ -21,3 +21,5 @@ scripts/*.mv.db
 
 # Logs
 logs/*.log
+logs/*.log.1
+logs/*.log.lck

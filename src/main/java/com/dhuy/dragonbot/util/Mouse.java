@@ -24,6 +24,16 @@ public class Mouse {
     robot.mouseMove(x, y);
   }
 
+  public void click() {
+    robot.mousePress(InputEvent.BUTTON1_MASK);
+    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+  }
+
+  public void backClick() {
+    robot.mousePress(InputEvent.BUTTON3_MASK);
+    robot.mouseRelease(InputEvent.BUTTON3_MASK);
+  }
+
   public void clickOn(int x, int y) {
     robot.mouseMove(x, y);
     robot.mousePress(InputEvent.BUTTON1_MASK);

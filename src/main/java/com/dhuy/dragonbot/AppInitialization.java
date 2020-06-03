@@ -57,6 +57,9 @@ public class AppInitialization {
         System.exit(0);
       }
 
+      // String scriptName = "TEST";
+      // String characterName = "Raul Porcino";
+
       Database.getInstance().createDatabase(scriptName);
 
       store.setScriptName(scriptName);
@@ -65,7 +68,7 @@ public class AppInitialization {
           .info(log.getMessage(this, "Nome do personagem: '".concat(characterName + "'")));
       log.getLogger().info(log.getMessage(this, "Carregando o script ".concat(scriptName + "...")));
 
-      setup.execute();
+      setup.execute(chosenMode);
 
       /**
        * [END] CREATE SCRIPT MODE
@@ -99,6 +102,9 @@ public class AppInitialization {
         System.exit(0);
       }
 
+      // String characterName = "Raul Porcino";
+      // int characterLevel = 58;
+
       DBConnection.getInstance().open(scripts[chosenScript]);
 
       store.setScriptName(scripts[chosenScript]);
@@ -112,7 +118,7 @@ public class AppInitialization {
 
       DBConnection.getInstance().close();
 
-      setup.execute();
+      setup.execute(chosenMode);
 
       Hunting hunting = new Hunting();
       while (true) {
