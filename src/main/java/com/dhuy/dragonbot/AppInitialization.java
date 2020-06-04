@@ -7,6 +7,7 @@ import com.dhuy.dragonbot.global.Database;
 import com.dhuy.dragonbot.global.KeyboardHook;
 import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
+import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.Hunting;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.util.FileSystem;
@@ -120,7 +121,11 @@ public class AppInitialization {
 
       setup.execute(chosenMode);
 
+      FoodThread foodThread = new FoodThread("Food");
       Hunting hunting = new Hunting();
+
+      foodThread.start();
+
       while (true) {
         hunting.execute();
       }
