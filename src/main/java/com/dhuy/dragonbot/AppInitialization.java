@@ -121,7 +121,7 @@ public class AppInitialization {
 
       setup.execute(chosenMode);
 
-      FoodThread foodThread = new FoodThread("Food");
+      FoodThread foodThread = new FoodThread();
       Hunting hunting = new Hunting();
 
       foodThread.start();
