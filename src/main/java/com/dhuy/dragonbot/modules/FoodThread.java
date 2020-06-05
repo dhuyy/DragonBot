@@ -8,14 +8,12 @@ public class FoodThread implements Runnable {
 
   private Log log;
   private Thread thread;
-  private String threadName;
   private boolean suspended;
   private Food food;
 
-  public FoodThread(String threadName) {
+  public FoodThread() {
     log = Log.getInstance();
 
-    this.threadName = threadName;
     suspended = false;
     food = new Food();
   }
@@ -37,25 +35,25 @@ public class FoodThread implements Runnable {
     } catch (InterruptedException e) {
       log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
 
-      System.out.println("[" + threadName + "] Thread interrupted.");
+      log.getLogger().info(log.getMessage(this, "Thread interrupted"));
     }
 
-    System.out.println("[" + threadName + "] Thread exiting.");
+    log.getLogger().info(log.getMessage(this, "Thread exiting"));
   }
 
   public void start() {
     if (thread == null) {
-      thread = new Thread(this, threadName);
+      thread = new Thread(this);
       thread.start();
 
-      System.out.println("[" + threadName + "] Thread started.");
+      log.getLogger().info(log.getMessage(this, "Thread started"));
     }
   }
 
   public void suspend() {
     suspended = true;
 
-    System.out.println("[" + threadName + "] Thread suspended.");
+    log.getLogger().info(log.getMessage(this, "Thread suspended"));
   }
 
   public synchronized void resume() {
@@ -63,7 +61,7 @@ public class FoodThread implements Runnable {
 
     notify();
 
-    System.out.println("[" + threadName + "] Thread resumed.");
+    log.getLogger().info(log.getMessage(this, "Thread resumed"));
   }
 
   public boolean isSuspended() {

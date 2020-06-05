@@ -23,3 +23,7 @@ scripts/*.mv.db
 logs/*.log
 logs/*.log.1
 logs/*.log.lck
+
+# Setup
+setup/dragonbot-setup.exe
+setup/dragonbot.exe
