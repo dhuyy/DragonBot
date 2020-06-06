@@ -4,29 +4,28 @@ import java.util.logging.Level;
 import com.dhuy.dragonbot.global.Log;
 
 public class HealingThread implements Runnable {
-  private Healing healingModule;
+  // A Knight takes 6 seconds to regenerate 2 of mana. Exura Ico consumes 40 of mana.
+  private static final int USE_HEALING_SPELL_DELAY = 120000;
 
-  private Thread thread;
-  private String threadName;
-  private boolean suspended;
   private Log log;
+  private Thread thread;
+  private boolean suspended;
+  private Healing healing;
 
-  public HealingThread(String threadName) {
-    healingModule = new Healing();
+  public HealingThread() {
     log = Log.getInstance();
 
-    this.threadName = threadName;
     suspended = false;
+    healing = new Healing();
   }
 
   @Override
   public void run() {
     try {
       while (true) {
-        healingModule.execute();
+        healing.execute();
 
-        // Let the thread sleep for a while.
-        Thread.sleep(1000);
+        delay(USE_HEALING_SPELL_DELAY);
 
         synchronized (this) {
           while (suspended) {
@@ -37,25 +36,25 @@ public class HealingThread implements Runnable {
     } catch (InterruptedException e) {
       log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
 
-      System.out.println("[" + threadName + "] Thread interrupted.");
+      log.getLogger().info(log.getMessage(this, "Thread interrupted"));
     }
 
-    System.out.println("[" + threadName + "] Thread exiting.");
+    log.getLogger().info(log.getMessage(this, "Thread exiting"));
   }
 
   public void start() {
     if (thread == null) {
-      thread = new Thread(this, threadName);
+      thread = new Thread(this);
       thread.start();
 
-      System.out.println("[" + threadName + "] Thread started.");
+      log.getLogger().info(log.getMessage(this, "Thread started"));
     }
   }
 
   public void suspend() {
     suspended = true;
 
-    System.out.println("[" + threadName + "] Thread suspended.");
+    log.getLogger().info(log.getMessage(this, "Thread suspended"));
   }
 
   public synchronized void resume() {
@@ -63,10 +62,18 @@ public class HealingThread implements Runnable {
 
     notify();
 
-    System.out.println("[" + threadName + "] Thread resumed.");
+    log.getLogger().info(log.getMessage(this, "Thread resumed"));
   }
 
   public boolean isSuspended() {
     return suspended;
+  }
+
+  private void delay(int ms) {
+    try {
+      Thread.sleep(ms);
+    } catch (InterruptedException e) {
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+    }
   }
 }
