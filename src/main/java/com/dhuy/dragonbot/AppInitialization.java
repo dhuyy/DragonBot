@@ -1,5 +1,6 @@
 package com.dhuy.dragonbot;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import com.dhuy.dragonbot.global.DBConnection;
@@ -8,6 +9,7 @@ import com.dhuy.dragonbot.global.KeyboardHook;
 import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.modules.FoodThread;
+import com.dhuy.dragonbot.modules.HealingThread;
 import com.dhuy.dragonbot.modules.Hunting;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.util.FileSystem;
@@ -121,8 +123,17 @@ public class AppInitialization {
 
       setup.execute(chosenMode);
 
+      HealingThread healingThread = new HealingThread();
       FoodThread foodThread = new FoodThread();
       Hunting hunting = new Hunting();
+
+      healingThread.start();
+
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      }
 
       foodThread.start();
 
