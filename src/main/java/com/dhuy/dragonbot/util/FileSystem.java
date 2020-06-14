@@ -51,7 +51,7 @@ public class FileSystem {
     try {
       FileUtils.cleanDirectory(new File(Store.getInstance().getTibiaScreenshotAbsoluteDirectory()));
     } catch (IOException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 }

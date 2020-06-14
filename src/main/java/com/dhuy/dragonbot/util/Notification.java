@@ -11,6 +11,11 @@ public class Notification {
     Notify.MOVE_DURATION = 0.3F;
   }
 
+  public void instantlyShow(String message) {
+    Notify.create().title("DragonBot").text(message).darkStyle().position(Pos.TOP_LEFT)
+        .showInformation();
+  }
+
   public void show(String message, int hideAfter) {
     Notify.create().title("DragonBot").text(message).hideAfter(hideAfter).darkStyle()
         .position(Pos.TOP_LEFT).showInformation();

@@ -8,6 +8,9 @@ import com.dhuy.dragonbot.model.Waypoint;
 public class Store {
   private static Store instance = new Store();
 
+  public static final int SECONDS_UNTIL_SKIP_ATTACKING_MONSTER = 15000; // In milliseconds
+  public static final int AMOUNT_MONSTERS_VISIBLE_IN_BATTLE = 3;
+
   public static final int WAYPOINT_BLOCK_SIZE = 16;
   public static final int WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS = WAYPOINT_BLOCK_SIZE / 2 - 1;
   public static final int WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL = WAYPOINT_BLOCK_SIZE / 2 - 3;
@@ -27,8 +30,12 @@ public class Store {
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_Y = 32;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X = 4;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y = 15;
-  public static final int BATTLE_PIXEL_RGB_WITHOUT_MONSTER_VISIBLE_COLOR = -12303292;
-  public static final int BATTLE_PIXEL_RGB_MONSTER_BEING_ATTACKED_COLOR = -65536;
+  public static final int DISTANCE_BETWEEN_MONSTER_BATTLE_SQUARE = 22;
+
+  public static final String BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR = "#444444";
+  public static final String BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_1 = "#FF0000";
+  public static final String BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_2 = "#FF8080";
+
   public static final int SPACING_FROM_CHARACTER_POSITION_TO_CLOSEST_SQM = 70;
   public static final int DEFAULT_DIRECTION = 4; // WEST
   public static final int CHARACTER_SPEED_BASE = 270;
@@ -53,6 +60,7 @@ public class Store {
   private long startTimeWaypoint;
   private long intervalToReachWaypoint;
   private int currentDirection;
+  private long intervalAttackingMonster;
 
   private Store() {
     waypointList = new LinkedList<Waypoint>();
@@ -75,6 +83,7 @@ public class Store {
     startTimeWaypoint = 0;
     intervalToReachWaypoint = -1;
     currentDirection = DEFAULT_DIRECTION;
+    intervalAttackingMonster = -1;
   }
 
   public static Store getInstance() {
@@ -223,6 +232,14 @@ public class Store {
 
   public void setIntervalToReachWaypoint(long intervalToReachWaypoint) {
     this.intervalToReachWaypoint = intervalToReachWaypoint;
+  }
+
+  public long getIntervalAttackingMonster() {
+    return intervalAttackingMonster;
+  }
+
+  public void setIntervalAttackingMonster(long intervalAttackingMonster) {
+    this.intervalAttackingMonster = intervalAttackingMonster;
   }
 
   public int getCurrentDirection() {

@@ -19,7 +19,7 @@ public class Keyboard {
       robot = new Robot();
       keyEventMap = new KeyEventMapping();
     } catch (AWTException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 

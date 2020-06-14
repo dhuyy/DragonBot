@@ -219,7 +219,7 @@ public class CavebotActions {
     try {
       Thread.sleep(ms);
     } catch (InterruptedException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 }

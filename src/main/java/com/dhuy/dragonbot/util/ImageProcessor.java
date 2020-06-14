@@ -1,5 +1,6 @@
 package com.dhuy.dragonbot.util;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,10 @@ public class ImageProcessor {
     log = Log.getInstance();
   }
 
+  public String getHexFromColor(Color color) {
+    return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
+  }
+
   public InputStream getInputStreamFromBufferedImage(BufferedImage original) {
     if (original == null) {
       return null;
@@ -30,7 +35,7 @@ public class ImageProcessor {
 
       return new ByteArrayInputStream(outputStream.toByteArray());
     } catch (IOException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
 
     return null;

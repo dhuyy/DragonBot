@@ -33,7 +33,7 @@ public class FoodThread implements Runnable {
         }
       }
     } catch (InterruptedException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
 
       log.getLogger().info(log.getMessage(this, "Thread interrupted"));
     }
@@ -72,7 +72,7 @@ public class FoodThread implements Runnable {
     try {
       Thread.sleep(ms);
     } catch (InterruptedException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 }
