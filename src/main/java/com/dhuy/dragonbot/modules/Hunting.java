@@ -1,19 +1,20 @@
 package com.dhuy.dragonbot.modules;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.util.ImageProcessor;
-import com.dhuy.dragonbot.util.Mouse;
+import com.dhuy.dragonbot.util.Keyboard;
 
 public class Hunting {
   private Store store = Store.getInstance();
 
   private Cavebot cavebot;
   private ImageProcessor imageProcessor;
-  private Mouse mouse;
+  private Keyboard keyboard;
   private Screenshot screenshotModule;
   private Looting looting;
   private Log log;
@@ -21,7 +22,7 @@ public class Hunting {
   public Hunting() {
     cavebot = new Cavebot();
     imageProcessor = new ImageProcessor();
-    mouse = new Mouse();
+    keyboard = new Keyboard();
     screenshotModule = new Screenshot();
     looting = new Looting();
     log = Log.getInstance();
@@ -44,10 +45,10 @@ public class Hunting {
           {battleWindowTitleCoord[0] + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_X,
               battleWindowTitleCoord[1] + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_Y};
 
-      int monsterLifeBarPixelColor =
-          currentBattleWindow.getSubimage(monsterLifeBar[0], monsterLifeBar[1], 1, 1).getRGB(0, 0);
+      String monsterLifeBarPixelHex = imageProcessor.getHexFromColor(new Color(currentBattleWindow
+          .getSubimage(monsterLifeBar[0], monsterLifeBar[1], 1, 1).getRGB(0, 0)));
 
-      if (monsterLifeBarPixelColor == Store.BATTLE_PIXEL_RGB_WITHOUT_MONSTER_VISIBLE_COLOR) {
+      if (monsterLifeBarPixelHex.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR)) {
         log.getLogger().info(log.getMessage(this, "Não tem monstro no battle list"));
 
         if (store.getIntervalToReachWaypoint() == -1) {
@@ -62,30 +63,59 @@ public class Hunting {
       } else {
         log.getLogger().info(log.getMessage(this, "Tem monstro no battle list"));
 
-        int[] monsterBeingAttacked =
-            {battleWindowTitleCoord[0] + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X,
-                battleWindowTitleCoord[1] + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y};
-
-        int monsterBeingAttackedPixelColor = currentBattleWindow
-            .getSubimage(monsterBeingAttacked[0], monsterBeingAttacked[1], 1, 1).getRGB(0, 0);
-
-        if (monsterBeingAttackedPixelColor != Store.BATTLE_PIXEL_RGB_MONSTER_BEING_ATTACKED_COLOR) {
+        if (!isThereAnyMonsterBeingAttacked(currentBattleWindow, battleWindowTitleCoord[0],
+            battleWindowTitleCoord[1])) {
           log.getLogger().info(log.getMessage(this, "Atacando monstro..."));
 
           looting.execute();
 
-          // TODO Generate that 359 value based on the user monitor resolution
-          mouse.clickOn(
-              monsterLifeBar[0] + store.getBattleLeftSpace()
-                  + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X,
-              monsterLifeBar[1] + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y + 376);
+          keyboard.type("ESC");
+          keyboard.type("SPACE");
 
-          mouse.move(monsterLifeBar[0] + store.getBattleLeftSpace()
-              + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X, monsterLifeBar[1] + 366);
+          store.setIntervalAttackingMonster(System.currentTimeMillis());
+        } else {
+          long timeAttacking = (System.currentTimeMillis() - store.getIntervalAttackingMonster());
+
+          if (timeAttacking > Store.SECONDS_UNTIL_SKIP_ATTACKING_MONSTER) {
+            log.getLogger().info(log.getMessage(this, "Mostro sendo atacado a mais de "
+                + (Store.SECONDS_UNTIL_SKIP_ATTACKING_MONSTER / 1000) + " segundos"));
+
+            keyboard.type("SPACE");
+
+            store.setIntervalAttackingMonster(System.currentTimeMillis());
+          }
         }
       }
     } catch (Exception e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
+  }
+
+  private boolean isThereAnyMonsterBeingAttacked(BufferedImage currentBattleWindow,
+      int battleWindowBaseX, int battleWindowBaseY) {
+    boolean hasMonsterBeingAttacked = false;
+
+    for (int i = 0; i < Store.AMOUNT_MONSTERS_VISIBLE_IN_BATTLE; i++) {
+      int[] monsterBeingAttacked =
+          {battleWindowBaseX + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X,
+              battleWindowBaseY + Store.BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y
+                  + (Store.DISTANCE_BETWEEN_MONSTER_BATTLE_SQUARE * i)};
+
+      String monsterSquarePixelHex = imageProcessor.getHexFromColor(new Color(currentBattleWindow
+          .getSubimage(monsterBeingAttacked[0], monsterBeingAttacked[1], 1, 1).getRGB(0, 0)));
+
+      if (monsterSquarePixelHex.equals(Store.BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_1)
+          || monsterSquarePixelHex.equals(Store.BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_2)) {
+        hasMonsterBeingAttacked = true;
+      }
+    }
+
+    if (hasMonsterBeingAttacked) {
+      log.getLogger().info(log.getMessage(this, "Há algum monstro sendo atacado..."));
+    } else {
+      log.getLogger().info(log.getMessage(this, "Não há nenhum monstro sendo atacado..."));
+    }
+
+    return hasMonsterBeingAttacked;
   }
 }

@@ -62,7 +62,7 @@ public class KeyboardHook {
     exitAppHook = new GlobalKeyAdapter() {
       @Override
       public void keyReleased(GlobalKeyEvent event) {
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_PAUSE) {
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_F5) {
           try {
             if (dbConnection.getConnection() != null && !dbConnection.getConnection().isClosed()) {
               dbConnection.close();
@@ -71,9 +71,9 @@ public class KeyboardHook {
             log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
           }
 
-          notification.show("bye bye :p", 1500);
+          notification.instantlyShow("bye bye!");
 
-          delay(1550);
+          delay(1000);
 
           keyboardHook.shutdownHook();
           System.exit(0);
