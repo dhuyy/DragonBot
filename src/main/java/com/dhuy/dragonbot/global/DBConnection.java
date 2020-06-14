@@ -27,7 +27,7 @@ public class DBConnection {
     try {
       Class.forName(JDBC_DRIVER);
     } catch (Exception e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 
@@ -52,7 +52,7 @@ public class DBConnection {
       log.getLogger().info(log.getMessage(this, "Creating database statement..."));
       statement = connection.createStatement();
     } catch (SQLException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 
@@ -64,7 +64,7 @@ public class DBConnection {
       log.getLogger().info(log.getMessage(this, "Closing database connection..."));
       connection.close();
     } catch (SQLException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 

@@ -132,7 +132,7 @@ public class AppInitialization {
       try {
         Thread.sleep(500);
       } catch (InterruptedException e) {
-        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
       }
 
       foodThread.start();

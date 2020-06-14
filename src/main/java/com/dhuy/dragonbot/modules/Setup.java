@@ -82,7 +82,7 @@ public class Setup {
       log.getLogger().info(
           log.getMessage(this, "(" + waypointList.size() + ") waypoints carregados na memória"));
     } catch (SQLException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 
@@ -109,7 +109,7 @@ public class Setup {
       store.setMinimapCross(ImageIO.read(new File(Store.MINIMAP_CROSS_ZOOM_4X_PATH)));
       store.setBattleListCrop(ImageIO.read(new File(Store.BATTLE_LIST_CROP_PATH)));
     } catch (IOException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
 
     calculateMinimapAndBattleLeftSpace();

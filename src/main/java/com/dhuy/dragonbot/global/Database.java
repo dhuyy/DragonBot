@@ -42,7 +42,7 @@ public class Database {
       dbConnection.open(databaseName);
       dbConnection.getStatement().execute(sqlQuery.getCreateDatabaseQuery());
     } catch (SQLException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 
@@ -62,7 +62,7 @@ public class Database {
 
       preparedStatement.execute();
     } catch (SQLException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 
@@ -70,7 +70,7 @@ public class Database {
     try {
       return dbConnection.getStatement().executeQuery(sqlQuery.getSelectAllWaypointsQuery());
     } catch (SQLException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
 
     return null;

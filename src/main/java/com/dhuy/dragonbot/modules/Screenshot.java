@@ -41,7 +41,7 @@ public class Screenshot {
 
       return ImageIO.read(new File(screenshotPath));
     } catch (IOException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
 
     return null;

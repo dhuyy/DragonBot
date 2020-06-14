@@ -68,7 +68,7 @@ public class KeyboardHook {
               dbConnection.close();
             }
           } catch (SQLException e) {
-            log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+            log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
           }
 
           notification.instantlyShow("bye bye!");
@@ -195,7 +195,7 @@ public class KeyboardHook {
     try {
       Thread.sleep(ms);
     } catch (InterruptedException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
   }
 }

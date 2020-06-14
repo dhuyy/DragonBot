@@ -35,7 +35,7 @@ public class ImageProcessor {
 
       return new ByteArrayInputStream(outputStream.toByteArray());
     } catch (IOException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e.getStackTrace());
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
     }
 
     return null;
