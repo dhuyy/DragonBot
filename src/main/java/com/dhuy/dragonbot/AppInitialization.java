@@ -1,8 +1,11 @@
 package com.dhuy.dragonbot;
 
+import java.io.File;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
 import com.dhuy.dragonbot.global.DBConnection;
 import com.dhuy.dragonbot.global.Database;
 import com.dhuy.dragonbot.global.KeyboardHook;
@@ -49,7 +52,7 @@ public class AppInitialization {
 
       String scriptName = JOptionPane.showInputDialog("Qual o título do script?");
       if (scriptName == null) {
-        Logger.getLogger("global")
+        log.getLogger()
             .info(log.getMessage(this, "Não escolheu o título do script. Fechando bot..."));
         System.exit(0);
       }
@@ -81,32 +84,62 @@ public class AppInitialization {
        * [BEGIN] EXECUTE CAVEBOT MODE
        */
 
-      int chosenScript = JOptionPane.showOptionDialog(null, "Escolha o script:", "",
+      String[] questions = new String[] {"Manual", "Auto"};
+      int chosenSettings =
+          JOptionPane.showOptionDialog(null, "Em qual modo de configuração deseja executar?", "",
+              JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, questions, null);
+
+      store.setChosenSettings(chosenSettings);
+
+      String characterName = "";
+      int characterLevel = 0;
+
+      int chosenScript = 0;
+      chosenScript = JOptionPane.showOptionDialog(null, "Escolha o script:", "",
           JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, scripts, null);
+
       if (chosenScript == -1) {
         log.getLogger().info(log.getMessage(this, "Não escolheu o script. Fechando bot..."));
         System.exit(0);
       }
 
-      String characterName = JOptionPane.showInputDialog("Qual o nome do personagem?");
-      if (characterName == null) {
+      if (chosenSettings == 0) {
+        characterName = JOptionPane.showInputDialog("Qual o nome do personagem?");
+        if (characterName == null) {
+          log.getLogger()
+              .info(log.getMessage(this, "Não escolheu o nome do personagem. Fechando bot..."));
+          System.exit(0);
+        }
+
+        try {
+          characterLevel =
+              Integer.parseInt(JOptionPane.showInputDialog("Qual o level do personagem?"));
+
+          store.setCharacterLevel(characterLevel);
+        } catch (NumberFormatException e) {
+          log.getLogger()
+              .info(log.getMessage(this, "Level do personagem inválido. Fechando bot..."));
+          System.exit(0);
+        }
+      } else if (chosenSettings == 1) {
+        try {
+          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+          DocumentBuilder builder = factory.newDocumentBuilder();
+          Document document = builder.parse(new File("character.xml"));
+          document.getDocumentElement().normalize();
+
+          characterName = document.getElementsByTagName("name").item(0).getTextContent();
+          characterLevel =
+              Integer.parseInt(document.getElementsByTagName("level").item(0).getTextContent());
+        } catch (Exception e) {
+          log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
+          System.exit(0);
+        }
+      } else {
         log.getLogger()
-            .info(log.getMessage(this, "Não escolheu o nome do personagem. Fechando bot..."));
+            .info(log.getMessage(this, "Não escolheu o título do script. Fechando bot..."));
         System.exit(0);
       }
-
-      try {
-        int characterLevel =
-            Integer.parseInt(JOptionPane.showInputDialog("Qual o level do personagem?"));
-
-        store.setCharacterLevel(characterLevel);
-      } catch (NumberFormatException e) {
-        log.getLogger().info(log.getMessage(this, "Level do personagem inválido. Fechando bot..."));
-        System.exit(0);
-      }
-
-      // String characterName = "Raul Porcino";
-      // int characterLevel = 58;
 
       DBConnection.getInstance().open(scripts[chosenScript]);
 

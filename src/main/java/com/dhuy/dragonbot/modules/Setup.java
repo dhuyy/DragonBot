@@ -92,9 +92,14 @@ public class Setup {
     BufferedImage currentScreenshot = screenshotModule.execute(this);
 
     if (mode == 1) {
-      Rectangle battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
-          "Selecione a área superior esquerda do Battle List");
-      // Rectangle battleWindowArea = new Rectangle(1741, 354, 64, 57);
+      Rectangle battleWindowArea;
+
+      if (store.getChosenSettings() == 1) {
+        battleWindowArea = new Rectangle(1737, 370, 37, 87);
+      } else {
+        battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
+            "Selecione a área superior esquerda do Battle List");
+      }
 
       store.setBattleWindowArea(battleWindowArea);
     }
