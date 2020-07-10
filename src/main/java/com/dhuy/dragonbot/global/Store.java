@@ -61,6 +61,7 @@ public class Store {
   private long intervalToReachWaypoint;
   private int currentDirection;
   private long intervalAttackingMonster;
+  private int chosenSettings;
 
   private Store() {
     waypointList = new LinkedList<Waypoint>();
@@ -84,6 +85,7 @@ public class Store {
     intervalToReachWaypoint = -1;
     currentDirection = DEFAULT_DIRECTION;
     intervalAttackingMonster = -1;
+    chosenSettings = 0;
   }
 
   public static Store getInstance() {
@@ -248,5 +250,13 @@ public class Store {
 
   public void setCurrentDirection(int currentDirection) {
     this.currentDirection = currentDirection;
+  }
+
+  public int getChosenSettings() {
+    return chosenSettings;
+  }
+
+  public void setChosenSettings(int chosenSettings) {
+    this.chosenSettings = chosenSettings;
   }
 }
