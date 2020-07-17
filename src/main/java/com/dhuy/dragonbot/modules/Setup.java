@@ -93,22 +93,21 @@ public class Setup {
 
     if (mode == 1) {
       Rectangle battleWindowArea;
+      Rectangle characterPositionArea;
 
       if (store.getChosenSettings() == 1) {
-        battleWindowArea = new Rectangle(1737, 370, 37, 87);
+        battleWindowArea = new Rectangle(1743, 375, 31, 108);
+        characterPositionArea = new Rectangle(866, 462, 1, 1);
       } else {
         battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
             "Selecione a área superior esquerda do Battle List");
+        characterPositionArea = areaSelector.getSelectedArea(currentScreenshot,
+            "Selecione a área do SQM central onde o Character está na localizado");
       }
 
       store.setBattleWindowArea(battleWindowArea);
+      store.setCharacterPositionArea(characterPositionArea);
     }
-
-    // Rectangle characterPositionArea =
-    // areaSelector.getSelectedArea(currentScreenshot);
-    Rectangle characterPositionArea = new Rectangle(866, 462, 1, 1);
-
-    store.setCharacterPositionArea(characterPositionArea);
 
     try {
       store.setMinimapCross(ImageIO.read(new File(Store.MINIMAP_CROSS_ZOOM_4X_PATH)));
