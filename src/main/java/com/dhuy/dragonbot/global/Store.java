@@ -26,6 +26,11 @@ public class Store {
       "\\AppData\\Local\\Tibia\\packages\\Tibia\\screenshots";
   public static final String MINIMAP_CROSS_ZOOM_4X_PATH = "images\\minimapCross_4x.png";
   public static final String BATTLE_LIST_CROP_PATH = "images\\battleListCrop.png";
+  public static final String PROTECTIVE_CHARM_LIMIT_PATH = "images\\protectiveCharmLimit.png";
+  public static final String MEDICINE_POUCH_LIMIT_PATH = "images\\medicinePouchLimit.png";
+  public static final String HONEYCOMB_LIMIT_PATH = "images\\honeycombLimit.png";
+  public static final int CREATURE_PRODUCT_LIMIT_BLOCK_IMAGE_WIDTH = 15;
+  public static final int CREATURE_PRODUCT_LIMIT_BLOCK_IMAGE_HEIGHT = 10;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_X = 27;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_Y = 32;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X = 4;
