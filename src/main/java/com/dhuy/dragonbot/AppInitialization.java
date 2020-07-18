@@ -1,7 +1,6 @@
 package com.dhuy.dragonbot;
 
 import java.io.File;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,7 +12,7 @@ import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.HealingThread;
-import com.dhuy.dragonbot.modules.Hunting;
+import com.dhuy.dragonbot.modules.HuntingThread;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.util.FileSystem;
 import com.dhuy.dragonbot.util.LoggerConfigurator;
@@ -158,21 +157,11 @@ public class AppInitialization {
 
       HealingThread healingThread = new HealingThread();
       FoodThread foodThread = new FoodThread();
-      Hunting hunting = new Hunting();
+      HuntingThread huntingThread = new HuntingThread();
 
       healingThread.start();
-
-      try {
-        Thread.sleep(500);
-      } catch (InterruptedException e) {
-        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
-      }
-
       foodThread.start();
-
-      while (true) {
-        hunting.execute();
-      }
+      huntingThread.start();
 
       /**
        * [END] EXECUTE CAVEBOT MODE
