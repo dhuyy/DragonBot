@@ -21,6 +21,10 @@ public class LootStorage {
   private ImageProcessor imageProcessor;
   private Screenshot screenshotModule;
 
+  private BufferedImage protectiveCharmCacheImage = null;
+  private BufferedImage medicinePouchCacheImage = null;
+  private BufferedImage honeycombCacheImage = null;
+
   public LootStorage() {
     log = Log.getInstance();
     imageProcessor = new ImageProcessor();
@@ -33,15 +37,30 @@ public class LootStorage {
     try {
       switch (loot) {
         case PROTECTIVE_CHARM:
-          systemLootLimit = ImageIO.read(new File(Store.PROTECTIVE_CHARM_LIMIT_PATH));
+          if (protectiveCharmCacheImage != null) {
+            systemLootLimit = ImageIO.read(new File(Store.PROTECTIVE_CHARM_LIMIT_PATH));
+            protectiveCharmCacheImage = systemLootLimit;
+          } else {
+            systemLootLimit = protectiveCharmCacheImage;
+          }
           break;
 
         case MEDICINE_POUCH:
-          systemLootLimit = ImageIO.read(new File(Store.MEDICINE_POUCH_LIMIT_PATH));
+          if (medicinePouchCacheImage != null) {
+            systemLootLimit = ImageIO.read(new File(Store.MEDICINE_POUCH_LIMIT_PATH));
+            medicinePouchCacheImage = systemLootLimit;
+          } else {
+            systemLootLimit = medicinePouchCacheImage;
+          }
           break;
 
         case HONEYCOMB:
-          systemLootLimit = ImageIO.read(new File(Store.HONEYCOMB_LIMIT_PATH));
+          if (honeycombCacheImage != null) {
+            systemLootLimit = ImageIO.read(new File(Store.HONEYCOMB_LIMIT_PATH));
+            honeycombCacheImage = systemLootLimit;
+          } else {
+            systemLootLimit = honeycombCacheImage;
+          }
           break;
       }
     } catch (IOException e) {
