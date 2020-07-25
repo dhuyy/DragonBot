@@ -11,23 +11,28 @@ import com.dhuy.dragonbot.global.Database;
 import com.dhuy.dragonbot.global.KeyboardHook;
 import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
+import com.dhuy.dragonbot.modules.AntiLogoutThread;
 import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.HealingThread;
 import com.dhuy.dragonbot.modules.Hunting;
 import com.dhuy.dragonbot.modules.Setup;
+import com.dhuy.dragonbot.modules.SpellCasterThread;
+import com.dhuy.dragonbot.util.ApplicationWindow;
 import com.dhuy.dragonbot.util.FileSystem;
 import com.dhuy.dragonbot.util.LoggerConfigurator;
 
 public class AppInitialization {
   private FileSystem fileSystem;
+  private ApplicationWindow appWindow;
 
   private String[] modes;
   private String[] scripts;
 
   public AppInitialization() {
     fileSystem = new FileSystem();
+    appWindow = new ApplicationWindow();
 
-    modes = new String[] {"Criar Script", "Executar Cavebot"};
+    modes = new String[] {"Create Cavebot Script", "Run Cavebot", "Run Spell Caster"};
     scripts = fileSystem.getScriptFiles();
   }
 
@@ -125,12 +130,12 @@ public class AppInitialization {
         try {
           DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
           DocumentBuilder builder = factory.newDocumentBuilder();
-          Document document = builder.parse(new File("character.xml"));
+          Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
           document.getDocumentElement().normalize();
 
-          characterName = document.getElementsByTagName("name").item(0).getTextContent();
+          characterName = document.getElementsByTagName("characterName").item(0).getTextContent();
           characterLevel =
-              Integer.parseInt(document.getElementsByTagName("level").item(0).getTextContent());
+              Integer.parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent());
         } catch (Exception e) {
           log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
           System.exit(0);
@@ -177,6 +182,52 @@ public class AppInitialization {
       /**
        * [END] EXECUTE CAVEBOT MODE
        */
+    } else if (chosenMode == 2) {
+		  /**
+		   * [BEGIN] EXECUTE SPELL CASTER MODE
+		   */
+    	
+    	try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
+        document.getDocumentElement().normalize();
+
+        store.setCharacterName(document.getElementsByTagName("characterName").item(0).getTextContent());
+        store.setCharacterLevel((Integer.parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent())));
+        store.setSpellCasterHotkey(document.getElementsByTagName("spellCasterHotkey").item(0).getTextContent());
+        store.setSpellCasterInterval(Integer.parseInt(document.getElementsByTagName("spellCasterInterval").item(0).getTextContent()));
+      } catch (Exception e) {
+        log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
+        System.exit(0);
+      }
+    	
+      appWindow.restore();
+    	
+      AntiLogoutThread antiLogoutThread = new AntiLogoutThread();
+      antiLogoutThread.start();
+
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
+      }
+
+      FoodThread foodThread = new FoodThread();
+      foodThread.start();
+
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
+      }
+
+      SpellCasterThread spellCasterThread = new SpellCasterThread();
+      spellCasterThread.start();
+    	
+      /**
+       * [END] EXECUTE SPELL CASTER MODE
+       */    	
     } else {
       log.getLogger().info(log.getMessage(this, "Não escolheu o modo. Fechando bot..."));
       System.exit(0);

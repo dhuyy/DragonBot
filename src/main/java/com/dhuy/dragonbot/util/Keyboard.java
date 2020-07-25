@@ -53,4 +53,13 @@ public class Keyboard {
     robot.mouseRelease(InputEvent.BUTTON3_MASK);
     robot.keyRelease(KeyEvent.VK_SHIFT);
   }
+
+  public void pressShiftAndKey(String stringKey) {
+  	int keyEvent = keyEventMap.getKeyCode(stringKey);
+  	
+    robot.keyPress(KeyEvent.VK_SHIFT);
+    robot.keyPress(keyEvent);
+    robot.keyRelease(keyEvent);
+    robot.keyRelease(KeyEvent.VK_SHIFT);
+  }
 }

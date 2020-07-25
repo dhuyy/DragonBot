@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config>
+    <characterName>Django Enforced</characterName>
+    <characterLevel>70</characterLevel>
+    <spellCasterHotkey>F7</spellCasterHotkey>
+    <spellCasterInterval>5000</spellCasterInterval>
+</config>
