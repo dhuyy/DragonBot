@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DragonBot"
-#define MyAppVersion "1.4"
+#define MyAppVersion "1.5"
 #define MyAppPublisher "Vandhuy Martins"
 #define MyAppExeName "DragonBot.exe"
 
@@ -33,7 +33,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\vandh\Workspace\DragonBot\setup\dragonbot.exe"; DestDir: "{app}"; Flags: ignoreversion  
-Source: "C:\Users\vandh\Workspace\DragonBot\character.xml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\vandh\Workspace\DragonBot\config.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\vandh\Workspace\DragonBot\images\*"; DestDir: "{app}\images"; Flags: ignoreversion
 Source: "C:\Users\vandh\Workspace\DragonBot\logs\*"; DestDir: "{app}\logs"; Flags: ignoreversion
 Source: "C:\Users\vandh\Workspace\DragonBot\scripts\*"; DestDir: "{app}\scripts"; Flags: ignoreversion

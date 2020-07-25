@@ -26,6 +26,7 @@ public class Store {
       "\\AppData\\Local\\Tibia\\packages\\Tibia\\screenshots";
   public static final String MINIMAP_CROSS_ZOOM_4X_PATH = "images\\minimapCross_4x.png";
   public static final String BATTLE_LIST_CROP_PATH = "images\\battleListCrop.png";
+  public static final String CONFIGURATION_FILE_PATH = "config.xml";
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_X = 27;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_LIFE_BAR_Y = 32;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X = 4;
@@ -62,6 +63,8 @@ public class Store {
   private int currentDirection;
   private long intervalAttackingMonster;
   private int chosenSettings;
+  private String spellCasterHotkey;
+  private int spellCasterInterval;
 
   private Store() {
     waypointList = new LinkedList<Waypoint>();
@@ -86,6 +89,8 @@ public class Store {
     currentDirection = DEFAULT_DIRECTION;
     intervalAttackingMonster = -1;
     chosenSettings = 0;
+    spellCasterHotkey = null;
+    spellCasterInterval = 0;
   }
 
   public static Store getInstance() {
@@ -259,4 +264,20 @@ public class Store {
   public void setChosenSettings(int chosenSettings) {
     this.chosenSettings = chosenSettings;
   }
+
+	public String getSpellCasterHotkey() {
+		return spellCasterHotkey;
+	}
+
+	public void setSpellCasterHotkey(String spellCasterHotkey) {
+		this.spellCasterHotkey = spellCasterHotkey;
+	}
+
+	public int getSpellCasterInterval() {
+		return spellCasterInterval;
+	}
+
+	public void setSpellCasterInterval(int spellCasterInterval) {
+		this.spellCasterInterval = spellCasterInterval;
+	}
 }

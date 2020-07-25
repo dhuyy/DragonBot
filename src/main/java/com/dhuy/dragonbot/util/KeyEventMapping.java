@@ -91,34 +91,44 @@ public class KeyEventMapping {
   }
 
   public int getKeyCode(String stringKey) {
-    if (stringKey == "F1")
+    if (stringKey.equals("F1"))
       return KeyEvent.VK_F1;
-    else if (stringKey == "F2")
+    else if (stringKey.equals("F2"))
       return KeyEvent.VK_F2;
-    else if (stringKey == "F3")
+    else if (stringKey.equals("F3"))
       return KeyEvent.VK_F3;
-    else if (stringKey == "F4")
+    else if (stringKey.equals("F4"))
       return KeyEvent.VK_F4;
-    else if (stringKey == "F5")
+    else if (stringKey.equals("F5"))
       return KeyEvent.VK_F5;
-    else if (stringKey == "F6")
+    else if (stringKey.equals("F6"))
       return KeyEvent.VK_F6;
-    else if (stringKey == "F7")
+    else if (stringKey.equals("F7"))
       return KeyEvent.VK_F7;
-    else if (stringKey == "F8")
+    else if (stringKey.equals("F8"))
       return KeyEvent.VK_F8;
-    else if (stringKey == "F9")
+    else if (stringKey.equals("F9"))
       return KeyEvent.VK_F9;
-    else if (stringKey == "F10")
+    else if (stringKey.equals("F10"))
       return KeyEvent.VK_F10;
-    else if (stringKey == "F11")
+    else if (stringKey.equals("F11"))
       return KeyEvent.VK_F11;
-    else if (stringKey == "F12")
+    else if (stringKey.equals("F12"))
       return KeyEvent.VK_F12;
-    else if (stringKey == "ESC")
+    else if (stringKey.equals("ESC"))
       return KeyEvent.VK_ESCAPE;
-    else if (stringKey == "SPACE")
+    else if (stringKey.equals("ENTER"))
+      return KeyEvent.VK_ENTER;
+    else if (stringKey.equals("SPACE"))
       return KeyEvent.VK_SPACE;
+    else if (stringKey.equals("UP"))
+      return KeyEvent.VK_UP;
+    else if (stringKey.equals("LEFT"))
+      return KeyEvent.VK_LEFT;
+    else if (stringKey.equals("RIGHT"))
+      return KeyEvent.VK_RIGHT;
+    else if (stringKey.equals("DOWN"))
+      return KeyEvent.VK_DOWN;
     else
       return KeyEvent.VK_UNDEFINED;
   }
