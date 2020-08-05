@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DragonBot"
-#define MyAppVersion "1.5"
+#define MyAppVersion "1.5.1"
 #define MyAppPublisher "Vandhuy Martins"
 #define MyAppExeName "DragonBot.exe"
 
@@ -38,6 +38,9 @@ Source: "C:\Users\vandh\Workspace\DragonBot\images\*"; DestDir: "{app}\images"; 
 Source: "C:\Users\vandh\Workspace\DragonBot\logs\*"; DestDir: "{app}\logs"; Flags: ignoreversion
 Source: "C:\Users\vandh\Workspace\DragonBot\scripts\*"; DestDir: "{app}\scripts"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[InstallDelete]
+Type: files; Name: "{app}\character.xml"
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
