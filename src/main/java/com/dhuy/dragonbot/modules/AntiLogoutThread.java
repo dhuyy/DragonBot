@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import com.dhuy.dragonbot.global.Log;
 
 public class AntiLogoutThread implements Runnable {
-  private static final int ANTI_LOGOUT_DELAY = 900000;
+  private static final int ANTI_LOGOUT_DELAY = 600000;
 
   private Log log;
   private Thread thread;

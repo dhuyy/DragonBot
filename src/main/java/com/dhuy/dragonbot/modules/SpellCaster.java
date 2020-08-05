@@ -18,7 +18,7 @@ public class SpellCaster {
 
   public void execute() {
     keyboard.type(store.getSpellCasterHotkey());
-    keyboard.type("ENTER");
+    keyboard.type("F6");
 
     log.getLogger().info(log.getMessage(this, "Calling spell caster"));
   }
