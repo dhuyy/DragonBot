@@ -6,7 +6,7 @@ import com.dhuy.dragonbot.util.Keyboard;
 
 public class SpellCaster {
   private Store store = Store.getInstance();
-  
+
   private Log log;
   private Keyboard keyboard;
 
@@ -19,6 +19,7 @@ public class SpellCaster {
   public void execute() {
     keyboard.type(store.getSpellCasterHotkey());
     keyboard.type("F6");
+    keyboard.type("F4");
 
     log.getLogger().info(log.getMessage(this, "Calling spell caster"));
   }
