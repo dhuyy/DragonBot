@@ -20,6 +20,7 @@ public class SpellCaster {
     keyboard.type(store.getSpellCasterHotkey());
     keyboard.type("F6");
     keyboard.type("F4");
+    keyboard.type("F3");
 
     log.getLogger().info(log.getMessage(this, "Calling spell caster"));
   }
