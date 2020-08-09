@@ -134,8 +134,8 @@ public class AppInitialization {
           document.getDocumentElement().normalize();
 
           characterName = document.getElementsByTagName("characterName").item(0).getTextContent();
-          characterLevel =
-              Integer.parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent());
+          characterLevel = Integer
+              .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent());
         } catch (Exception e) {
           log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
           System.exit(0);
@@ -183,27 +183,36 @@ public class AppInitialization {
        * [END] EXECUTE CAVEBOT MODE
        */
     } else if (chosenMode == 2) {
-		  /**
-		   * [BEGIN] EXECUTE SPELL CASTER MODE
-		   */
-    	
-    	try {
+      /**
+       * [BEGIN] EXECUTE SPELL CASTER MODE
+       */
+
+      boolean enableCavebot = false;
+
+      try {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
         document.getDocumentElement().normalize();
 
-        store.setCharacterName(document.getElementsByTagName("characterName").item(0).getTextContent());
-        store.setCharacterLevel((Integer.parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent())));
-        store.setSpellCasterHotkey(document.getElementsByTagName("spellCasterHotkey").item(0).getTextContent());
-        store.setSpellCasterInterval(Integer.parseInt(document.getElementsByTagName("spellCasterInterval").item(0).getTextContent()));
+        store.setCharacterName(
+            document.getElementsByTagName("characterName").item(0).getTextContent());
+        store.setCharacterLevel((Integer
+            .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent())));
+        store.setSpellCasterHotkey(
+            document.getElementsByTagName("spellCasterHotkey").item(0).getTextContent());
+        store.setSpellCasterInterval(Integer.parseInt(
+            document.getElementsByTagName("spellCasterInterval").item(0).getTextContent()));
+
+        enableCavebot = Boolean.parseBoolean(
+            document.getElementsByTagName("spellCasterEnableCavebot").item(0).getTextContent());
       } catch (Exception e) {
         log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
         System.exit(0);
       }
-    	
+
       appWindow.restore();
-    	
+
       AntiLogoutThread antiLogoutThread = new AntiLogoutThread();
       antiLogoutThread.start();
 
@@ -224,10 +233,43 @@ public class AppInitialization {
 
       SpellCasterThread spellCasterThread = new SpellCasterThread();
       spellCasterThread.start();
-    	
+
+      if (enableCavebot) {
+        int chosenScript = 0;
+        chosenScript = JOptionPane.showOptionDialog(null, "Escolha o script:", "",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, scripts, null);
+
+        if (chosenScript == -1) {
+          log.getLogger().info(log.getMessage(this, "Não escolheu o script. Fechando bot..."));
+          System.exit(0);
+        }
+
+        DBConnection.getInstance().open(scripts[chosenScript]);
+
+        store.setScriptName(scripts[chosenScript]);
+        store.setCharacterName(store.getCharacterName());
+        log.getLogger().info(
+            log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
+        log.getLogger().info(
+            log.getMessage(this, "Carregando o script ".concat(scripts[chosenScript] + "...")));
+
+        setup.storeWaypointsInMemory();
+        store.setChosenSettings(1);
+
+        DBConnection.getInstance().close();
+
+        setup.execute(1);
+
+        Hunting hunting = new Hunting();
+
+        while (true) {
+          hunting.execute();
+        }
+      }
+
       /**
        * [END] EXECUTE SPELL CASTER MODE
-       */    	
+       */
     } else {
       log.getLogger().info(log.getMessage(this, "Não escolheu o modo. Fechando bot..."));
       System.exit(0);

@@ -4,4 +4,5 @@
     <characterLevel></characterLevel>
     <spellCasterHotkey>F7</spellCasterHotkey>
     <spellCasterInterval>60000</spellCasterInterval>
+    <spellCasterEnableCavebot>false</spellCasterEnableCavebot>
 </config>
