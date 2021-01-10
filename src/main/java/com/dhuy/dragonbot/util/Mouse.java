@@ -45,4 +45,10 @@ public class Mouse {
     robot.mousePress(InputEvent.BUTTON3_MASK);
     robot.mouseRelease(InputEvent.BUTTON3_MASK);
   }
+
+  public void clickOn(int x, int y, int additionalYAxisCoordinate) {
+    robot.mouseMove(x, y + additionalYAxisCoordinate);
+    robot.mousePress(InputEvent.BUTTON1_MASK);
+    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+  }
 }

@@ -33,6 +33,7 @@ public class Store {
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y = 15;
   public static final int DISTANCE_BETWEEN_MONSTER_BATTLE_SQUARE = 22;
 
+  public static final String BATTLE_PIXEL_HEX_WITHOUT_OFFER_VISIBLE_COLOR = "#404040";
   public static final String BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR = "#444444";
   public static final String BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_1 = "#FF0000";
   public static final String BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_2 = "#FF8080";
@@ -265,19 +266,19 @@ public class Store {
     this.chosenSettings = chosenSettings;
   }
 
-	public String getSpellCasterHotkey() {
-		return spellCasterHotkey;
-	}
+  public String getSpellCasterHotkey() {
+    return spellCasterHotkey;
+  }
 
-	public void setSpellCasterHotkey(String spellCasterHotkey) {
-		this.spellCasterHotkey = spellCasterHotkey;
-	}
+  public void setSpellCasterHotkey(String spellCasterHotkey) {
+    this.spellCasterHotkey = spellCasterHotkey;
+  }
 
-	public int getSpellCasterInterval() {
-		return spellCasterInterval;
-	}
+  public int getSpellCasterInterval() {
+    return spellCasterInterval;
+  }
 
-	public void setSpellCasterInterval(int spellCasterInterval) {
-		this.spellCasterInterval = spellCasterInterval;
-	}
+  public void setSpellCasterInterval(int spellCasterInterval) {
+    this.spellCasterInterval = spellCasterInterval;
+  }
 }

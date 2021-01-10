@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Items>
+	<Item>
+		<id>165945</id><name>cowtana</name><price>2500</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170004</id><name>Gearwheel Chain</name><price>5000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170019</id><name>Glooth Amulet</name><price>2000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>170033</id><name>Glooth Axe</name><price>1500</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170049</id><name>Glooth Blade</name><price>1500</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170105</id><name>Glooth Club</name><price>1500</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>170119</id><name>Glooth Whip</name><price>2500</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170136</id><name>Heat Core</name><price>10000</price><buy>2</buy>
+	</Item>
+	<Item>
+		<id>170152</id><name>Mino Shield</name><price>3000</price><buy>40</buy>
+	</Item>
+	<Item>
+		<id>170211</id><name>Mooh</name><price>6000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>170226</id><name>execowtioner mask</name><price>240</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170241</id><name>giant pacifier</name><price>170</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>170256</id><name>glooth injection</name><price>350</price><buy>30</buy>
+	</Item>
+	<Item>
+		<id>170310</id><name>metal jaw</name><price>260</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170336</id><name>tah shell</name><price>110</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>170352</id><name>necromantic rust</name><price>390</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170406</id><name>poisoned fang</name><price>130</price><buy>40</buy>
+	</Item>
+	<Item>
+		<id>170424</id><name>slime heart</name><price>160</price><buy>40</buy>
+	</Item>
+	<Item>
+		<id>170446</id><name>Bonebreaker</name><price>10000</price><buy>3</buy>
+	</Item>
+	<Item>
+		<id>170500</id><name>Dark Helmet</name><price>250</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170514</id><name>Dragon Hammer</name><price>2000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170534</id><name>Giant Sword</name><price>17000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>170548</id><name>Haunted Blade</name><price>8000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170612</id><name>Knight Legs</name><price>5000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170635</id><name>Serpent Sword</name><price>900</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170649</id><name>Skull Staff</name><price>6000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170711</id><name>Titan Axe</name><price>4000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>170736</id><name>Tower Shield</name><price>8000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170800</id><name>Vampire Shield</name><price>15000</price><buy>3</buy>
+	</Item>
+	<Item>
+		<id>170819</id><name>Warrior Helmet</name><price>5000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>170838</id><name>Hailstorm Rod</name><price>3000</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>170902</id><name>Necrotic Rod</name><price>1000</price><buy>30</buy>
+	</Item>
+	<Item>
+		<id>170923</id><name>Northwind Rod</name><price>1500</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>170944</id><name>Springsprout Rod</name><price>3600</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>171008</id><name>Terra Rod</name><price>2000</price><buy>80</buy>
+	</Item>
+	<Item>
+		<id>171033</id><name>Underworld Rod</name><price>4400</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>171049</id><name>Amber Staff</name><price>8000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>171105</id><name>Ancient Amulet</name><price>200</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>171119</id><name>Assassin Dagger</name><price>20000</price><buy>5</buy>
+	</Item>
+	<Item>
+		<id>171137</id><name>Composite Hornbow</name><price>25000</price><buy>2</buy>
+	</Item>
+	<Item>
+		<id>171158</id><name>Crocodile Boots</name><price>1000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>171221</id><name>Crystal Necklace</name><price>400</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>171237</id><name>Crystal Ring</name><price>250</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>171257</id><name>Crystal Sword</name><price>600</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>171315</id><name>Daramian Waraxe</name><price>1000</price><buy>6</buy>
+	</Item>
+	<Item>
+		<id>171338</id><name>Death Ring</name><price>1000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>171403</id><name>Demon Shield</name><price>30000</price><buy>5</buy>
+	</Item>
+	<Item>
+		<id>171429</id><name>Diamond Sceptre</name><price>3000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>171454</id><name>Dragon Scale Mail</name><price>40000</price><buy>2</buy>
+	</Item>
+	<Item>
+		<id>171517</id><name>Dragon Slayer</name><price>15000</price><buy>3</buy>
+	</Item>
+	<Item>
+		<id>171535</id><name>Dragonbone Staff</name><price>3000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>171559</id><name>Emerald Bangle</name><price>800</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>171618</id><name>Epee</name><price>8000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>171642</id><name>Furry Club</name><price>1000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>171705</id><name>Glacier Kilt</name><price>11000</price><buy>5</buy>
+	</Item>
+	<Item>
+		<id>171729</id><name>Glacier Mask</name><price>2500</price><buy>6</buy>
+	</Item>
+	<Item>
+		<id>171754</id><name>Golden Armor</name><price>20000</price><buy>2</buy>
+	</Item>
+	<Item>
+		<id>171819</id><name>Guardian Halberd</name><price>11000</price><buy>2</buy>
+	</Item>
+	<Item>
+		<id>171839</id><name>Hibiscus Dress</name><price>3000</price><buy>8</buy>
+	</Item>
+	<Item>
+		<id>171905</id><name>Lightning Headband</name><price>2500</price><buy>30</buy>
+	</Item>
+	<Item>
+		<id>171927</id><name>Lightning Pendant</name><price>1500</price><buy>30</buy>
+	</Item>
+	<Item>
+		<id>171952</id><name>Lunar Staff</name><price>5000</price><buy>3</buy>
+	</Item>
+	<Item>
+		<id>172018</id><name>Medusa Shield</name><price>9000</price><buy>5</buy>
+	</Item>
+	<Item>
+		<id>101750</id><name>Mercenary Sword</name><price>12000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>172049</id><name>Naginata</name><price>2000</price><buy>3</buy>
+	</Item>
+	<Item>
+		<id>141147</id><name>Nightmare Blade</name><price>35000</price><buy>8</buy>
+	</Item>
+	<Item>
+		<id>172129</id><name>Pirate Voodoo Doll</name><price>500</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>142706</id><name>Platinum Amulet</name><price>2500</price><buy>30</buy>
+	</Item>
+	<Item>
+		<id>013211</id><name>Sacred Tree Amulet</name><price>3000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>172227</id><name>Scarab Amulet</name><price>200</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>173043</id><name>Scarab Shield</name><price>2000</price><buy>10</buy>
+	</Item>
+	<Item>
+		<id>173104</id><name>Shockwave Amulet</name><price>3000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>173131</id><name>Silver Brooch</name><price>150</price><buy>50</buy>
+	</Item>
+	<Item>
+		<id>173154</id><name>Spiked Squelcher</name><price>5000</price><buy>20</buy>
+	</Item>
+	<Item>
+		<id>173218</id><name>Steel Boots</name><price>30000</price><buy>3</buy>
+	</Item>
+	<Item>
+		<id>173722</id><name>Taurus Mace</name><price>500</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>173747</id><name>Terra Amulet</name><price>1500</price><buy>30</buy>
+	</Item>
+	<Item>
+		<id>173813</id><name>Terra Boots</name><price>2500</price><buy>25</buy>
+	</Item>
+	<Item>
+		<id>173838</id><name>Terra Hood</name><price>2500</price><buy>25</buy>
+	</Item>
+	<Item>
+		<id>173942</id><name>Terra Legs</name><price>11000</price><buy>15</buy>
+	</Item>
+	<Item>
+		<id>174000</id><name>Terra Mantle</name><price>11000</price><buy>15</buy>
+	</Item>
+</Items>
