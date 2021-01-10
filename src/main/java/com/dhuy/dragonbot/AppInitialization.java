@@ -1,5 +1,6 @@
 package com.dhuy.dragonbot;
 
+import java.awt.AWTException;
 import java.io.File;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import com.dhuy.dragonbot.modules.AntiLogoutThread;
 import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.HealingThread;
 import com.dhuy.dragonbot.modules.Hunting;
+import com.dhuy.dragonbot.modules.MarketMoneyMaker;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.modules.SpellCasterThread;
 import com.dhuy.dragonbot.util.ApplicationWindow;
@@ -32,7 +34,8 @@ public class AppInitialization {
     fileSystem = new FileSystem();
     appWindow = new ApplicationWindow();
 
-    modes = new String[] {"Create Cavebot Script", "Run Cavebot", "Run Spell Caster"};
+    modes = new String[] {"Create Cavebot Script", "Run Cavebot", "Run Spell Caster",
+        "Market Money Maker"};
     scripts = fileSystem.getScriptFiles();
   }
 
@@ -137,7 +140,7 @@ public class AppInitialization {
           characterLevel = Integer
               .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent());
         } catch (Exception e) {
-          log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
+          log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
           System.exit(0);
         }
       } else {
@@ -207,7 +210,7 @@ public class AppInitialization {
         enableCavebot = Boolean.parseBoolean(
             document.getElementsByTagName("spellCasterEnableCavebot").item(0).getTextContent());
       } catch (Exception e) {
-        log.getLogger().info(log.getMessage(this, "Leitura do XML falhou."));
+        log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
         System.exit(0);
       }
 
@@ -269,6 +272,41 @@ public class AppInitialization {
 
       /**
        * [END] EXECUTE SPELL CASTER MODE
+       */
+    } else if (chosenMode == 3) {
+      /**
+       * [BEGIN] EXECUTE MARKET MONEY MAKER
+       */
+
+      try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
+        document.getDocumentElement().normalize();
+
+        store.setCharacterName(
+            document.getElementsByTagName("characterName").item(0).getTextContent());
+      } catch (Exception e) {
+        log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
+        System.exit(0);
+      }
+
+      appWindow.restore();
+
+      store.setCharacterName(store.getCharacterName());
+      log.getLogger().info(
+          log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
+
+
+      try {
+        MarketMoneyMaker marketMoneyMaker = new MarketMoneyMaker();
+        marketMoneyMaker.execute();
+      } catch (AWTException e) {
+        log.getLogger().info(log.getMessage(this, "Módulo MMM falhou. Fechando bot..."));
+      }
+
+      /**
+       * [END] EXECUTE MARKET MONEY MAKER
        */
     } else {
       log.getLogger().info(log.getMessage(this, "Não escolheu o modo. Fechando bot..."));

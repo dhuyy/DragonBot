@@ -31,6 +31,14 @@ public class Keyboard {
     robot.delay(250);
   }
 
+  public void type(String stringKey, int delay) {
+    int keyCode = getKeyCode(stringKey);
+
+    robot.keyPress(keyCode);
+    robot.keyRelease(keyCode);
+    robot.delay(delay);
+  }
+
   public void writeWord(String word) {
     for (int i = 0; i < word.length(); i++) {
       int keyCode = keyEventMap.getKeyCodeFromChar(word.charAt(i));
@@ -55,11 +63,24 @@ public class Keyboard {
   }
 
   public void pressShiftAndKey(String stringKey) {
-  	int keyEvent = keyEventMap.getKeyCode(stringKey);
-  	
+    int keyEvent = keyEventMap.getKeyCode(stringKey);
+
     robot.keyPress(KeyEvent.VK_SHIFT);
     robot.keyPress(keyEvent);
     robot.keyRelease(keyEvent);
     robot.keyRelease(KeyEvent.VK_SHIFT);
+  }
+
+  public void selectAllTextAndDelete() {
+    robot.keyPress(KeyEvent.VK_CONTROL);
+    robot.delay(200);
+    robot.keyPress(KeyEvent.VK_A);
+    robot.delay(200);
+    robot.keyRelease(KeyEvent.VK_CONTROL);
+    robot.delay(200);
+    robot.keyRelease(KeyEvent.VK_A);
+    robot.delay(200);
+    robot.keyPress(KeyEvent.VK_DELETE);
+    robot.delay(200);
   }
 }
