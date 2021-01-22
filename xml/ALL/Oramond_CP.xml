@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+	<Item><id>000</id><name>Cowbell</name><price>210</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Execowtioner Mask</name><price>240</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Giant Pacifier</name><price>170</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glob of Glooth</name><price>125</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glooth Injection Tube</name><price>350</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Metal Jaw</name><price>260</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Metal Toe</name><price>430</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Tah Shell</name><price>110</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Moohtant Horn</name><price>140</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Necromantic Rust</name><price>390</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Poisoned Fang</name><price>130</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Seacrest Hair</name><price>260</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Seacrest Pearl</name><price>400</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Seacrest Scale</name><price>150</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Slime Heart</name><price>160</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Slimy Leaf Tentacle</name><price>320</price><buy>000</buy></Item>
+</Items>

@@ -13,15 +13,18 @@ import com.dhuy.dragonbot.global.KeyboardHook;
 import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.modules.AntiLogoutThread;
+import com.dhuy.dragonbot.modules.CollectItemsToSell;
 import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.HealingThread;
 import com.dhuy.dragonbot.modules.Hunting;
 import com.dhuy.dragonbot.modules.MarketMoneyMaker;
+import com.dhuy.dragonbot.modules.OptimizeItemList;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.modules.SpellCasterThread;
 import com.dhuy.dragonbot.util.ApplicationWindow;
 import com.dhuy.dragonbot.util.FileSystem;
 import com.dhuy.dragonbot.util.LoggerConfigurator;
+import com.dhuy.dragonbot.util.MouseCoordinates;
 
 public class AppInitialization {
   private FileSystem fileSystem;
@@ -35,7 +38,7 @@ public class AppInitialization {
     appWindow = new ApplicationWindow();
 
     modes = new String[] {"Create Cavebot Script", "Run Cavebot", "Run Spell Caster",
-        "Market Money Maker"};
+        "Market Money Maker", "Sell Items", "Optimize Item List"};
     scripts = fileSystem.getScriptFiles();
   }
 
@@ -70,9 +73,6 @@ public class AppInitialization {
         log.getLogger().info(log.getMessage(this, "Nome de personagem inválido. Fechando bot..."));
         System.exit(0);
       }
-
-      // String scriptName = "TEST";
-      // String characterName = "Raul Porcino";
 
       Database.getInstance().createDatabase(scriptName);
 
@@ -179,7 +179,7 @@ public class AppInitialization {
       foodThread.start();
 
       while (true) {
-        hunting.execute();
+        hunting.execute(true);
       }
 
       /**
@@ -266,7 +266,7 @@ public class AppInitialization {
         Hunting hunting = new Hunting();
 
         while (true) {
-          hunting.execute();
+          hunting.execute(true);
         }
       }
 
@@ -307,6 +307,163 @@ public class AppInitialization {
 
       /**
        * [END] EXECUTE MARKET MONEY MAKER
+       */
+    } else if (chosenMode == 4) {
+      /**
+       * [BEGIN] EXECUTE SELL ITEMS
+       */
+
+      String[] questions = new String[] {"Manual", "Auto"};
+      int chosenSettings =
+          JOptionPane.showOptionDialog(null, "Em qual modo de configuração deseja executar?", "",
+              JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, questions, null);
+
+      store.setChosenSettings(chosenSettings);
+
+      String[] npcType = new String[] {"Green Djinn", "Flint (Oramond)", "Rashid"};
+      int npcChoise = JOptionPane.showOptionDialog(null, "Pra qual NPC deseja vender os items?", "",
+          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, npcType, null);
+
+      if (npcChoise == 0) {
+        store.setChosenSellItemsScript("GreenDjinn");
+        store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Green.xml");
+        MouseCoordinates.DEPOT_BOX_X = 865;
+        MouseCoordinates.DEPOT_BOX_Y = 505;
+      } else if (npcChoise == 1) {
+        store.setChosenSellItemsScript("Oramond");
+        store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Oramond_Items.xml");
+        MouseCoordinates.DEPOT_BOX_X = 865;
+        MouseCoordinates.DEPOT_BOX_Y = 505;
+      } else if (npcChoise == 2) {
+        store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Rashid.xml");
+
+        String[] weekDay = new String[] {"Tuesday", "Wednesday", "Friday", "Saturday", "Sunday"};
+        int chosenWeekDay = JOptionPane.showOptionDialog(null, "Qual o dia da semana?", "",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, weekDay, null);
+
+        if (chosenWeekDay == 0) {
+          store.setChosenSellItemsScript("RashidTuesday");
+          MouseCoordinates.DEPOT_BOX_X = 865;
+          MouseCoordinates.DEPOT_BOX_Y = 360;
+        } else if (chosenWeekDay == 1) {
+          store.setChosenSellItemsScript("RashidWednesday");
+          MouseCoordinates.DEPOT_BOX_X = 800;
+          MouseCoordinates.DEPOT_BOX_Y = 440;
+        } else if (chosenWeekDay == 2) {
+          store.setChosenSellItemsScript("RashidFriday");
+          MouseCoordinates.DEPOT_BOX_X = 865;
+          MouseCoordinates.DEPOT_BOX_Y = 505;
+        } else if (chosenWeekDay == 3) {
+          store.setChosenSellItemsScript("RashidSaturday");
+          MouseCoordinates.DEPOT_BOX_X = 865;
+          MouseCoordinates.DEPOT_BOX_Y = 360;
+        } else if (chosenWeekDay == 4) {
+          store.setChosenSellItemsScript("RashidSunday");
+          MouseCoordinates.DEPOT_BOX_X = 865;
+          MouseCoordinates.DEPOT_BOX_Y = 360;
+        } else {
+          log.getLogger()
+              .info(log.getMessage(this, "Não escolheu o dia da semana. Fechando bot..."));
+          System.exit(0);
+        }
+      } else {
+        log.getLogger().info(log.getMessage(this, "Não escolheu o tipo do NPC. Fechando bot..."));
+        System.exit(0);
+      }
+
+      try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
+        document.getDocumentElement().normalize();
+
+        store.setCharacterName(
+            document.getElementsByTagName("characterName").item(0).getTextContent());
+        store.setCharacterLevel((Integer
+            .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent())));
+      } catch (Exception e) {
+        log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
+        System.exit(0);
+      }
+
+      String currentScript = "";
+      for (String script : scripts) {
+        if (script.equals(store.getChosenSellItemsScript())) {
+          currentScript = script;
+        }
+      }
+
+      DBConnection.getInstance().open(currentScript);
+
+      store.setScriptName(currentScript);
+      log.getLogger().info(
+          log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
+      log.getLogger()
+          .info(log.getMessage(this, "Carregando o script ".concat(currentScript + "...")));
+
+      setup.storeWaypointsInMemory();
+
+      DBConnection.getInstance().close();
+
+      setup.execute(chosenMode);
+
+      HealingThread healingThread = new HealingThread();
+      healingThread.start();
+
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
+      }
+
+      FoodThread foodThread = new FoodThread();
+      foodThread.start();
+
+      try {
+        CollectItemsToSell collectItemsToSell = new CollectItemsToSell();
+        collectItemsToSell.execute();
+      } catch (AWTException e) {
+        log.getLogger()
+            .info(log.getMessage(this, "Módulo CollectItemsToSell falhou. Fechando bot..."));
+      }
+
+      /**
+       * [END] EXECUTE SELL ITEMS
+       */
+    } else if (chosenMode == 5) {
+      /**
+       * [BEGIN] EXECUTE OPTIMIZE ITEM LIST
+       */
+
+      try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
+        document.getDocumentElement().normalize();
+
+        store.setCharacterName(
+            document.getElementsByTagName("characterName").item(0).getTextContent());
+      } catch (Exception e) {
+        log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
+        System.exit(0);
+      }
+
+      appWindow.restore();
+
+      store.setCharacterName(store.getCharacterName());
+      log.getLogger().info(
+          log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
+
+      try {
+        OptimizeItemList optimizeItemList = new OptimizeItemList();
+        optimizeItemList.execute();
+      } catch (AWTException e) {
+        log.getLogger()
+            .info(log.getMessage(this, "Módulo OptimizeItemList falhou. Fechando bot..."));
+      }
+
+      /**
+       * [END] EXECUTE OPTIMIZE ITEM LIST
        */
     } else {
       log.getLogger().info(log.getMessage(this, "Não escolheu o modo. Fechando bot..."));

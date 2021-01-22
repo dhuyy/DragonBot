@@ -28,7 +28,7 @@ public class Hunting {
     log = Log.getInstance();
   }
 
-  public void execute() {
+  public void execute(boolean enableLooting) {
     try {
       Rectangle battleWindowArea = store.getBattleWindowArea();
 
@@ -52,12 +52,12 @@ public class Hunting {
         log.getLogger().info(log.getMessage(this, "Não tem monstro no battle list"));
 
         if (store.getIntervalToReachWaypoint() == -1) {
-          cavebot.execute();
+          cavebot.execute(enableLooting);
         } else {
           long currentTime = (System.currentTimeMillis() - store.getStartTimeWaypoint());
 
           if (store.getIntervalToReachWaypoint() <= currentTime) {
-            cavebot.execute();
+            cavebot.execute(enableLooting);
           }
         }
       } else {
@@ -67,7 +67,9 @@ public class Hunting {
             battleWindowTitleCoord[1])) {
           log.getLogger().info(log.getMessage(this, "Atacando monstro..."));
 
-          looting.execute();
+          if (enableLooting) {
+            looting.execute();
+          }
 
           keyboard.type("ESC");
           keyboard.type("SPACE");

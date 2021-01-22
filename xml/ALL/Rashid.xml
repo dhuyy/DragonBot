@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+	<Item><id>000</id><name>Abyss Hammer</name><price>20000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Albino Plate</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Amber Staff</name><price>8000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Ancient Amulet</name><price>200</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Assassin Dagger</name><price>20000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Beastslayer Axe</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Beetle Necklace</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Berserker</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Blacksteel Sword</name><price>6000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Blessed Sceptre</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Bonelord Helmet</name><price>7500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Brutetamer</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Buckle</name><price>7000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Castle Shield</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Chain Bolter</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Chaos Mace</name><price>9000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Cobra Crown</name><price>50000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Coconut Shoes</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Composite Hornbow</name><price>25000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Cranial Basher</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crocodile Boots</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crystal Crossbow</name><price>35000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crystal Mace</name><price>12000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crystal Necklace</name><price>400</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crystal Ring</name><price>250</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crystal Sword</name><price>600</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Crystalline Armor</name><price>16000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Daramian Waraxe</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dark Shield</name><price>400</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Death Ring</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Demon Shield</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Demonbone Amulet</name><price>32000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Demonrage Sword</name><price>36000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Devil Helmet</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Diamond Sceptre</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Divine Plate</name><price>55000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Djinn Blade</name><price>15000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dragon Scale Mail</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dragon Slayer</name><price>15000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dragonbone Staff</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dreaded Cleaver</name><price>10000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dwarven Armor</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Elvish Bow</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Emerald Bangle</name><price>800</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Epee</name><price>8000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Flower Dress</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Flower Wreath</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Fur Boots</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Furry Club</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glacier Amulet</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glacier Kilt</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glacier Mask</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glacier Robe</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glacier Shoes</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Gold Ring</name><price>8000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Golden Armor</name><price>20000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Golden Legs</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Goo Shell</name><price>4000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Griffin Shield</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Guardian Halberd</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Hammer of Wrath</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Headchopper</name><price>6000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Heavy Mace</name><price>50000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Heavy Trident</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Helmet of the Lost</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Heroic Axe</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Hibiscus Dress</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Hieroglyph Banner</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Horn (Ring)</name><price>300</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Jade Hammer</name><price>25000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lavos Armor</name><price>16000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Leaf Legs</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Leopard Armor</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Leviathan's Amulet</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lightning Boots</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lightning Headband</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lightning Legs</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lightning Pendant</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lightning Robe</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Lunar Staff</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Magic Plate Armor</name><price>90000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Magma Amulet</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Magma Boots</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Magma Coat</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Magma Legs</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Magma Monocle</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mammoth Fur Cape</name><price>6000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mammoth Fur Shorts</name><price>850</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mammoth Whopper</name><price>300</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mastermind Shield</name><price>50000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Medusa Shield</name><price>9000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mercenary Sword</name><price>12000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Model Ship</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mycological Bow</name><price>35000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Mystic Blade</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Naginata</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Nightmare Blade</name><price>35000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Noble Axe</name><price>10000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Norse Shield</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Onyx Pendant</name><price>3500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Orcish Maul</name><price>6000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Oriental Shoes</name><price>15000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pair of Iron Fists</name><price>4000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Paladin Armor</name><price>15000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Patched Boots</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pharaoh Banner</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pharaoh Sword</name><price>23000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pirate Boots</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pirate Hat</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pirate Knee Breeches</name><price>200</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pirate Shirt</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Pirate Voodoo Doll</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Platinum Amulet</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Ragnir Helmet</name><price>400</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Relic Sword</name><price>25000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Rift Bow</name><price>45000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Rift Crossbow</name><price>45000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Rift Lance</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Rift Shield</name><price>50000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Ring of the Sky</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Royal Axe</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Ruby Necklace</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Ruthless Axe</name><price>45000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Sacred Tree Amulet</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Sapphire Hammer</name><price>7000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Scarab Amulet</name><price>200</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Scarab Shield</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Shockwave Amulet</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Silver Brooch</name><price>150</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Silver Dagger</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Skull Helmet</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Skullcracker Armor</name><price>18000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Spiked Squelcher</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Steel Boots</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Swamplair Armor</name><price>16000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Taurus Mace</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Tempest Shield</name><price>35000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Terra Amulet</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Terra Boots</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Terra Hood</name><price>2500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Terra Legs</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Terra Mantle</name><price>11000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>The Justice Seeker</name><price>40000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Vile Axe</name><price>30000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Voodoo Doll</name><price>400</price><buy>000</buy></Item>
+	<Item><id>000</id><name>War Axe</name><price>12000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>War Horn</name><price>8000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Witch Hat</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Wyvern Fang</name><price>1500</price><buy>000</buy></Item>
+</Items>

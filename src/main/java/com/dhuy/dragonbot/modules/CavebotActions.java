@@ -34,7 +34,7 @@ public class CavebotActions {
     looting = new Looting();
   }
 
-  public void executeWalkAction(int direction) {
+  public void executeWalkAction(int direction, boolean enableLooting) {
     Rectangle minimapArea = store.getMinimapArea();
     BufferedImage currentCross = store.getMinimapCross();
 
@@ -97,7 +97,9 @@ public class CavebotActions {
     } else {
       log.getLogger().info(log.getMessage(this, "Ainda não chegou no waypoint"));
 
-      looting.execute();
+      if (enableLooting) {
+        looting.execute();
+      }
 
       switch (direction) {
         case 1:
@@ -187,6 +189,40 @@ public class CavebotActions {
     setNextWaypointIndex();
   }
 
+  public void executeTalkAction(String phrase) {
+    delay(MINOR_ACTIONS_DELAY);
+    keyboard.writeWord(phrase);
+    delay(MINOR_ACTIONS_DELAY);
+    keyboard.type("ENTER");
+    delay(MINOR_ACTIONS_DELAY);
+
+    log.getLogger().info(log.getMessage(this, "Executando ação: TALK"));
+
+    setNextWaypointIndex();
+  }
+
+  public void executeSequencialClicksAction(String sequence) {
+    delay(MINOR_ACTIONS_DELAY * 3);
+
+    String[] split = sequence.split("[*]");
+    int numberOfRounds = Integer.parseInt(split[0]);
+    String[] coordinates = split[1].split("[|]");
+
+    for (int i = 0; i < numberOfRounds; i++) {
+      for (String coordinate : coordinates) {
+        String[] axis = coordinate.split("x");
+
+        mouse.clickOn(Integer.parseInt(axis[0]), Integer.parseInt(axis[1]),
+            store.getWindowsTitleBarHeight());
+        delay(250);
+      }
+    }
+
+    log.getLogger().info(log.getMessage(this, "Executando ação: SEQUENCIAL CLICKS"));
+
+    setNextWaypointIndex();
+  }
+
   private void moveMouseToDirection(int direction) {
     switch (direction) {
       case 1:
@@ -210,6 +246,7 @@ public class CavebotActions {
 
     if (nextWaypointIndex == store.getWaypointList().size()) {
       store.setCurrentWaypointIndex(0);
+      store.setShouldStopCavebotModule(true);
     } else {
       store.setCurrentWaypointIndex(nextWaypointIndex);
     }

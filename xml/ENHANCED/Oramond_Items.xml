@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+    <Item><id>000</id><name>Alloy Legs</name><price>11000</price><buy>4</buy></Item>
+    <Item><id>000</id><name>Cowtana</name><price>2500</price><buy>5</buy></Item>
+    <Item><id>000</id><name>Gearwheel Chain</name><price>5000</price><buy>6</buy></Item>
+    <Item><id>000</id><name>Glooth Amulet</name><price>2000</price><buy>7</buy></Item>
+    <Item><id>000</id><name>Glooth Axe</name><price>1500</price><buy>8</buy></Item>
+    <Item><id>000</id><name>Glooth Blade</name><price>1500</price><buy>8</buy></Item>
+    <Item><id>000</id><name>Glooth Club</name><price>1500</price><buy>7</buy></Item>
+    <Item><id>000</id><name>Mino Lance</name><price>7000</price><buy>5</buy></Item>
+    <Item><id>000</id><name>Mino Shield</name><price>3000</price><buy>21</buy></Item>
+    <Item><id>000</id><name>Mooh</name><price>6000</price><buy>5</buy></Item>
+</Items>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+	<Item><id>000</id><name>Bone Shoulderplate</name><price>150</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Broken Draken Mail</name><price>340</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Broken Halberd</name><price>100</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Broken Slicer</name><price>120</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Cursed Shoulder Spikes</name><price>320</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Draken Wristbands</name><price>430</price><buy>000</buy></Item>
+	<Item><id>000</id><name>High Guard Shoulderplates</name><price>130</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Red Lantern</name><price>250</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Spiked Iron Ball</name><price>100</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Warmaster</name><price>200</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Zaogun Shoulderplates</name><price>150</price><buy>000</buy></Item>
+</Items>

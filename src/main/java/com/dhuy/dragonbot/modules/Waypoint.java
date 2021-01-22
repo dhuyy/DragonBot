@@ -69,22 +69,30 @@ public class Waypoint {
             crossCoord[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL, Store.WAYPOINT_BLOCK_SIZE,
             Store.WAYPOINT_BLOCK_SIZE);
 
-    database.insertWaypoint(0, store.getCurrentDirection(), baseImage, goalImage);
+    database.insertWaypoint(0, store.getCurrentDirection(), baseImage, goalImage, "NOT_PRESENT");
   }
 
   public void captureRopeWaypoint() {
-    database.insertWaypoint(1, store.getCurrentDirection(), null, null);
+    database.insertWaypoint(1, store.getCurrentDirection(), null, null, "NOT_PRESENT");
   }
 
   public void captureShovelWaypoint() {
-    database.insertWaypoint(2, store.getCurrentDirection(), null, null);
+    database.insertWaypoint(2, store.getCurrentDirection(), null, null, "NOT_PRESENT");
   }
 
   public void captureLadderWaypoint() {
-    database.insertWaypoint(3, store.getCurrentDirection(), null, null);
+    database.insertWaypoint(3, store.getCurrentDirection(), null, null, "NOT_PRESENT");
   }
 
   public void captureHoleRampWaypoint() {
-    database.insertWaypoint(4, store.getCurrentDirection(), null, null);
+    database.insertWaypoint(4, store.getCurrentDirection(), null, null, "NOT_PRESENT");
+  }
+
+  public void captureTalkWaypoint(String phrase) {
+    database.insertWaypoint(5, store.getCurrentDirection(), null, null, phrase);
+  }
+
+  public void captureSequentialClicksWaypoint(String sequence) {
+    database.insertWaypoint(6, store.getCurrentDirection(), null, null, sequence);
   }
 }

@@ -18,13 +18,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.model.Item;
 
 public class XMLHelper {
   private String ITEMS_LIST_XML_PATH;
 
   public XMLHelper() {
-    ITEMS_LIST_XML_PATH = "xml\\items.xml";
+    ITEMS_LIST_XML_PATH = Store.getInstance().getChosenSellItemsXmlFileName();
   }
 
   public List<Item> getItemsList() {
@@ -49,6 +50,43 @@ public class XMLHelper {
     }
 
     return items;
+  }
+
+  public void updateBuyAmount(String buyAmount, String itemName) {
+    File xmlFile = new File(ITEMS_LIST_XML_PATH);
+    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder dBuilder;
+
+    try {
+      dBuilder = dbFactory.newDocumentBuilder();
+      Document doc = dBuilder.parse(xmlFile);
+      doc.getDocumentElement().normalize();
+
+      NodeList items = doc.getElementsByTagName("Item");
+      Element item = null;
+
+      for (int i = 0; i < items.getLength(); i++) {
+        item = (Element) items.item(i);
+
+        String name = item.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
+
+        if (name.equals(itemName)) {
+          Node id = item.getElementsByTagName("buy").item(0).getFirstChild();
+          id.setNodeValue(buyAmount);
+        }
+      }
+
+      doc.getDocumentElement().normalize();
+      TransformerFactory transformerFactory = TransformerFactory.newInstance();
+      Transformer transformer = transformerFactory.newTransformer();
+      DOMSource source = new DOMSource(doc);
+      StreamResult result = new StreamResult(new File(ITEMS_LIST_XML_PATH));
+      transformer.setOutputProperty(OutputKeys.INDENT, "no");
+      transformer.transform(source, result);
+
+    } catch (SAXException | ParserConfigurationException | IOException | TransformerException e) {
+      e.printStackTrace();
+    }
   }
 
   public void updateItemId(String itemId, String itemName) {

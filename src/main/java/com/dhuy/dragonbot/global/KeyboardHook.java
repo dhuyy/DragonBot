@@ -2,6 +2,7 @@ package com.dhuy.dragonbot.global;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
+import javax.swing.JOptionPane;
 import com.dhuy.dragonbot.modules.Waypoint;
 import com.dhuy.dragonbot.util.Notification;
 import lc.kra.system.keyboard.GlobalKeyboardHook;
@@ -110,28 +111,28 @@ public class KeyboardHook {
         /**
          * Direction
          */
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_I) {
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_7) {
           store.setCurrentDirection(1);
 
           notification.show("Direção Alterada: ".concat(getDirectionString(1)),
               HIDE_NOTIFICATION_AFTER);
         }
 
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_L) {
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_8) {
           store.setCurrentDirection(2);
 
           notification.show("Direção Alterada: ".concat(getDirectionString(2)),
               HIDE_NOTIFICATION_AFTER);
         }
 
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_K) {
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_9) {
           store.setCurrentDirection(3);
 
           notification.show("Direção Alterada: ".concat(getDirectionString(3)),
               HIDE_NOTIFICATION_AFTER);
         }
 
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_J) {
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_0) {
           store.setCurrentDirection(4);
 
           notification.show("Direção Alterada: ".concat(getDirectionString(4)),
@@ -186,6 +187,31 @@ public class KeyboardHook {
 
           notification.show("______ Waypoint Adicionado ______ Tipo: WALK - Map Base: "
               .concat(getDirectionString(store.getCurrentDirection())), HIDE_NOTIFICATION_AFTER);
+        }
+
+        /**
+         * Talk
+         */
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_1) {
+          String phrase = JOptionPane.showInputDialog("Digite a sua fala:");
+
+          waypoint.captureTalkWaypoint(phrase);
+
+          notification.show("______ Waypoint Adicionado ______ Tipo: TALK",
+              HIDE_NOTIFICATION_AFTER);
+        }
+
+        /**
+         * Sequential Clicks
+         */
+        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_2) {
+          String sequence =
+              JOptionPane.showInputDialog("Digite o comando da sequência de cliques:");
+
+          waypoint.captureSequentialClicksWaypoint(sequence);
+
+          notification.show("______ Waypoint Adicionado ______ Tipo: SEQUENTIAL CLICKS",
+              HIDE_NOTIFICATION_AFTER);
         }
       }
     };

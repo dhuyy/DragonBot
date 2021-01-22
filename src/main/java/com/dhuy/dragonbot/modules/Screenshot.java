@@ -21,7 +21,7 @@ public class Screenshot {
   }
 
   public BufferedImage execute(Object caller) {
-    log.getLogger().info(log.getMessage(caller, "Screenshot requisitada"));
+    // log.getLogger().info(log.getMessage(caller, "Screenshot requisitada"));
 
     try {
       String screenshotPath = null;
