@@ -75,6 +75,7 @@ public class Store {
   private boolean shouldStopCavebotModule;
   private String chosenSellItemsScript;
   private String chosenSellItemsXmlFileName;
+  private boolean isExecutingMMMInVM;
 
   private Store() {
     numberImages = new LinkedList<BufferedImage>();
@@ -105,6 +106,7 @@ public class Store {
     currentCollectItemIndex = 0;
     shouldStopCavebotModule = false;
     chosenSellItemsXmlFileName = "xml\\items.xml";
+    isExecutingMMMInVM = false;
   }
 
   public static Store getInstance() {
@@ -333,5 +335,13 @@ public class Store {
 
   public void setChosenSellItemsXmlFileName(String chosenSellItemsXmlFileName) {
     this.chosenSellItemsXmlFileName = chosenSellItemsXmlFileName;
+  }
+
+  public boolean isExecutingMMMInVM() {
+    return isExecutingMMMInVM;
+  }
+
+  public void setExecutingMMMInVM(boolean isExecutingMMMInVM) {
+    this.isExecutingMMMInVM = isExecutingMMMInVM;
   }
 }

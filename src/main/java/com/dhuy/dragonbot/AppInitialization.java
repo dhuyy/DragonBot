@@ -14,10 +14,12 @@ import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.modules.AntiLogoutThread;
 import com.dhuy.dragonbot.modules.CollectItemsToSell;
+import com.dhuy.dragonbot.modules.CollectItemsToSellVM;
 import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.HealingThread;
 import com.dhuy.dragonbot.modules.Hunting;
 import com.dhuy.dragonbot.modules.MarketMoneyMaker;
+import com.dhuy.dragonbot.modules.MarketMoneyMakerVM;
 import com.dhuy.dragonbot.modules.OptimizeItemList;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.modules.SpellCasterThread;
@@ -297,10 +299,21 @@ public class AppInitialization {
       log.getLogger().info(
           log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
 
-
       try {
         MarketMoneyMaker marketMoneyMaker = new MarketMoneyMaker();
-        marketMoneyMaker.execute();
+        MarketMoneyMakerVM marketMoneyMakerVM = new MarketMoneyMakerVM();
+
+        String[] isVM = new String[] {"Sim", "Não"};
+        int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
+
+        if (chosenIsVM == 0) {
+          store.setExecutingMMMInVM(true);
+
+          marketMoneyMakerVM.execute();
+        } else {
+          marketMoneyMaker.execute();
+        }
       } catch (AWTException e) {
         log.getLogger().info(log.getMessage(this, "Módulo MMM falhou. Fechando bot..."));
       }
@@ -421,7 +434,20 @@ public class AppInitialization {
 
       try {
         CollectItemsToSell collectItemsToSell = new CollectItemsToSell();
-        collectItemsToSell.execute();
+        CollectItemsToSellVM collectItemsToSellVM = new CollectItemsToSellVM();
+
+        String[] isVM = new String[] {"Sim", "Não"};
+        int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
+
+        if (chosenIsVM == 0) {
+          store.setExecutingMMMInVM(true);
+
+          collectItemsToSellVM.execute();
+        } else {
+          collectItemsToSell.execute();
+        }
+
       } catch (AWTException e) {
         log.getLogger()
             .info(log.getMessage(this, "Módulo CollectItemsToSell falhou. Fechando bot..."));
