@@ -5,7 +5,7 @@
 
 	<groupId>com.dhuy.dragonbot</groupId>
 	<artifactId>dragonbot</artifactId>
-	<version>1.8.0</version>
+	<version>1.9.0</version>
 	<packaging>jar</packaging>
 
 	<name>DragonBot</name>
