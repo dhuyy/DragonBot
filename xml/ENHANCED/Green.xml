@@ -8,6 +8,7 @@
 	<Item><id>000</id><name>Giant Sword</name><price>17000</price><buy>31</buy></Item>
 	<Item><id>000</id><name>Haunted Blade</name><price>8000</price><buy>43</buy></Item>
 	<Item><id>000</id><name>Knight Legs</name><price>5000</price><buy>74</buy></Item>
+	<Item><id>000</id><name>Knight Armor</name><price>5000</price><buy>40</buy></Item>
 	<Item><id>000</id><name>Onyx Flail</name><price>22000</price><buy>6</buy></Item>
 	<Item><id>000</id><name>Serpent Sword</name><price>900</price><buy>60</buy></Item>
 	<Item><id>000</id><name>Skull Staff</name><price>6000</price><buy>33</buy></Item>
