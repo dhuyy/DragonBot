@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DragonBot"
-#define MyAppVersion "1.9.0"
+#define MyAppVersion "1.9.1"
 #define MyAppPublisher "Vandhuy Martins"
 #define MyAppExeName "DragonBot.exe"
 
@@ -38,7 +38,8 @@ Source: "C:\Users\vandh\Workspace\DragonBot\images\*"; DestDir: "{app}\images"; 
 Source: "C:\Users\vandh\Workspace\DragonBot\logs\*"; DestDir: "{app}\logs"; Flags: ignoreversion
 Source: "C:\Users\vandh\Workspace\DragonBot\scripts\*"; DestDir: "{app}\scripts"; Flags: ignoreversion    
 Source: "C:\Users\vandh\Workspace\DragonBot\xml\*"; DestDir: "{app}\xml"; Flags: ignoreversion
-Source: "C:\Users\vandh\Workspace\DragonBot\xml\ENHANCED\*"; DestDir: "{app}\xml\ENHANCED"; Flags: ignoreversion
+Source: "C:\Users\vandh\Workspace\DragonBot\xml\ENHANCED\*"; DestDir: "{app}\xml\ENHANCED"; Flags: ignoreversion  
+Source: "C:\Users\vandh\Workspace\DragonBot\Tesseract\tessdata\*"; DestDir: "C:\Tesseract\tessdata"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [InstallDelete]
