@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+	<Item><id>000</id><name>Cowbell</name><price>210</price><buy>5</buy></Item>
+	<Item><id>000</id><name>Glob of Glooth</name><price>125</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Tah Shell</name><price>110</price><buy>6</buy></Item>
+	<Item><id>000</id><name>Moohtant Horn</name><price>140</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Poisoned Fang</name><price>130</price><buy>6</buy></Item>
+	<Item><id>000</id><name>Slime Heart</name><price>160</price><buy>9</buy></Item>
+</Items>

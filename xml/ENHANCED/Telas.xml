@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+	<Item><id>000</id><name>Ancient Stone</name><price>200</price><buy>7</buy></Item>
+	<Item><id>000</id><name>Battle Stone</name><price>290</price><buy>9</buy></Item>
+	<Item><id>000</id><name>Broken Gladiator Shield</name><price>190</price><buy>5</buy></Item>
+	<Item><id>000</id><name>Crystalline Spikes</name><price>440</price><buy>10</buy></Item>
+	<Item><id>000</id><name>Gear Crystal</name><price>200</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Huge Chunk of Crude Iron</name><price>15000</price><buy>9</buy></Item>
+	<Item><id>000</id><name>Magma Clump</name><price>570</price><buy>4</buy></Item>
+	<Item><id>000</id><name>Metal Spike</name><price>320</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Piece of Draconian Steel</name><price>3000</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Piece of Hell Steel</name><price>500</price><buy>5</buy></Item>
+	<Item><id>000</id><name>Piece of Royal Steel</name><price>10000</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Pulverized Ore</name><price>400</price><buy>6</buy></Item>
+	<Item><id>000</id><name>Shiny Stone</name><price>500</price><buy>8</buy></Item>
+	<Item><id>000</id><name>Sulphurous Stone</name><price>100</price><buy>10</buy></Item>
+	<Item><id>000</id><name>Vein of Ore</name><price>330</price><buy>8</buy></Item>
+	<Item><id>000</id><name>War Crystal</name><price>460</price><buy>3</buy></Item>
+	<Item><id>000</id><name>Crystal Pedestal</name><price>500</price><buy>3</buy></Item>
+</Items>

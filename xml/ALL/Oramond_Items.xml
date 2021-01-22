@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+    <Item><id>000</id><name>Alloy Legs</name><price>11000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Cowtana</name><price>2500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Crest of the Deep Seas</name><price>10000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Execowtioner Axe</name><price>12000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Fire Sword</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Gearwheel Chain</name><price>5000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glooth Amulet</name><price>2000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glooth Axe</name><price>1500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glooth Blade</name><price>1500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glooth Cape</name><price>7000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glooth Club</name><price>1500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glooth Whip</name><price>2500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Heat Core</name><price>10000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Metal Bat</name><price>9000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Metal Spats</name><price>2000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Mino Lance</name><price>7000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Mino Shield</name><price>3000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Mooh</name><price>6000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Moohtant Cudgel</name><price>14000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Rubber Cap</name><price>11000</price><buy>000</buy></Item>
+</Items>

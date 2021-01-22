@@ -62,6 +62,7 @@ public class Setup {
         int rowId = resultSet.getInt("ID");
         int type = resultSet.getInt("TYPE");
         int direction = resultSet.getInt("DIRECTION");
+        String phrase = resultSet.getString("PHRASE");
 
         if (type == 0) {
           Blob baseImageBlob = resultSet.getBlob("BASE_IMAGE");
@@ -72,9 +73,14 @@ public class Setup {
           BufferedImage goalImage = imageProcessor.getBufferedImageFromByteArray(
               goalImageBlob.getBytes(1, (int) goalImageBlob.length()));
 
-          waypointList.add(new Waypoint(rowId, type, direction, baseImage, goalImage));
+          waypointList
+              .add(new Waypoint(rowId, type, direction, baseImage, goalImage, "NOT_PRESENT"));
+        } else if (type == 5) {
+          waypointList.add(new Waypoint(rowId, type, direction, null, null, phrase));
+        } else if (type == 6) {
+          waypointList.add(new Waypoint(rowId, type, direction, null, null, phrase));
         } else {
-          waypointList.add(new Waypoint(rowId, type, direction, null, null));
+          waypointList.add(new Waypoint(rowId, type, direction, null, null, "NOT_PRESENT"));
         }
       }
 
@@ -91,7 +97,7 @@ public class Setup {
 
     BufferedImage currentScreenshot = screenshotModule.execute(this);
 
-    if (mode == 1) {
+    if (mode == 1 || mode == 4) {
       Rectangle battleWindowArea;
 
       if (store.getChosenSettings() == 1) {

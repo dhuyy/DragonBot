@@ -47,6 +47,13 @@ public class OCRHelper {
     return resize(image, image.getWidth() * factor, image.getHeight() * factor);
   }
 
+  public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY,
+      BufferedImage currentScreenshot) throws IOException, TesseractException {
+    int[] rectangleSize = getSizeFromTwoPoints(topX, topY, bottomX, bottomY);
+
+    return currentScreenshot.getSubimage(topX, topY, rectangleSize[0], rectangleSize[1]);
+  }
+
   public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY)
       throws IOException, TesseractException {
     BufferedImage currentScreenshot = screenshotModule.execute(this);
@@ -71,6 +78,33 @@ public class OCRHelper {
 
     return currentScreenshot.getSubimage(topX, recalculatedTopY, rectangleSize[0],
         rectangleSize[1]);
+  }
+
+  public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY,
+      int currentRow, BufferedImage currentScreenshot) throws IOException, TesseractException {
+    int recalculatedTopY;
+    int[] rectangleSize = getSizeFromTwoPoints(topX, topY, bottomX, bottomY);
+
+    if (currentRow == 0) {
+      recalculatedTopY = topY;
+    } else {
+      recalculatedTopY = topY + (rectangleSize[1] * currentRow);
+    }
+
+    return currentScreenshot.getSubimage(topX, recalculatedTopY, rectangleSize[0],
+        rectangleSize[1]);
+  }
+
+  public String getTextFromImage(int topX, int topY, int bottomX, int bottomY,
+      BufferedImage currentScreenshot) throws IOException, TesseractException {
+    int rateToResizeImage = 5;
+    int[] rectangleSize = getSizeFromTwoPoints(topX, topY, bottomX, bottomY);
+
+    BufferedImage screenFullImage =
+        resize(currentScreenshot.getSubimage(topX, topY, rectangleSize[0], rectangleSize[1]),
+            rectangleSize[0] * rateToResizeImage, rectangleSize[1] * rateToResizeImage);
+
+    return getText(screenFullImage);
   }
 
   public String getTextFromImage(int topX, int topY, int bottomX, int bottomY)

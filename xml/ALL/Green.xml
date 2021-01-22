@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+	<Item><id>000</id><name>Ancient Shield</name><price>900</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Black Shield</name><price>800</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Bonebreaker</name><price>10000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dragon Hammer</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Dreaded Cleaver</name><price>15000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Giant Sword</name><price>17000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Haunted Blade</name><price>8000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Knight Armor</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Knight Axe</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Knight Legs</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Onyx Flail</name><price>22000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Serpent Sword</name><price>900</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Skull Staff</name><price>6000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Strange Helmet</name><price>500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Titan Axe</name><price>4000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Tower Shield</name><price>8000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Vampire Shield</name><price>15000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Warrior Helmet</name><price>5000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Glacial Rod</name><price>6500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Hailstorm Rod</name><price>3000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Muck Rod</name><price>6000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Necrotic Rod</name><price>1000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Northwind Rod</name><price>1500</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Springsprout Rod</name><price>3600</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Terra Rod</name><price>2000</price><buy>000</buy></Item>
+	<Item><id>000</id><name>Underworld Rod</name><price>4400</price><buy>000</buy></Item>
+</Items>

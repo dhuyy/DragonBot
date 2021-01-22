@@ -32,7 +32,11 @@ public class Store {
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_X = 4;
   public static final int BATTLE_MATCH_PIXEL_TO_MONSTER_BEING_ATTACKED_Y = 15;
   public static final int DISTANCE_BETWEEN_MONSTER_BATTLE_SQUARE = 22;
+  public static final int NUMBER_OF_POSSIBLE_NUMBERS = 10;
 
+  public static final String MY_OFFERS_SCROLL_HAS_REACHED_BOTTOM_PIXEL_COLOR = "#0B0B0B";
+  public static final String NOT_ENOUGH_CAPACITY_PIXEL_COLOR = "#373737";
+  public static final String INDICATOR_EXISTING_ITEMS_IN_POSTAL_BOX_PIXEL_COLOR = "#717171";
   public static final String BATTLE_PIXEL_HEX_WITHOUT_OFFER_VISIBLE_COLOR = "#404040";
   public static final String BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR = "#444444";
   public static final String BATTLE_PIXEL_HEX_MONSTER_BEING_ATTACKED_COLOR_1 = "#FF0000";
@@ -41,8 +45,9 @@ public class Store {
   public static final int SPACING_FROM_CHARACTER_POSITION_TO_CLOSEST_SQM = 70;
   public static final int DEFAULT_DIRECTION = 4; // WEST
   public static final int CHARACTER_SPEED_BASE = 270;
-  public static final int GRASS_TILE_SPEED_WALKING = 150;
+  public static final int GRASS_TILE_SPEED_WALKING = 70;
 
+  private LinkedList<BufferedImage> numberImages;
   private LinkedList<Waypoint> waypointList;
   private int currentWaypointIndex;
   private String homeDirectoryPath;
@@ -66,8 +71,13 @@ public class Store {
   private int chosenSettings;
   private String spellCasterHotkey;
   private int spellCasterInterval;
+  private int currentCollectItemIndex;
+  private boolean shouldStopCavebotModule;
+  private String chosenSellItemsScript;
+  private String chosenSellItemsXmlFileName;
 
   private Store() {
+    numberImages = new LinkedList<BufferedImage>();
     waypointList = new LinkedList<Waypoint>();
     currentWaypointIndex = 0;
     homeDirectoryPath = System.getProperty("user.home");
@@ -92,6 +102,9 @@ public class Store {
     chosenSettings = 0;
     spellCasterHotkey = null;
     spellCasterInterval = 0;
+    currentCollectItemIndex = 0;
+    shouldStopCavebotModule = false;
+    chosenSellItemsXmlFileName = "xml\\items.xml";
   }
 
   public static Store getInstance() {
@@ -104,6 +117,14 @@ public class Store {
     }
 
     return instance;
+  }
+
+  public LinkedList<BufferedImage> getNumberImages() {
+    return numberImages;
+  }
+
+  public void setNumberImages(LinkedList<BufferedImage> numberImages) {
+    this.numberImages = numberImages;
   }
 
   public LinkedList<Waypoint> getWaypointList() {
@@ -280,5 +301,37 @@ public class Store {
 
   public void setSpellCasterInterval(int spellCasterInterval) {
     this.spellCasterInterval = spellCasterInterval;
+  }
+
+  public int getCurrentCollectItemIndex() {
+    return currentCollectItemIndex;
+  }
+
+  public void setCurrentCollectItemIndex(int currentCollectItemIndex) {
+    this.currentCollectItemIndex = currentCollectItemIndex;
+  }
+
+  public boolean isShouldStopCavebotModule() {
+    return shouldStopCavebotModule;
+  }
+
+  public void setShouldStopCavebotModule(boolean shouldStopCavebotModule) {
+    this.shouldStopCavebotModule = shouldStopCavebotModule;
+  }
+
+  public String getChosenSellItemsScript() {
+    return chosenSellItemsScript;
+  }
+
+  public void setChosenSellItemsScript(String chosenSellItemsScript) {
+    this.chosenSellItemsScript = chosenSellItemsScript;
+  }
+
+  public String getChosenSellItemsXmlFileName() {
+    return chosenSellItemsXmlFileName;
+  }
+
+  public void setChosenSellItemsXmlFileName(String chosenSellItemsXmlFileName) {
+    this.chosenSellItemsXmlFileName = chosenSellItemsXmlFileName;
   }
 }

@@ -26,8 +26,9 @@ public class NormalizeOCREntries {
   }
 
   public String normalizePrice(String price) {
-    return price.trim().replaceAll(Pattern.quote("'"), "").replaceAll(" ", "").replaceAll(",", "")
-        .replaceAll("l", "1").replaceAll("O", "0").replaceAll(Pattern.quote("e"), "6")
-        .replaceAll(Pattern.quote("?"), "7").replaceAll("S", "5");
+    return price.trim().replaceAll(Pattern.quote("'"), "").replaceAll("[.]", "").replaceAll(" ", "")
+        .replaceAll(",", "").replaceAll("l", "1").replaceAll("O", "0")
+        .replaceAll(Pattern.quote("e"), "6").replaceAll(Pattern.quote("?"), "7")
+        .replaceAll("S", "5").replaceAll(Pattern.quote("]"), "1");
   }
 }

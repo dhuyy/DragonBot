@@ -16,14 +16,15 @@ public class Cavebot {
     cavebotActions = new CavebotActions();
   }
 
-  public void execute() {
+  public void execute(boolean enableLooting) {
     int type = store.getWaypointList().get(store.getCurrentWaypointIndex()).getType();
     int direction = store.getWaypointList().get(store.getCurrentWaypointIndex()).getDirection();
+    String phrase = store.getWaypointList().get(store.getCurrentWaypointIndex()).getPhrase();
 
     switch (type) {
       case 0:
         log.getLogger().info(log.getMessage(this, "Executando waypoint do tipo: WALK"));
-        cavebotActions.executeWalkAction(direction);
+        cavebotActions.executeWalkAction(direction, enableLooting);
         break;
       case 1:
         log.getLogger().info(log.getMessage(this, "Executando waypoint do tipo: ROPE"));
@@ -40,6 +41,16 @@ public class Cavebot {
       case 4:
         log.getLogger().info(log.getMessage(this, "Executando waypoint do tipo: HOLE/RAMP"));
         cavebotActions.executeHoleRampAction(direction);
+        break;
+      case 5:
+        log.getLogger().info(log.getMessage(this, "Executando waypoint do tipo: TALK"));
+        cavebotActions.executeTalkAction(phrase);
+        break;
+      case 6:
+        log.getLogger()
+            .info(log.getMessage(this, "Executando waypoint do tipo: SEQUENTIAL CLICKS"));
+        String sequence = phrase;
+        cavebotActions.executeSequencialClicksAction(sequence);
         break;
     }
   }

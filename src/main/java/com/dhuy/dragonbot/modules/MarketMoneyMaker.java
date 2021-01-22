@@ -15,8 +15,8 @@ import com.dhuy.dragonbot.model.Item;
 import com.dhuy.dragonbot.util.ApplicationWindow;
 import com.dhuy.dragonbot.util.ImageProcessor;
 import com.dhuy.dragonbot.util.Keyboard;
-import com.dhuy.dragonbot.util.MMMCoordinates;
 import com.dhuy.dragonbot.util.Mouse;
+import com.dhuy.dragonbot.util.MouseCoordinates;
 import com.dhuy.dragonbot.util.NormalizeOCREntries;
 import com.dhuy.dragonbot.util.OCRHelper;
 import com.dhuy.dragonbot.util.XMLHelper;
@@ -78,8 +78,8 @@ public class MarketMoneyMaker {
       boolean isTheFirstNegotiation = true;
       for (int i = 0; i < items.size(); i++) {
         String isMarketOpened = normalizeOCREntries.normalizeId(ocrHelper.getTextFromImage(
-            MMMCoordinates.MARKET_TITLE_X_TOP, MMMCoordinates.MARKET_TITLE_Y_TOP,
-            MMMCoordinates.MARKET_TITLE_X_BOTTOM, MMMCoordinates.MARKET_TITLE_Y_BOTTOM));
+            MouseCoordinates.MARKET_TITLE_X_TOP, MouseCoordinates.MARKET_TITLE_Y_TOP,
+            MouseCoordinates.MARKET_TITLE_X_BOTTOM, MouseCoordinates.MARKET_TITLE_Y_BOTTOM));
 
         if (!isMarketOpened.equals("Market")) {
           isTheFirstNegotiation = true;
@@ -89,9 +89,9 @@ public class MarketMoneyMaker {
         }
 
         if (isTheFirstNegotiation) {
-          mouse.clickOn(MMMCoordinates.ANONYMOUS_CHECKBOX_X, MMMCoordinates.ANONYMOUS_CHECKBOX_Y,
-              store.getWindowsTitleBarHeight());
-          mouse.clickOn(MMMCoordinates.BUY_RADIO_X, MMMCoordinates.BUY_RADIO_Y,
+          mouse.clickOn(MouseCoordinates.ANONYMOUS_CHECKBOX_X,
+              MouseCoordinates.ANONYMOUS_CHECKBOX_Y, store.getWindowsTitleBarHeight());
+          mouse.clickOn(MouseCoordinates.BUY_RADIO_X, MouseCoordinates.BUY_RADIO_Y,
               store.getWindowsTitleBarHeight());
 
           isTheFirstNegotiation = false;
@@ -100,7 +100,7 @@ public class MarketMoneyMaker {
         buyItem(items.get(i));
       }
 
-      mouse.clickOn(MMMCoordinates.CLOSE_MARKET_X, MMMCoordinates.CLOSE_MARKET_Y,
+      mouse.clickOn(MouseCoordinates.CLOSE_MARKET_X, MouseCoordinates.CLOSE_MARKET_Y,
           store.getWindowsTitleBarHeight());
       System.exit(0);
     } catch (Exception e) {
@@ -110,48 +110,56 @@ public class MarketMoneyMaker {
 
   private void buyItem(Item item)
       throws InterruptedException, AWTException, IOException, TesseractException {
-    mouse.clickOn(MMMCoordinates.SEARCH_BOX_X, MMMCoordinates.SEARCH_BOX_Y,
-        store.getWindowsTitleBarHeight());
-    delay(250);
+    log.getLogger()
+        .info(log.getMessage(this, "Em processo de compra do item: " + item.getName() + "."));
 
-    keyboard.selectAllTextAndDelete();
-    delay(250);
+    mouse.clickOn(MouseCoordinates.SEARCH_BOX_X, MouseCoordinates.SEARCH_BOX_Y,
+        store.getWindowsTitleBarHeight());
+    delay(100);
+
+    mouse.clickOn(MouseCoordinates.CLEAR_MARKET_ITEM_NAME_X,
+        MouseCoordinates.CLEAR_MARKET_ITEM_NAME_Y, store.getWindowsTitleBarHeight());
+    delay(100);
 
     keyboard.writeWord(item.getName());
     delay(250);
 
-    mouse.clickOn(MMMCoordinates.FIRST_FOUND_X, MMMCoordinates.FIRST_FOUND_Y,
+    mouse.clickOn(MouseCoordinates.FIRST_FOUND_X, MouseCoordinates.FIRST_FOUND_Y,
         store.getWindowsTitleBarHeight());
     delay(250);
 
-    BufferedImage hoursImage = ocrHelper.getImageFromCoordinates(
-        MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP, MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-        MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-        MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM);
+    BufferedImage currentScreenshot = screenshotModule.execute(this);
+
+    BufferedImage hoursImage =
+        ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
+            MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
+            MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
+            MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, currentScreenshot);
     BufferedImage minutesImage =
-        ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-            MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-            MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-            MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM);
+        ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
+            MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
+            MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
+            MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, currentScreenshot);
     BufferedImage secondsImage =
-        ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-            MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-            MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-            MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM);
+        ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
+            MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
+            MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
+            MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, currentScreenshot);
     BufferedImage idImage =
         combineImages(new BufferedImage[] {hoursImage, minutesImage, secondsImage});
 
     String id =
         normalizeOCREntries.newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(idImage, 5)));
 
-    log.getLogger().info(log.getMessage(this, "End At value read " + id));
+    log.getLogger().info(
+        log.getMessage(this, "ID atual da compra mais cara: " + id + " (" + item.getName() + ")"));
 
     if (id.equals(item.getId())) {
       /**
        * Se já existir uma oferta.
        */
-      log.getLogger().info(log.getMessage(this,
-          "Não comprou " + item.getName() + ". Você já possui uma oferta corrente."));
+      log.getLogger().info(
+          log.getMessage(this, "Não comprou " + item.getName() + ". A oferta mais cara é a nossa"));
     } else {
       /**
        * Se não existir nenhuma oferta:
@@ -159,41 +167,43 @@ public class MarketMoneyMaker {
       if (id.equals("")) {
         int firstOffer = Math.round((item.getPrice() / 2));
 
-        mouse.clickOn(MMMCoordinates.PIECE_PRICE_X, MMMCoordinates.PIECE_PRICE_Y,
+        mouse.clickOn(MouseCoordinates.PIECE_PRICE_X, MouseCoordinates.PIECE_PRICE_Y,
             store.getWindowsTitleBarHeight());
-        delay(250);
+        delay(100);
 
         keyboard.selectAllTextAndDelete();
-        delay(500);
-
-        keyboard.writeWord(String.valueOf(firstOffer));
         delay(250);
 
+        keyboard.writeWord(String.valueOf(firstOffer));
+        delay(100);
+
         for (int i = 1; i < item.getBuy(); i++) {
-          mouse.clickOn(MMMCoordinates.ITEM_QUANTITY_X, MMMCoordinates.ITEM_QUANTITY_Y,
+          mouse.clickOn(MouseCoordinates.ITEM_QUANTITY_X, MouseCoordinates.ITEM_QUANTITY_Y,
               store.getWindowsTitleBarHeight());
           delay(25);
         }
 
-        mouse.clickOn(MMMCoordinates.CREATE_OFFER_X, MMMCoordinates.CREATE_OFFER_Y,
+        mouse.clickOn(MouseCoordinates.CREATE_OFFER_X, MouseCoordinates.CREATE_OFFER_Y,
             store.getWindowsTitleBarHeight());
-        delay(500);
+        delay(750);
+
+        BufferedImage currentScreenshot_2 = screenshotModule.execute(this);
 
         BufferedImage createdHoursImage =
-            ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-                MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-                MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-                MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM);
+            ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
+                MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
+                MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
+                MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, currentScreenshot_2);
         BufferedImage createdMinutesImage =
-            ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-                MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-                MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-                MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM);
+            ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
+                MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
+                MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
+                MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, currentScreenshot_2);
         BufferedImage createdSecondsImage =
-            ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-                MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-                MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-                MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM);
+            ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
+                MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
+                MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
+                MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, currentScreenshot_2);
         BufferedImage createdIdImage = combineImages(
             new BufferedImage[] {createdHoursImage, createdMinutesImage, createdSecondsImage});
 
@@ -202,8 +212,10 @@ public class MarketMoneyMaker {
 
         xml.updateItemId(createdId, item.getName());
 
-        log.getLogger().info(
-            log.getMessage(this, "Primeiro ao comprar " + item.getName() + " por: " + firstOffer));
+        log.getLogger()
+            .info(log.getMessage(this,
+                "Oferta criada em um item que não havia nenhuma outra oferta de terceiros. Item: "
+                    + item.getName()));
       } else {
         /**
          * Se já existir alguma oferta: Verificar se há alguma oferta obsoleta.
@@ -211,89 +223,84 @@ public class MarketMoneyMaker {
         int numberOfOffersToCheck = 0;
         boolean foundObsoleteOfferId = false;
         boolean foundObsoleteOfferRow = false;
-        BufferedImage currentScreenshot = screenshotModule.execute(this);
+        BufferedImage currentScreenshot_7 = screenshotModule.execute(this);
 
-        for (int d = 0; d < MMMCoordinates.NUMBER_OF_OFFERS_TO_CHECK; d++) {
-          String monsterLifeBarPixelHex = imageProcessor.getHexFromColor(new Color(
-              currentScreenshot.getSubimage(MMMCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_X,
-                  MMMCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_Y + (numberOfOffersToCheck * 17),
+        for (int d = 0; d < MouseCoordinates.NUMBER_OF_OFFERS_TO_CHECK; d++) {
+          String battlePixelWithoutOffer = imageProcessor.getHexFromColor(new Color(
+              currentScreenshot_7.getSubimage(MouseCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_X,
+                  MouseCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_Y + (numberOfOffersToCheck * 17),
                   1, 1).getRGB(0, 0)));
 
-          if (!monsterLifeBarPixelHex.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_OFFER_VISIBLE_COLOR)) {
+          if (!battlePixelWithoutOffer.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_OFFER_VISIBLE_COLOR)) {
             numberOfOffersToCheck += 1;
           }
         }
 
         for (int f = 0; f < numberOfOffersToCheck; f++) {
           if (!foundObsoleteOfferId) {
+            BufferedImage currentScreenshot_3 = screenshotModule.execute(this);
+
             BufferedImage currentRowHoursImage =
-                ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-                    MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-                    MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-                    MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, f);
+                ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
+                    MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
+                    MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
+                    MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, f, currentScreenshot_3);
             BufferedImage currentRowMinutesImage =
-                ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-                    MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-                    MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-                    MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, f);
+                ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
+                    MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
+                    MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
+                    MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, f, currentScreenshot_3);
             BufferedImage currentRowSecondsImage =
-                ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-                    MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-                    MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-                    MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, f);
+                ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
+                    MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
+                    MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
+                    MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, f, currentScreenshot_3);
             BufferedImage currentRowIdImage = combineImages(new BufferedImage[] {
                 currentRowHoursImage, currentRowMinutesImage, currentRowSecondsImage});
 
             String currentRowId = normalizeOCREntries
                 .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(currentRowIdImage, 5)));
 
-            log.getLogger()
-                .info(log.getMessage(this, "Janela Market Linha Atual: " + currentRowId));
+            log.getLogger().info(log.getMessage(this,
+                "Lendo ID das buy offers existentes. ID lido: " + currentRowId));
 
             if (!currentRowId.equals("")) {
               if (item.getId().equals(currentRowId)) {
                 log.getLogger().info(log.getMessage(this,
-                    "Cancelar a oferta obsoleta que está na linha " + (f + 1) + "."));
+                    "ID da oferta obsoleta achado. Cancelando ID: " + currentRowId));
 
                 foundObsoleteOfferId = true;
 
-                mouse.clickOn(MMMCoordinates.MY_OFFERS_X, MMMCoordinates.MY_OFFERS_Y,
+                mouse.clickOn(MouseCoordinates.MY_OFFERS_X, MouseCoordinates.MY_OFFERS_Y,
                     store.getWindowsTitleBarHeight());
                 delay(1000);
 
-                int totalOfBuyOffers = Integer.parseInt(normalizeOCREntries.normalizeId(
-                    ocrHelper.getTextFromImage(MMMCoordinates.NUMBER_OF_BUY_OFFERS_X_TOP,
-                        MMMCoordinates.NUMBER_OF_BUY_OFFERS_Y_TOP,
-                        MMMCoordinates.NUMBER_OF_BUY_OFFERS_X_BOTTOM,
-                        MMMCoordinates.NUMBER_OF_BUY_OFFERS_Y_BOTTOM)));
-
-                log.getLogger()
-                    .info(log.getMessage(this, "Total of buy orders: " + totalOfBuyOffers));
-
-                int numberOfHiddenBuyOffers =
-                    totalOfBuyOffers - MMMCoordinates.NUMBER_OF_VISIBLE_BUY_OFFERS;
-
-                mouse.clickOn(MMMCoordinates.FIRST_BUY_OFFER_X, MMMCoordinates.FIRST_BUY_OFFER_Y,
-                    store.getWindowsTitleBarHeight());
+                mouse.clickOn(MouseCoordinates.FIRST_BUY_OFFER_X,
+                    MouseCoordinates.FIRST_BUY_OFFER_Y, store.getWindowsTitleBarHeight());
 
                 String currentBuyOfferId;
-                for (int g = 0; g < MMMCoordinates.NUMBER_OF_VISIBLE_BUY_OFFERS; g++) {
+                for (int g = 0; g < MouseCoordinates.NUMBER_OF_VISIBLE_BUY_OFFERS; g++) {
                   if (!foundObsoleteOfferRow) {
+                    BufferedImage currentScreenshot_4 = screenshotModule.execute(this);
+
                     BufferedImage currentBuyOfferHoursImage = ocrHelper.getImageFromCoordinates(
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_X_TOP,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_Y_TOP,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_HOURS_X_BOTTOM,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_HOURS_Y_BOTTOM, g);
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_X_TOP,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_Y_TOP,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_HOURS_X_BOTTOM,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_HOURS_Y_BOTTOM, g,
+                        currentScreenshot_4);
                     BufferedImage currentBuyOfferMinutesImage = ocrHelper.getImageFromCoordinates(
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_X_TOP,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_Y_TOP,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_X_BOTTOM,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_Y_BOTTOM, g);
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_X_TOP,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_Y_TOP,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_X_BOTTOM,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_Y_BOTTOM, g,
+                        currentScreenshot_4);
                     BufferedImage currentBuyOfferSecondsImage = ocrHelper.getImageFromCoordinates(
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_X_TOP,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_Y_TOP,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_X_BOTTOM,
-                        MMMCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_Y_BOTTOM, g);
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_X_TOP,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_Y_TOP,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_X_BOTTOM,
+                        MouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_Y_BOTTOM, g,
+                        currentScreenshot_4);
                     BufferedImage currentBuyOfferIdImage =
                         combineImages(new BufferedImage[] {currentBuyOfferHoursImage,
                             currentBuyOfferMinutesImage, currentBuyOfferSecondsImage});
@@ -301,58 +308,53 @@ public class MarketMoneyMaker {
                     currentBuyOfferId = normalizeOCREntries.newNormalizeId(
                         ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferIdImage, 5)));
 
-                    log.getLogger().info(log.getMessage(this,
-                        "Janela Buy Offers Linha Atual: " + currentBuyOfferId));
+                    log.getLogger().info(
+                        log.getMessage(this, "Buscando por ofertas feitas com o ID: " + item.getId()
+                            + ". Item: " + item.getName() + ". ID lido: " + currentBuyOfferId));
 
-                    if (currentBuyOfferId.equals("\"?\\it;“A")
-                        || currentBuyOfferId.equals("\"\"?\\it;“A\"")) {
+                    if (item.getId().equals(currentBuyOfferId)) {
+                      mouse.clickOn(MouseCoordinates.CANCEL_OFFER_X,
+                          MouseCoordinates.CANCEL_OFFER_Y, store.getWindowsTitleBarHeight());
+                      delay(500);
+
                       foundObsoleteOfferRow = true;
 
-                      mouse.clickOn(MMMCoordinates.BACK_TO_MARKET_X,
-                          MMMCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
+                      mouse.clickOn(MouseCoordinates.BACK_TO_MARKET_X,
+                          MouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
                       delay(1000);
+
+                      log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
+                          + " com o ID: " + item.getId() + ". Cancelada com sucesso."));
 
                       break;
                     } else {
-                      if (item.getId().equals(currentBuyOfferId)) {
-                        mouse.clickOn(MMMCoordinates.CANCEL_OFFER_X, MMMCoordinates.CANCEL_OFFER_Y,
-                            store.getWindowsTitleBarHeight());
-                        delay(500);
-
-                        foundObsoleteOfferRow = true;
-
-                        mouse.clickOn(MMMCoordinates.BACK_TO_MARKET_X,
-                            MMMCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
-                        delay(1000);
-
-                        log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
-                            + " com o id: " + currentBuyOfferId + ". Cancelada com sucesso."));
-
-                        break;
-                      } else {
-                        keyboard.type("DOWN", 10);
-                      }
+                      keyboard.type("DOWN", 10);
                     }
                   }
                 }
 
                 if (!foundObsoleteOfferRow) {
-                  for (int h = 0; h < numberOfHiddenBuyOffers; h++) {
+                  boolean scrollHasReachedBottom = false;
+                  while (!scrollHasReachedBottom) {
+                    BufferedImage currentScreenshot_5 = screenshotModule.execute(this);
+
                     BufferedImage currentBuyOfferHoursImage = ocrHelper.getImageFromCoordinates(
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_END_AT_HOURS_X_TOP,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_END_AT_HOURS_Y_TOP,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_HOURS_X_BOTTOM,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_HOURS_Y_BOTTOM);
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_END_AT_HOURS_X_TOP,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_END_AT_HOURS_Y_TOP,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_HOURS_X_BOTTOM,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_HOURS_Y_BOTTOM, currentScreenshot_5);
                     BufferedImage currentBuyOfferMinutesImage = ocrHelper.getImageFromCoordinates(
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_X_TOP,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_Y_TOP,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_X_BOTTOM,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_Y_BOTTOM);
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_X_TOP,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_Y_TOP,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_X_BOTTOM,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_Y_BOTTOM,
+                        currentScreenshot_5);
                     BufferedImage currentBuyOfferSecondsImage = ocrHelper.getImageFromCoordinates(
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_X_TOP,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_Y_TOP,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_X_BOTTOM,
-                        MMMCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_Y_BOTTOM);
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_X_TOP,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_Y_TOP,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_X_BOTTOM,
+                        MouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_Y_BOTTOM,
+                        currentScreenshot_5);
                     BufferedImage currentBuyOfferIdImage =
                         combineImages(new BufferedImage[] {currentBuyOfferHoursImage,
                             currentBuyOfferMinutesImage, currentBuyOfferSecondsImage});
@@ -360,41 +362,46 @@ public class MarketMoneyMaker {
                     currentBuyOfferId = normalizeOCREntries.newNormalizeId(
                         ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferIdImage, 5)));
 
-                    log.getLogger().info(log.getMessage(this,
-                        "Janela Buy Offers Linha Atual: " + currentBuyOfferId));
+                    log.getLogger().info(
+                        log.getMessage(this, "Buscando por ofertas feitas com o ID: " + item.getId()
+                            + ". Item: " + item.getName() + ". ID lido: " + currentBuyOfferId));
 
-                    if (currentBuyOfferId.equals("\"?\\it;“A")
-                        || currentBuyOfferId.equals("\"\"?\\it;“A\"")) {
-                      foundObsoleteOfferRow = true;
+                    if (item.getId().equals(currentBuyOfferId)) {
+                      mouse.clickOn(MouseCoordinates.CANCEL_OFFER_X,
+                          MouseCoordinates.CANCEL_OFFER_Y, store.getWindowsTitleBarHeight());
+                      delay(500);
 
-                      mouse.clickOn(MMMCoordinates.BACK_TO_MARKET_X,
-                          MMMCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
+                      mouse.clickOn(MouseCoordinates.BACK_TO_MARKET_X,
+                          MouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
                       delay(1000);
+
+                      log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
+                          + " com o id: " + currentBuyOfferId + ". Cancelada com sucesso."));
 
                       break;
                     } else {
-                      if (item.getId().equals(currentBuyOfferId)) {
-                        mouse.clickOn(MMMCoordinates.CANCEL_OFFER_X, MMMCoordinates.CANCEL_OFFER_Y,
-                            store.getWindowsTitleBarHeight());
-                        delay(500);
+                      String scrollHasReachedBottomPixelHex =
+                          imageProcessor.getHexFromColor(new Color(currentScreenshot_5
+                              .getSubimage(MouseCoordinates.PIXEL_SCROLL_HAS_REACHED_BOTTOM_X,
+                                  MouseCoordinates.PIXEL_SCROLL_HAS_REACHED_BOTTOM_Y, 1, 1)
+                              .getRGB(0, 0)));
 
-                        foundObsoleteOfferRow = true;
+                      if (scrollHasReachedBottomPixelHex
+                          .equals(Store.MY_OFFERS_SCROLL_HAS_REACHED_BOTTOM_PIXEL_COLOR)) {
+                        scrollHasReachedBottom = true;
 
-                        mouse.clickOn(MMMCoordinates.BACK_TO_MARKET_X,
-                            MMMCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
+                        mouse.clickOn(MouseCoordinates.BACK_TO_MARKET_X,
+                            MouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
                         delay(1000);
 
-                        log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
-                            + " com o id: " + currentBuyOfferId + ". Cancelada com sucesso."));
-
-                        break;
-                      } else {
-                        keyboard.type("DOWN", 25);
+                        log.getLogger().info(log.getMessage(this, "[ATENÇÃO] A oferta com o ID: "
+                            + item.getName() + " não foi cancelada pois não foi encontrada."));
                       }
+
+                      keyboard.type("DOWN", 10);
                     }
                   }
                 }
-
               }
             }
           }
@@ -404,52 +411,52 @@ public class MarketMoneyMaker {
          * Iniciar o processo de compra
          */
         int price = Integer.parseInt(normalizeOCREntries.normalizePrice(ocrHelper.getTextFromImage(
-            MMMCoordinates.PIECE_PRICE_X_TOP, MMMCoordinates.PIECE_PRICE_Y_TOP,
-            MMMCoordinates.PIECE_PRICE_X_BOTTOM, MMMCoordinates.PIECE_PRICE_Y_BOTTOM)));
+            MouseCoordinates.PIECE_PRICE_X_TOP, MouseCoordinates.PIECE_PRICE_Y_TOP,
+            MouseCoordinates.PIECE_PRICE_X_BOTTOM, MouseCoordinates.PIECE_PRICE_Y_BOTTOM)));
 
         price = (price + 1);
-
-        log.getLogger().info(log.getMessage(this, "Piece price " + price + "."));
 
         /**
          * Se o maior preço ofertado for menor que o preço do item:
          */
         if (price < item.getPrice()) {
-          mouse.clickOn(MMMCoordinates.PIECE_PRICE_X, MMMCoordinates.PIECE_PRICE_Y,
+          mouse.clickOn(MouseCoordinates.PIECE_PRICE_X, MouseCoordinates.PIECE_PRICE_Y,
               store.getWindowsTitleBarHeight());
-          delay(250);
+          delay(100);
 
           keyboard.selectAllTextAndDelete();
-          delay(500);
-
-          keyboard.writeWord(String.valueOf(price));
           delay(250);
 
+          keyboard.writeWord(String.valueOf(price));
+          delay(100);
+
           for (int i = 1; i < item.getBuy(); i++) {
-            mouse.clickOn(MMMCoordinates.ITEM_QUANTITY_X, MMMCoordinates.ITEM_QUANTITY_Y,
+            mouse.clickOn(MouseCoordinates.ITEM_QUANTITY_X, MouseCoordinates.ITEM_QUANTITY_Y,
                 store.getWindowsTitleBarHeight());
             delay(25);
           }
 
-          mouse.clickOn(MMMCoordinates.CREATE_OFFER_X, MMMCoordinates.CREATE_OFFER_Y,
+          mouse.clickOn(MouseCoordinates.CREATE_OFFER_X, MouseCoordinates.CREATE_OFFER_Y,
               store.getWindowsTitleBarHeight());
-          delay(500);
+          delay(750);
+
+          BufferedImage currentScreenshot_6 = screenshotModule.execute(this);
 
           BufferedImage createdHoursImage =
-              ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-                  MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-                  MMMCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-                  MMMCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM);
+              ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
+                  MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
+                  MouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
+                  MouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, currentScreenshot_6);
           BufferedImage createdMinutesImage =
-              ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-                  MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-                  MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-                  MMMCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM);
+              ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
+                  MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
+                  MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
+                  MouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, currentScreenshot_6);
           BufferedImage createdSecondsImage =
-              ocrHelper.getImageFromCoordinates(MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-                  MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-                  MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-                  MMMCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM);
+              ocrHelper.getImageFromCoordinates(MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
+                  MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
+                  MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
+                  MouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, currentScreenshot_6);
           BufferedImage createdIdImage = combineImages(
               new BufferedImage[] {createdHoursImage, createdMinutesImage, createdSecondsImage});
 
@@ -458,9 +465,11 @@ public class MarketMoneyMaker {
 
           xml.updateItemId(createdId, item.getName());
 
-          System.out.println("Comprando " + item.getName() + " por: " + price + " gps.");
+          log.getLogger().info(log.getMessage(this,
+              "Comprando " + item.getBuy() + " " + item.getName() + "s por " + price + "gp cada."));
         } else {
-          System.out.println("Não comprou " + item.getName() + ". Caro demais.");
+          log.getLogger().info(log.getMessage(this, "Não comprou " + item.getName()
+              + ". O valor da oferta iria ser maior que o valor do item."));
         }
       }
     }
