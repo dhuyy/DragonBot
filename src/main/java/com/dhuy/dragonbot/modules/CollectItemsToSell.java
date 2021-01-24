@@ -43,6 +43,8 @@ public class CollectItemsToSell {
   }
 
   public void execute() {
+    mouseCoordinates.init();
+
     BufferedImage currentScreenshot = screenshotModule.execute(this);
 
     int titleBarHeight = appWindow.getWindowsTitleBarHeight(currentScreenshot.getHeight(),

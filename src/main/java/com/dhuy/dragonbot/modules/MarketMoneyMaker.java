@@ -55,6 +55,8 @@ public class MarketMoneyMaker {
   // ImageIO.write(images[0], "png", new File("images\\sample.png"));
 
   public void execute() {
+    mouseCoordinates.init();
+
     BufferedImage currentScreenshot = screenshotModule.execute(this);
     try {
       ImageIO.write(currentScreenshot, "png", new File("images\\original0.png"));
