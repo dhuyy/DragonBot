@@ -26,24 +26,27 @@ public class Screenshot {
     try {
       String screenshotPath = null;
 
-      fileSystem.cleanupScreenshots();
+      int screenshotsAmount = fileSystem.getTibiaScreenshotsLength();
 
       keyboard.type("F12");
 
-      boolean hasFoundScreenshot = false;
-      while (!hasFoundScreenshot) {
-        screenshotPath = fileSystem.getLastModifiedScreenshot();
+      while (true) {
+        if (screenshotsAmount != fileSystem.getTibiaScreenshotsLength()) {
+          screenshotPath = fileSystem.getTheNewestFile();
 
-        if (screenshotPath != null) {
-          hasFoundScreenshot = true;
+          break;
         }
       }
 
-      return ImageIO.read(new File(screenshotPath));
-    } catch (IOException e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
-    }
+      BufferedImage currentScreenshot = ImageIO.read(new File(screenshotPath));
 
-    return null;
+      fileSystem.deleteFile(screenshotPath);
+
+      return currentScreenshot;
+    } catch (IOException e1) {
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e1);
+
+      return null;
+    }
   }
 }

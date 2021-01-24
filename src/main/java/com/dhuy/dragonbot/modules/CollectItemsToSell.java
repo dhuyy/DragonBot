@@ -28,8 +28,9 @@ public class CollectItemsToSell {
   private ApplicationWindow appWindow;
   private Screenshot screenshotModule;
   private Hunting hunting;
+  private MouseCoordinates mouseCoordinates;
 
-  public CollectItemsToSell() throws AWTException {
+  public CollectItemsToSell(boolean isRunningInVM, String depotDirection) throws AWTException {
     log = Log.getInstance();
     xml = new XMLHelper();
     mouse = new Mouse();
@@ -38,6 +39,7 @@ public class CollectItemsToSell {
     appWindow = new ApplicationWindow();
     screenshotModule = new Screenshot();
     hunting = new Hunting();
+    mouseCoordinates = new MouseCoordinates(isRunningInVM, depotDirection);
   }
 
   public void execute() {
@@ -56,43 +58,43 @@ public class CollectItemsToSell {
       boolean shouldCollectMoreItems = true;
       while (shouldCollectMoreItems) {
         if (shouldOpenDepotBox) {
-          mouse.clickOn(MouseCoordinates.DEPOT_BOX_X,
-              MouseCoordinates.DEPOT_BOX_Y + store.getWindowsTitleBarHeight(), true);
+          mouse.clickOn(mouseCoordinates.DEPOT_BOX_X,
+              mouseCoordinates.DEPOT_BOX_Y + store.getWindowsTitleBarHeight(), true);
           delay(500);
 
-          mouse.clickOn(MouseCoordinates.SEARCH_ITEMS_BUTTON_X,
-              MouseCoordinates.SEARCH_ITEMS_BUTTON_Y, store.getWindowsTitleBarHeight());
+          mouse.clickOn(mouseCoordinates.SEARCH_ITEMS_BUTTON_X,
+              mouseCoordinates.SEARCH_ITEMS_BUTTON_Y, store.getWindowsTitleBarHeight());
           delay(500);
 
           shouldOpenDepotBox = false;
         }
 
-        mouse.clickOn(MouseCoordinates.CLEAR_FOUND_ITEM_NAME_X,
-            MouseCoordinates.CLEAR_FOUND_ITEM_NAME_Y, store.getWindowsTitleBarHeight());
+        mouse.clickOn(mouseCoordinates.CLEAR_FOUND_ITEM_NAME_X,
+            mouseCoordinates.CLEAR_FOUND_ITEM_NAME_Y, store.getWindowsTitleBarHeight());
         delay(500);
 
         keyboard.writeWord(items.get(store.getCurrentCollectItemIndex()).getName());
         delay(500);
 
-        mouse.clickOn(MouseCoordinates.FIRST_FOUND_ITEM_X, MouseCoordinates.FIRST_FOUND_ITEM_Y,
+        mouse.clickOn(mouseCoordinates.FIRST_FOUND_ITEM_X, mouseCoordinates.FIRST_FOUND_ITEM_Y,
             store.getWindowsTitleBarHeight());
         delay(500);
 
-        mouse.clickOn(MouseCoordinates.SEARCH_FOR_ITEMS_X, MouseCoordinates.SEARCH_FOR_ITEMS_Y,
+        mouse.clickOn(mouseCoordinates.SEARCH_FOR_ITEMS_X, mouseCoordinates.SEARCH_FOR_ITEMS_Y,
             store.getWindowsTitleBarHeight());
         delay(500);
 
         currentScreenshot = screenshotModule.execute(this);
 
         String isThereAnyItemPixelHex = imageProcessor.getHexFromColor(
-            new Color(currentScreenshot.getSubimage(MouseCoordinates.CHECK_EXISTING_ITEMS_X,
-                MouseCoordinates.CHECK_EXISTING_ITEMS_Y, 1, 1).getRGB(0, 0)));
+            new Color(currentScreenshot.getSubimage(mouseCoordinates.CHECK_EXISTING_ITEMS_X,
+                mouseCoordinates.CHECK_EXISTING_ITEMS_Y, 1, 1).getRGB(0, 0)));
 
         if (isThereAnyItemPixelHex
             .equals(Store.INDICATOR_EXISTING_ITEMS_IN_POSTAL_BOX_PIXEL_COLOR)) {
           while (isThereCapacityLeft && isThereAnyItemPixelHex
               .equals(Store.INDICATOR_EXISTING_ITEMS_IN_POSTAL_BOX_PIXEL_COLOR)) {
-            mouse.clickOn(MouseCoordinates.RETRIEVE_ITEMS_X, MouseCoordinates.RETRIEVE_ITEMS_Y,
+            mouse.clickOn(mouseCoordinates.RETRIEVE_ITEMS_X, mouseCoordinates.RETRIEVE_ITEMS_Y,
                 store.getWindowsTitleBarHeight());
 
             delay(2000);
@@ -104,13 +106,13 @@ public class CollectItemsToSell {
                     .getHexFromColor(
                         new Color(
                             newCurrentScreenshot
-                                .getSubimage(MouseCoordinates.PIXEL_NOT_ENOUGH_CAPACITY_X,
-                                    MouseCoordinates.PIXEL_NOT_ENOUGH_CAPACITY_Y, 1, 1)
+                                .getSubimage(mouseCoordinates.PIXEL_NOT_ENOUGH_CAPACITY_X,
+                                    mouseCoordinates.PIXEL_NOT_ENOUGH_CAPACITY_Y, 1, 1)
                                 .getRGB(0, 0)));
 
             if (isThereCapacityLeftPixelHex.equals(Store.NOT_ENOUGH_CAPACITY_PIXEL_COLOR)) {
-              mouse.clickOn(MouseCoordinates.NOT_ENOUGH_CAPACITY_INFO_MESSAGE_X,
-                  MouseCoordinates.NOT_ENOUGH_CAPACITY_INFO_MESSAGE_Y,
+              mouse.clickOn(mouseCoordinates.NOT_ENOUGH_CAPACITY_INFO_MESSAGE_X,
+                  mouseCoordinates.NOT_ENOUGH_CAPACITY_INFO_MESSAGE_Y,
                   store.getWindowsTitleBarHeight());
               delay(500);
 
@@ -118,8 +120,8 @@ public class CollectItemsToSell {
             }
 
             isThereAnyItemPixelHex = imageProcessor.getHexFromColor(
-                new Color(newCurrentScreenshot.getSubimage(MouseCoordinates.CHECK_EXISTING_ITEMS_X,
-                    MouseCoordinates.CHECK_EXISTING_ITEMS_Y, 1, 1).getRGB(0, 0)));
+                new Color(newCurrentScreenshot.getSubimage(mouseCoordinates.CHECK_EXISTING_ITEMS_X,
+                    mouseCoordinates.CHECK_EXISTING_ITEMS_Y, 1, 1).getRGB(0, 0)));
           }
 
           if (!isThereAnyItemPixelHex
@@ -127,8 +129,8 @@ public class CollectItemsToSell {
             store.setCurrentCollectItemIndex(store.getCurrentCollectItemIndex() + 1);
             delay(250);
 
-            mouse.clickOn(MouseCoordinates.GO_BACK_SEARCH_ITEMS_X,
-                MouseCoordinates.GO_BACK_SEARCH_ITEMS_Y, store.getWindowsTitleBarHeight());
+            mouse.clickOn(mouseCoordinates.GO_BACK_SEARCH_ITEMS_X,
+                mouseCoordinates.GO_BACK_SEARCH_ITEMS_Y, store.getWindowsTitleBarHeight());
             delay(500);
           }
 
@@ -148,8 +150,8 @@ public class CollectItemsToSell {
           store.setCurrentCollectItemIndex(store.getCurrentCollectItemIndex() + 1);
           delay(250);
 
-          mouse.clickOn(MouseCoordinates.GO_BACK_SEARCH_ITEMS_X,
-              MouseCoordinates.GO_BACK_SEARCH_ITEMS_Y, store.getWindowsTitleBarHeight());
+          mouse.clickOn(mouseCoordinates.GO_BACK_SEARCH_ITEMS_X,
+              mouseCoordinates.GO_BACK_SEARCH_ITEMS_Y, store.getWindowsTitleBarHeight());
           delay(500);
         }
 

@@ -14,19 +14,16 @@ import com.dhuy.dragonbot.global.Log;
 import com.dhuy.dragonbot.global.Store;
 import com.dhuy.dragonbot.modules.AntiLogoutThread;
 import com.dhuy.dragonbot.modules.CollectItemsToSell;
-import com.dhuy.dragonbot.modules.CollectItemsToSellVM;
 import com.dhuy.dragonbot.modules.FoodThread;
 import com.dhuy.dragonbot.modules.HealingThread;
 import com.dhuy.dragonbot.modules.Hunting;
 import com.dhuy.dragonbot.modules.MarketMoneyMaker;
-import com.dhuy.dragonbot.modules.MarketMoneyMakerVM;
 import com.dhuy.dragonbot.modules.OptimizeItemList;
 import com.dhuy.dragonbot.modules.Setup;
 import com.dhuy.dragonbot.modules.SpellCasterThread;
 import com.dhuy.dragonbot.util.ApplicationWindow;
 import com.dhuy.dragonbot.util.FileSystem;
 import com.dhuy.dragonbot.util.LoggerConfigurator;
-import com.dhuy.dragonbot.util.MouseCoordinates;
 
 public class AppInitialization {
   private FileSystem fileSystem;
@@ -280,6 +277,10 @@ public class AppInitialization {
        * [BEGIN] EXECUTE MARKET MONEY MAKER
        */
 
+      String[] isVM = new String[] {"Sim", "Não"};
+      int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
+          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
+
       try {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -300,19 +301,12 @@ public class AppInitialization {
           log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
 
       try {
-        MarketMoneyMaker marketMoneyMaker = new MarketMoneyMaker();
-        MarketMoneyMakerVM marketMoneyMakerVM = new MarketMoneyMakerVM();
-
-        String[] isVM = new String[] {"Sim", "Não"};
-        int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
-
         if (chosenIsVM == 0) {
           store.setExecutingMMMInVM(true);
 
-          marketMoneyMakerVM.execute();
+          new MarketMoneyMaker(true).execute();
         } else {
-          marketMoneyMaker.execute();
+          new MarketMoneyMaker(false).execute();
         }
       } catch (AWTException e) {
         log.getLogger().info(log.getMessage(this, "Módulo MMM falhou. Fechando bot..."));
@@ -337,51 +331,57 @@ public class AppInitialization {
       int npcChoise = JOptionPane.showOptionDialog(null, "Pra qual NPC deseja vender os items?", "",
           JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, npcType, null);
 
-      if (npcChoise == 0) {
-        store.setChosenSellItemsScript("GreenDjinn");
-        store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Green.xml");
-        MouseCoordinates.DEPOT_BOX_X = 865;
-        MouseCoordinates.DEPOT_BOX_Y = 505;
-      } else if (npcChoise == 1) {
-        store.setChosenSellItemsScript("Oramond");
-        store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Oramond_Items.xml");
-        MouseCoordinates.DEPOT_BOX_X = 865;
-        MouseCoordinates.DEPOT_BOX_Y = 505;
-      } else if (npcChoise == 2) {
-        store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Rashid.xml");
+      String[] isVM = new String[] {"Sim", "Não"};
+      int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
+          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
 
-        String[] weekDay = new String[] {"Tuesday", "Wednesday", "Friday", "Saturday", "Sunday"};
-        int chosenWeekDay = JOptionPane.showOptionDialog(null, "Qual o dia da semana?", "",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, weekDay, null);
+      if (chosenIsVM == 0) {
+        store.setExecutingMMMInVM(true);
+      } else {
+        store.setExecutingMMMInVM(false);
+      }
 
-        if (chosenWeekDay == 0) {
-          store.setChosenSellItemsScript("RashidTuesday");
-          MouseCoordinates.DEPOT_BOX_X = 865;
-          MouseCoordinates.DEPOT_BOX_Y = 360;
-        } else if (chosenWeekDay == 1) {
-          store.setChosenSellItemsScript("RashidWednesday");
-          MouseCoordinates.DEPOT_BOX_X = 800;
-          MouseCoordinates.DEPOT_BOX_Y = 440;
-        } else if (chosenWeekDay == 2) {
-          store.setChosenSellItemsScript("RashidFriday");
-          MouseCoordinates.DEPOT_BOX_X = 865;
-          MouseCoordinates.DEPOT_BOX_Y = 505;
-        } else if (chosenWeekDay == 3) {
-          store.setChosenSellItemsScript("RashidSaturday");
-          MouseCoordinates.DEPOT_BOX_X = 865;
-          MouseCoordinates.DEPOT_BOX_Y = 360;
-        } else if (chosenWeekDay == 4) {
-          store.setChosenSellItemsScript("RashidSunday");
-          MouseCoordinates.DEPOT_BOX_X = 865;
-          MouseCoordinates.DEPOT_BOX_Y = 360;
+      CollectItemsToSell collectItemsToSell = null;
+
+      try {
+        if (npcChoise == 0) {
+          store.setChosenSellItemsScript("GreenDjinn");
+          store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Green.xml");
+          collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "SOUTH");
+        } else if (npcChoise == 1) {
+          store.setChosenSellItemsScript("Oramond");
+          store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Oramond_Items.xml");
+          collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "SOUTH");
+        } else if (npcChoise == 2) {
+          store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Rashid.xml");
+
+          String[] weekDay = new String[] {"Tuesday", "Friday", "Saturday", "Sunday"};
+          int chosenWeekDay = JOptionPane.showOptionDialog(null, "Qual o dia da semana?", "",
+              JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, weekDay, null);
+
+          if (chosenWeekDay == 0) {
+            store.setChosenSellItemsScript("RashidTuesday");
+            collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "NORTH");
+          } else if (chosenWeekDay == 1) {
+            store.setChosenSellItemsScript("RashidFriday");
+            collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "SOUTH");
+          } else if (chosenWeekDay == 2) {
+            store.setChosenSellItemsScript("RashidSaturday");
+            collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "NORTH");
+          } else if (chosenWeekDay == 3) {
+            store.setChosenSellItemsScript("RashidSunday");
+            collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "NORTH");
+          } else {
+            log.getLogger()
+                .info(log.getMessage(this, "Não escolheu o dia da semana. Fechando bot..."));
+            System.exit(0);
+          }
         } else {
-          log.getLogger()
-              .info(log.getMessage(this, "Não escolheu o dia da semana. Fechando bot..."));
+          log.getLogger().info(log.getMessage(this, "Não escolheu o tipo do NPC. Fechando bot..."));
           System.exit(0);
         }
-      } else {
-        log.getLogger().info(log.getMessage(this, "Não escolheu o tipo do NPC. Fechando bot..."));
-        System.exit(0);
+      } catch (AWTException e) {
+        log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
       }
 
       try {
@@ -432,26 +432,7 @@ public class AppInitialization {
       FoodThread foodThread = new FoodThread();
       foodThread.start();
 
-      try {
-        CollectItemsToSell collectItemsToSell = new CollectItemsToSell();
-        CollectItemsToSellVM collectItemsToSellVM = new CollectItemsToSellVM();
-
-        String[] isVM = new String[] {"Sim", "Não"};
-        int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
-
-        if (chosenIsVM == 0) {
-          store.setExecutingMMMInVM(true);
-
-          collectItemsToSellVM.execute();
-        } else {
-          collectItemsToSell.execute();
-        }
-
-      } catch (AWTException e) {
-        log.getLogger()
-            .info(log.getMessage(this, "Módulo CollectItemsToSell falhou. Fechando bot..."));
-      }
+      collectItemsToSell.execute();
 
       /**
        * [END] EXECUTE SELL ITEMS
@@ -460,6 +441,9 @@ public class AppInitialization {
       /**
        * [BEGIN] EXECUTE OPTIMIZE ITEM LIST
        */
+      String[] isVM = new String[] {"Sim", "Não"};
+      int chosenIsVM = JOptionPane.showOptionDialog(null, "Vai executar na VM?", "",
+          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, isVM, null);
 
       try {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -481,8 +465,13 @@ public class AppInitialization {
           log.getMessage(this, "Nome do personagem: '".concat(store.getCharacterName() + "'")));
 
       try {
-        OptimizeItemList optimizeItemList = new OptimizeItemList();
-        optimizeItemList.execute();
+        if (chosenIsVM == 0) {
+          store.setExecutingMMMInVM(true);
+
+          new OptimizeItemList(true).execute();
+        } else {
+          new OptimizeItemList(false).execute();
+        }
       } catch (AWTException e) {
         log.getLogger()
             .info(log.getMessage(this, "Módulo OptimizeItemList falhou. Fechando bot..."));

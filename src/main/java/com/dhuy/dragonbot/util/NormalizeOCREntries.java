@@ -29,6 +29,7 @@ public class NormalizeOCREntries {
     return price.trim().replaceAll(Pattern.quote("'"), "").replaceAll("[.]", "").replaceAll(" ", "")
         .replaceAll(",", "").replaceAll("l", "1").replaceAll("O", "0")
         .replaceAll(Pattern.quote("e"), "6").replaceAll(Pattern.quote("?"), "7")
-        .replaceAll("S", "5").replaceAll(Pattern.quote("]"), "1");
+        .replaceAll("S", "5").replaceAll(Pattern.quote("]"), "1")
+        .replaceAll(Pattern.quote("’"), "");
   }
 }
