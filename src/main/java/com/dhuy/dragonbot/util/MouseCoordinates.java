@@ -2,6 +2,7 @@ package com.dhuy.dragonbot.util;
 
 public class MouseCoordinates {
   private int isRunnninInVM;
+  private String direction;
 
   public int NUMBER_OF_OFFERS_TO_CHECK;
   public int NUMBER_OF_VISIBLE_BUY_OFFERS;
@@ -160,7 +161,13 @@ public class MouseCoordinates {
       isRunnninInVM = 0;
     }
 
-    switch (depotDirection) {
+    direction = depotDirection;
+  }
+
+  public void init() {
+    DEPOT_BOX_X = 865;
+
+    switch (direction) {
       case "NORTH":
         DEPOT_BOX_Y = 360;
         break;
@@ -168,9 +175,7 @@ public class MouseCoordinates {
         DEPOT_BOX_Y = 505;
         break;
     }
-  }
 
-  public void init() {
     NUMBER_OF_OFFERS_TO_CHECK = 7;
     NUMBER_OF_VISIBLE_BUY_OFFERS = 11;
     NUMBER_OF_TRANSACTIONS_REQUIRED = 50;
