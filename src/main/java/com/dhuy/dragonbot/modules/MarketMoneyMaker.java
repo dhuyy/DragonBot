@@ -58,12 +58,6 @@ public class MarketMoneyMaker {
     mouseCoordinates.init();
 
     BufferedImage currentScreenshot = screenshotModule.execute(this);
-    try {
-      ImageIO.write(currentScreenshot, "png", new File("images\\original0.png"));
-    } catch (IOException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
-    }
 
     int titleBarHeight = appWindow.getWindowsTitleBarHeight(currentScreenshot.getHeight(),
         appWindow.getWindowsTaskbarHeight());
