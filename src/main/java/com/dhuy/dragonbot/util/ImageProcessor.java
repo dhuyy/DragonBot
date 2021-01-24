@@ -2,6 +2,7 @@ package com.dhuy.dragonbot.util;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -18,6 +19,19 @@ public class ImageProcessor {
 
   public ImageProcessor() {
     log = Log.getInstance();
+  }
+
+  public BufferedImage combineImages(BufferedImage[] images) {
+    int widthCurr = 0;
+    BufferedImage concatImage = new BufferedImage(48, 16, BufferedImage.TYPE_INT_RGB);
+    Graphics2D g2d = concatImage.createGraphics();
+    for (BufferedImage image : images) {
+      g2d.drawImage(image, widthCurr, 0, null);
+      widthCurr += image.getWidth();
+    }
+    g2d.dispose();
+
+    return concatImage;
   }
 
   public String getHexFromColor(Color color) {

@@ -31,8 +31,9 @@ public class OptimizeItemList {
   private OCRHelper ocrHelper;
   private ApplicationWindow appWindow;
   private Screenshot screenshotModule;
+  private MouseCoordinates mouseCoordinates;
 
-  public OptimizeItemList() throws AWTException {
+  public OptimizeItemList(boolean isRunningInVM) throws AWTException {
     log = Log.getInstance();
     xml = new XMLHelper();
     mouse = new Mouse();
@@ -41,6 +42,7 @@ public class OptimizeItemList {
     ocrHelper = new OCRHelper();
     appWindow = new ApplicationWindow();
     screenshotModule = new Screenshot();
+    mouseCoordinates = new MouseCoordinates(isRunningInVM);
   }
 
   public void execute() {
@@ -55,7 +57,7 @@ public class OptimizeItemList {
       items = xml.getItemsList();
 
       for (Item item : items) {
-        mouse.clickOn(MouseCoordinates.SEARCH_BOX_X, MouseCoordinates.SEARCH_BOX_Y,
+        mouse.clickOn(mouseCoordinates.SEARCH_BOX_X, mouseCoordinates.SEARCH_BOX_Y,
             store.getWindowsTitleBarHeight());
         delay(250);
 
@@ -65,19 +67,19 @@ public class OptimizeItemList {
         keyboard.writeWord(item.getName());
         delay(250);
 
-        mouse.clickOn(MouseCoordinates.FIRST_FOUND_X, MouseCoordinates.FIRST_FOUND_Y,
+        mouse.clickOn(mouseCoordinates.FIRST_FOUND_X, mouseCoordinates.FIRST_FOUND_Y,
             store.getWindowsTitleBarHeight());
         delay(250);
 
-        mouse.clickOn(MouseCoordinates.DETAIL_BUTTON_MARKET_X,
-            MouseCoordinates.DETAIL_BUTTON_MARKET_Y, store.getWindowsTitleBarHeight());
+        mouse.clickOn(mouseCoordinates.DETAIL_BUTTON_MARKET_X,
+            mouseCoordinates.DETAIL_BUTTON_MARKET_Y, store.getWindowsTitleBarHeight());
         delay(500);
 
         int numberOfTransactions = Integer.parseInt(normalizeOCREntries.normalizePrice(
-            ocrHelper.getTextFromImage(MouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_X_TOP,
-                MouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_Y_TOP,
-                MouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_X_BOTTOM,
-                MouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_Y_BOTTOM)));
+            ocrHelper.getTextFromImage(mouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_X_TOP,
+                mouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_Y_TOP,
+                mouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_X_BOTTOM,
+                mouseCoordinates.AMOUNT_BUY_OFFERS_IN_SERVER_Y_BOTTOM)));
 
         if (numberOfTransactions < MINIMUM_TRANSACTIONS) {
           xml.deleteItem(item.getName());
@@ -88,7 +90,7 @@ public class OptimizeItemList {
         }
       }
 
-      mouse.clickOn(MouseCoordinates.CLOSE_MARKET_X, MouseCoordinates.CLOSE_MARKET_Y,
+      mouse.clickOn(mouseCoordinates.CLOSE_MARKET_X, mouseCoordinates.CLOSE_MARKET_Y,
           store.getWindowsTitleBarHeight());
       System.exit(0);
     } catch (Exception e) {

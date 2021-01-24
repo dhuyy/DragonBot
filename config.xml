@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
-    <characterName></characterName>
-    <characterLevel></characterLevel>
+    <characterName>Dhuyzin</characterName>
+    <characterLevel>150</characterLevel>
     <spellCasterHotkey>F7</spellCasterHotkey>
     <spellCasterInterval>60000</spellCasterInterval>
     <spellCasterEnableCavebot>false</spellCasterEnableCavebot>
