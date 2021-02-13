@@ -327,7 +327,7 @@ public class AppInitialization {
 
       store.setChosenSettings(chosenSettings);
 
-      String[] npcType = new String[] {"Green Djinn", "Flint (Oramond)", "Rashid"};
+      String[] npcType = new String[] {"Green Djinn", "Flint (Oramond)", "Rashid", "Blue Djinn"};
       int npcChoise = JOptionPane.showOptionDialog(null, "Pra qual NPC deseja vender os items?", "",
           JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, npcType, null);
 
@@ -376,6 +376,10 @@ public class AppInitialization {
                 .info(log.getMessage(this, "Não escolheu o dia da semana. Fechando bot..."));
             System.exit(0);
           }
+        } else if (npcChoise == 3) {
+          store.setChosenSellItemsScript("BlueDjinn");
+          store.setChosenSellItemsXmlFileName("xml\\ENHANCED\\Blue_Djinn.xml");
+          collectItemsToSell = new CollectItemsToSell(store.isExecutingMMMInVM(), "SOUTH");
         } else {
           log.getLogger().info(log.getMessage(this, "Não escolheu o tipo do NPC. Fechando bot..."));
           System.exit(0);

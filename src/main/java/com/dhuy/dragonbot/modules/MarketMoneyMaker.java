@@ -3,11 +3,9 @@ package com.dhuy.dragonbot.modules;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
-import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import com.dhuy.dragonbot.global.Log;
@@ -41,7 +39,13 @@ public class MarketMoneyMaker {
 
   public MarketMoneyMaker(boolean isRunningInVM) throws AWTException {
     log = Log.getInstance();
-    xml = new XMLHelper();
+
+    if (store.getCharacterName().equals("Dhuyzin")) {
+      xml = new XMLHelper("xml\\items_green.xml");
+    } else {
+      xml = new XMLHelper("xml\\items_blue.xml");
+    }
+
     mouse = new Mouse();
     keyboard = new Keyboard();
     normalizeOCREntries = new NormalizeOCREntries();
@@ -122,26 +126,38 @@ public class MarketMoneyMaker {
 
     BufferedImage currentScreenshot = screenshotModule.execute(this);
 
-    BufferedImage hoursImage =
-        ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-            mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-            mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-            mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, currentScreenshot);
-    BufferedImage minutesImage =
-        ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-            mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-            mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-            mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, currentScreenshot);
-    BufferedImage secondsImage =
-        ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-            mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-            mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-            mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, currentScreenshot);
-    BufferedImage idImage =
-        imageProcessor.combineImages(new BufferedImage[] {hoursImage, minutesImage, secondsImage});
+    BufferedImage dayImage = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_DAY, currentScreenshot);
+    BufferedImage hours_1Image = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_1, currentScreenshot);
+    BufferedImage hours_2Image = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_2, currentScreenshot);
+    BufferedImage minutes_1Image = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_1, currentScreenshot);
+    BufferedImage minutes_2Image = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_2, currentScreenshot);
+    BufferedImage seconds_1Image = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_1, currentScreenshot);
+    BufferedImage seconds_2Image = ocrHelper
+        .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_2, currentScreenshot);
 
-    String id =
-        normalizeOCREntries.newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(idImage, 5)));
+    String day =
+        normalizeOCREntries.newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(dayImage, 5)));
+    String hours_1 = normalizeOCREntries
+        .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(hours_1Image, 5)));
+    String hours_2 = normalizeOCREntries
+        .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(hours_2Image, 5)));
+    String minutes_1 = normalizeOCREntries
+        .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(minutes_1Image, 5)));
+    String minutes_2 = normalizeOCREntries
+        .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(minutes_2Image, 5)));
+    String seconds_1 = normalizeOCREntries
+        .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(seconds_1Image, 5)));
+    String seconds_2 = normalizeOCREntries
+        .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(seconds_2Image, 5)));
+
+    String id = "" + day + "" + hours_1 + "" + hours_2 + "" + minutes_1 + "" + minutes_2 + ""
+        + seconds_1 + "" + seconds_2;
 
     log.getLogger().info(
         log.getMessage(this, "ID atual da compra mais cara: " + id + " (" + item.getName() + ")"));
@@ -179,30 +195,45 @@ public class MarketMoneyMaker {
             store.getWindowsTitleBarHeight());
         delay(750);
 
-        BufferedImage currentScreenshot_2 = screenshotModule.execute(this);
+        BufferedImage createdDayImage = ocrHelper
+            .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_DAY, currentScreenshot);
+        BufferedImage createdHours_1Image = ocrHelper
+            .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_1, currentScreenshot);
+        BufferedImage createdHours_2Image = ocrHelper
+            .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_2, currentScreenshot);
+        BufferedImage createdMinutes_1Image = ocrHelper.getImageFromCoordinates(
+            mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_1, currentScreenshot);
+        BufferedImage createdMinutes_2Image = ocrHelper.getImageFromCoordinates(
+            mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_2, currentScreenshot);
+        BufferedImage createdSeconds_1Image = ocrHelper.getImageFromCoordinates(
+            mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_1, currentScreenshot);
+        BufferedImage createdSeconds_2Image = ocrHelper.getImageFromCoordinates(
+            mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_2, currentScreenshot);
 
-        BufferedImage createdHoursImage =
-            ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-                mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-                mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-                mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, currentScreenshot_2);
-        BufferedImage createdMinutesImage =
-            ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-                mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-                mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-                mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, currentScreenshot_2);
-        BufferedImage createdSecondsImage =
-            ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-                mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-                mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-                mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, currentScreenshot_2);
-        BufferedImage createdIdImage = imageProcessor.combineImages(
-            new BufferedImage[] {createdHoursImage, createdMinutesImage, createdSecondsImage});
+        String createdDay = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdDayImage, 5)));
+        String createdHours_1 = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdHours_1Image, 5)));
+        String createdHours_2 = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdHours_2Image, 5)));
+        String createdMinutes_1 = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdMinutes_1Image, 5)));
+        String createdMinutes_2 = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdMinutes_2Image, 5)));
+        String createdSeconds_1 = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdSeconds_1Image, 5)));
+        String createdSeconds_2 = normalizeOCREntries
+            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdSeconds_2Image, 5)));
 
-        String createdId = normalizeOCREntries
-            .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdIdImage, 5)));
+        String createdId =
+            "" + createdDay + "" + createdHours_1 + "" + createdHours_2 + "" + createdMinutes_1 + ""
+                + createdMinutes_2 + "" + createdSeconds_1 + "" + createdSeconds_2;
 
-        xml.updateItemId(createdId, item.getName());
+        if (createdId.matches("^[0-9]{7}$")) {
+          xml.updateItemId(createdId, item.getName());
+        } else {
+          xml.updateItemId("0000000", item.getName());
+        }
 
         log.getLogger()
             .info(log.getMessage(this,
@@ -212,54 +243,66 @@ public class MarketMoneyMaker {
         /**
          * Se já existir alguma oferta: Verificar se há alguma oferta obsoleta.
          */
-        int numberOfOffersToCheck = 0;
+        int numberOfBuyOffersToCheck = 0;
         boolean foundObsoleteOfferId = false;
-        boolean foundObsoleteOfferRow = false;
+        boolean foundObsoleteMyOffer = false;
         BufferedImage currentScreenshot_7 = screenshotModule.execute(this);
 
         for (int d = 0; d < mouseCoordinates.NUMBER_OF_OFFERS_TO_CHECK; d++) {
           String battlePixelWithoutOffer = imageProcessor.getHexFromColor(new Color(
               currentScreenshot_7.getSubimage(mouseCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_X,
-                  mouseCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_Y + (numberOfOffersToCheck * 17),
+                  mouseCoordinates.CHECK_EXISTING_OFFER_BUY_OFFERS_Y
+                      + (numberOfBuyOffersToCheck * 17),
                   1, 1).getRGB(0, 0)));
 
           if (!battlePixelWithoutOffer.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_OFFER_VISIBLE_COLOR)) {
-            numberOfOffersToCheck += 1;
+            numberOfBuyOffersToCheck += 1;
           }
         }
 
-        for (int f = 0; f < numberOfOffersToCheck; f++) {
+        for (int f = 0; f < numberOfBuyOffersToCheck; f++) {
           if (!foundObsoleteOfferId) {
-            BufferedImage currentScreenshot_3 = screenshotModule.execute(this);
+            BufferedImage currentRowDayImage = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_DAY, f, currentScreenshot);
+            BufferedImage currentRowHours_1Image = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_HOURS_1, f, currentScreenshot);
+            BufferedImage currentRowHours_2Image = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_HOURS_2, f, currentScreenshot);
+            BufferedImage currentRowMinutes_1Image = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_1, f, currentScreenshot);
+            BufferedImage currentRowMinutes_2Image = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_2, f, currentScreenshot);
+            BufferedImage currentRowSeconds_1Image = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_1, f, currentScreenshot);
+            BufferedImage currentRowSeconds_2Image = ocrHelper.getImageFromCoordinates(
+                mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_2, f, currentScreenshot);
 
-            BufferedImage currentRowHoursImage =
-                ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-                    mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-                    mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-                    mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, f, currentScreenshot_3);
-            BufferedImage currentRowMinutesImage =
-                ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-                    mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-                    mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-                    mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, f, currentScreenshot_3);
-            BufferedImage currentRowSecondsImage =
-                ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-                    mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-                    mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-                    mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, f, currentScreenshot_3);
-            BufferedImage currentRowIdImage = imageProcessor.combineImages(new BufferedImage[] {
-                currentRowHoursImage, currentRowMinutesImage, currentRowSecondsImage});
+            String currentRowDay = normalizeOCREntries
+                .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(currentRowDayImage, 5)));
+            String currentRowHours_1 = normalizeOCREntries.newNormalizeId(
+                ocrHelper.getText(ocrHelper.resizeImage(currentRowHours_1Image, 5)));
+            String currentRowHours_2 = normalizeOCREntries.newNormalizeId(
+                ocrHelper.getText(ocrHelper.resizeImage(currentRowHours_2Image, 5)));
+            String currentRowMinutes_1 = normalizeOCREntries.newNormalizeId(
+                ocrHelper.getText(ocrHelper.resizeImage(currentRowMinutes_1Image, 5)));
+            String currentRowMinutes_2 = normalizeOCREntries.newNormalizeId(
+                ocrHelper.getText(ocrHelper.resizeImage(currentRowMinutes_2Image, 5)));
+            String currentRowSeconds_1 = normalizeOCREntries.newNormalizeId(
+                ocrHelper.getText(ocrHelper.resizeImage(currentRowSeconds_1Image, 5)));
+            String currentRowSeconds_2 = normalizeOCREntries.newNormalizeId(
+                ocrHelper.getText(ocrHelper.resizeImage(currentRowSeconds_2Image, 5)));
 
-            String currentRowId = normalizeOCREntries
-                .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(currentRowIdImage, 5)));
+            String currentBuyOfferId = "" + currentRowDay + "" + currentRowHours_1 + ""
+                + currentRowHours_2 + "" + currentRowMinutes_1 + "" + currentRowMinutes_2 + ""
+                + currentRowSeconds_1 + "" + currentRowSeconds_2;
 
             log.getLogger().info(log.getMessage(this,
-                "Lendo ID das buy offers existentes. ID lido: " + currentRowId));
+                "Lendo ID das buy offers existentes. ID lido: " + currentBuyOfferId));
 
-            if (!currentRowId.equals("")) {
-              if (item.getId().equals(currentRowId)) {
+            if (!currentBuyOfferId.equals("")) {
+              if (item.getId().equals(currentBuyOfferId)) {
                 log.getLogger().info(log.getMessage(this,
-                    "ID da oferta obsoleta achado. Cancelando ID: " + currentRowId));
+                    "ID da oferta obsoleta achado. Cancelando ID: " + currentBuyOfferId));
 
                 foundObsoleteOfferId = true;
 
@@ -269,129 +312,109 @@ public class MarketMoneyMaker {
 
                 mouse.clickOn(mouseCoordinates.FIRST_BUY_OFFER_X,
                     mouseCoordinates.FIRST_BUY_OFFER_Y, store.getWindowsTitleBarHeight());
+                delay(250);
 
-                String currentBuyOfferId;
-                for (int g = 0; g < mouseCoordinates.NUMBER_OF_VISIBLE_BUY_OFFERS; g++) {
-                  if (!foundObsoleteOfferRow) {
-                    BufferedImage currentScreenshot_4 = screenshotModule.execute(this);
-
-                    BufferedImage currentBuyOfferHoursImage = ocrHelper.getImageFromCoordinates(
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_X_TOP,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_Y_TOP,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_HOURS_X_BOTTOM,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_HOURS_Y_BOTTOM, g,
-                        currentScreenshot_4);
-                    BufferedImage currentBuyOfferMinutesImage = ocrHelper.getImageFromCoordinates(
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_X_TOP,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_Y_TOP,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_X_BOTTOM,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_MINUTES_Y_BOTTOM, g,
-                        currentScreenshot_4);
-                    BufferedImage currentBuyOfferSecondsImage = ocrHelper.getImageFromCoordinates(
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_X_TOP,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_Y_TOP,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_X_BOTTOM,
-                        mouseCoordinates.MY_OFFERS_FIRST_ROW_AT_SECONDS_Y_BOTTOM, g,
-                        currentScreenshot_4);
-                    BufferedImage currentBuyOfferIdImage =
-                        imageProcessor.combineImages(new BufferedImage[] {currentBuyOfferHoursImage,
-                            currentBuyOfferMinutesImage, currentBuyOfferSecondsImage});
-
-                    currentBuyOfferId = normalizeOCREntries.newNormalizeId(
-                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferIdImage, 5)));
-
-                    log.getLogger().info(
-                        log.getMessage(this, "Buscando por ofertas feitas com o ID: " + item.getId()
-                            + ". Item: " + item.getName() + ". ID lido: " + currentBuyOfferId));
-
-                    if (item.getId().equals(currentBuyOfferId)) {
-                      mouse.clickOn(mouseCoordinates.CANCEL_OFFER_X,
-                          mouseCoordinates.CANCEL_OFFER_Y, store.getWindowsTitleBarHeight());
-                      delay(500);
-
-                      foundObsoleteOfferRow = true;
-
-                      mouse.clickOn(mouseCoordinates.BACK_TO_MARKET_X,
-                          mouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
-                      delay(1000);
-
-                      log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
-                          + " com o ID: " + item.getId() + ". Cancelada com sucesso."));
-
-                      break;
-                    } else {
-                      keyboard.type("DOWN", 10);
-                    }
+                String currentMyOfferId;
+                boolean scrollHasReachedBottom = false;
+                while (!scrollHasReachedBottom && !foundObsoleteMyOffer) {
+                  for (int g = 0; g < 10; g++) {
+                    keyboard.type("DOWN", 10);
                   }
-                }
 
-                if (!foundObsoleteOfferRow) {
-                  boolean scrollHasReachedBottom = false;
-                  while (!scrollHasReachedBottom) {
-                    BufferedImage currentScreenshot_5 = screenshotModule.execute(this);
+                  BufferedImage currentScreenshot_2 = screenshotModule.execute(this);
 
-                    BufferedImage currentBuyOfferHoursImage = ocrHelper.getImageFromCoordinates(
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_END_AT_HOURS_X_TOP,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_END_AT_HOURS_Y_TOP,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_HOURS_X_BOTTOM,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_HOURS_Y_BOTTOM, currentScreenshot_5);
-                    BufferedImage currentBuyOfferMinutesImage = ocrHelper.getImageFromCoordinates(
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_X_TOP,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_Y_TOP,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_X_BOTTOM,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_MINUTES_Y_BOTTOM,
-                        currentScreenshot_5);
-                    BufferedImage currentBuyOfferSecondsImage = ocrHelper.getImageFromCoordinates(
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_X_TOP,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_Y_TOP,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_X_BOTTOM,
-                        mouseCoordinates.MY_OFFERS_LAST_ROW_AT_SECONDS_Y_BOTTOM,
-                        currentScreenshot_5);
-                    BufferedImage currentBuyOfferIdImage =
-                        imageProcessor.combineImages(new BufferedImage[] {currentBuyOfferHoursImage,
-                            currentBuyOfferMinutesImage, currentBuyOfferSecondsImage});
+                  for (int g = 0; g < mouseCoordinates.NUMBER_OF_VISIBLE_BUY_OFFERS; g++) {
+                    BufferedImage currentBuyOfferDayImage = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_DAY, g, currentScreenshot_2);
+                    BufferedImage currentBuyOfferHours_1Image = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_1, g,
+                        currentScreenshot_2);
+                    BufferedImage currentBuyOfferHours_2Image = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_HOURS_2, g,
+                        currentScreenshot_2);
+                    BufferedImage currentBuyOfferMinutes_1Image = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_MINUTES_1, g,
+                        currentScreenshot_2);
+                    BufferedImage currentBuyOfferMinutes_2Image = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_MINUTES_2, g,
+                        currentScreenshot_2);
+                    BufferedImage currentBuyOfferSeconds_1Image = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_SECONDS_1, g,
+                        currentScreenshot_2);
+                    BufferedImage currentBuyOfferSeconds_2Image = ocrHelper.getImageFromCoordinates(
+                        mouseCoordinates.MY_OFFERS_FIRST_ROW_END_AT_SECONDS_2, g,
+                        currentScreenshot_2);
 
-                    currentBuyOfferId = normalizeOCREntries.newNormalizeId(
-                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferIdImage, 5)));
+                    String currentBuyOfferDay = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferDayImage, 5)));
+                    String currentBuyOfferHours_1 = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferHours_1Image, 5)));
+                    String currentBuyOfferHours_2 = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferHours_2Image, 5)));
+                    String currentBuyOfferMinutes_1 = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferMinutes_1Image, 5)));
+                    String currentBuyOfferMinutes_2 = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferMinutes_2Image, 5)));
+                    String currentBuyOfferSeconds_1 = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferSeconds_1Image, 5)));
+                    String currentBuyOfferSeconds_2 = normalizeOCREntries.newNormalizeId(
+                        ocrHelper.getText(ocrHelper.resizeImage(currentBuyOfferSeconds_2Image, 5)));
+
+                    currentMyOfferId = "" + currentBuyOfferDay + "" + currentBuyOfferHours_1 + ""
+                        + currentBuyOfferHours_2 + "" + currentBuyOfferMinutes_1 + ""
+                        + currentBuyOfferMinutes_2 + "" + currentBuyOfferSeconds_1 + ""
+                        + currentBuyOfferSeconds_2;
 
                     log.getLogger().info(
                         log.getMessage(this, "Buscando por ofertas feitas com o ID: " + item.getId()
-                            + ". Item: " + item.getName() + ". ID lido: " + currentBuyOfferId));
+                            + ". Item: " + item.getName() + ". ID lido: " + currentMyOfferId));
 
-                    if (item.getId().equals(currentBuyOfferId)) {
-                      mouse.clickOn(mouseCoordinates.CANCEL_OFFER_X,
-                          mouseCoordinates.CANCEL_OFFER_Y, store.getWindowsTitleBarHeight());
-                      delay(500);
-
-                      mouse.clickOn(mouseCoordinates.BACK_TO_MARKET_X,
-                          mouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
-                      delay(1000);
-
-                      log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
-                          + " com o id: " + currentBuyOfferId + ". Cancelada com sucesso."));
-
-                      break;
-                    } else {
-                      String scrollHasReachedBottomPixelHex =
-                          imageProcessor.getHexFromColor(new Color(currentScreenshot_5
-                              .getSubimage(mouseCoordinates.PIXEL_SCROLL_HAS_REACHED_BOTTOM_X,
-                                  mouseCoordinates.PIXEL_SCROLL_HAS_REACHED_BOTTOM_Y, 1, 1)
-                              .getRGB(0, 0)));
-
-                      if (scrollHasReachedBottomPixelHex
-                          .equals(Store.MY_OFFERS_SCROLL_HAS_REACHED_BOTTOM_PIXEL_COLOR)) {
-                        scrollHasReachedBottom = true;
-
-                        mouse.clickOn(mouseCoordinates.BACK_TO_MARKET_X,
-                            mouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
-                        delay(1000);
-
-                        log.getLogger().info(log.getMessage(this, "[ATENÇÃO] A oferta com o ID: "
-                            + item.getName() + " não foi cancelada pois não foi encontrada."));
+                    if (currentBuyOfferId.equals(currentMyOfferId)) {
+                      if (g == 0) {
+                        mouse.clickOn(mouseCoordinates.FIRST_BUY_OFFER_X,
+                            mouseCoordinates.FIRST_BUY_OFFER_Y, store.getWindowsTitleBarHeight());
+                        delay(100);
+                      } else {
+                        mouse.clickOn(mouseCoordinates.FIRST_BUY_OFFER_X,
+                            (mouseCoordinates.FIRST_BUY_OFFER_Y + (16 * g)),
+                            store.getWindowsTitleBarHeight());
+                        delay(100);
                       }
 
-                      keyboard.type("DOWN", 10);
+                      mouse.clickOn(mouseCoordinates.CANCEL_OFFER_X,
+                          mouseCoordinates.CANCEL_OFFER_Y, store.getWindowsTitleBarHeight());
+                      delay(500);
+
+                      mouse.clickOn(mouseCoordinates.BACK_TO_MARKET_X,
+                          mouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
+                      delay(1000);
+
+                      log.getLogger().info(log.getMessage(this, "Oferta do item " + item.getName()
+                          + " com o id: " + currentMyOfferId + ". Cancelada com sucesso."));
+
+                      foundObsoleteMyOffer = true;
+
+                      break;
                     }
+                  }
+
+                  String scrollHasReachedBottomPixelHex =
+                      imageProcessor.getHexFromColor(new Color(currentScreenshot_2
+                          .getSubimage(mouseCoordinates.PIXEL_SCROLL_HAS_REACHED_BOTTOM_X,
+                              mouseCoordinates.PIXEL_SCROLL_HAS_REACHED_BOTTOM_Y, 1, 1)
+                          .getRGB(0, 0)));
+
+                  if (scrollHasReachedBottomPixelHex
+                      .equals(Store.MY_OFFERS_SCROLL_HAS_REACHED_BOTTOM_PIXEL_COLOR)) {
+
+                    mouse.clickOn(mouseCoordinates.BACK_TO_MARKET_X,
+                        mouseCoordinates.BACK_TO_MARKET_Y, store.getWindowsTitleBarHeight());
+                    delay(1000);
+
+                    log.getLogger().info(log.getMessage(this, "[ATENÇÃO] A oferta com o ID: "
+                        + item.getName() + " não foi cancelada pois não foi encontrada."));
+
+                    scrollHasReachedBottom = true;
                   }
                 }
               }
@@ -432,30 +455,47 @@ public class MarketMoneyMaker {
               store.getWindowsTitleBarHeight());
           delay(750);
 
-          BufferedImage currentScreenshot_6 = screenshotModule.execute(this);
+          BufferedImage currentScreenshot_3 = screenshotModule.execute(this);
 
-          BufferedImage createdHoursImage =
-              ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_TOP,
-                  mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_TOP,
-                  mouseCoordinates.BUY_OFFERS_END_AT_HOURS_X_BOTTOM,
-                  mouseCoordinates.BUY_OFFERS_END_AT_HOURS_Y_BOTTOM, currentScreenshot_6);
-          BufferedImage createdMinutesImage =
-              ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_TOP,
-                  mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_TOP,
-                  mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_X_BOTTOM,
-                  mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_Y_BOTTOM, currentScreenshot_6);
-          BufferedImage createdSecondsImage =
-              ocrHelper.getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_TOP,
-                  mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_TOP,
-                  mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_X_BOTTOM,
-                  mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_Y_BOTTOM, currentScreenshot_6);
-          BufferedImage createdIdImage = imageProcessor.combineImages(
-              new BufferedImage[] {createdHoursImage, createdMinutesImage, createdSecondsImage});
+          BufferedImage createdDayImage = ocrHelper
+              .getImageFromCoordinates(mouseCoordinates.BUY_OFFERS_END_AT_DAY, currentScreenshot_3);
+          BufferedImage createdHours_1Image = ocrHelper.getImageFromCoordinates(
+              mouseCoordinates.BUY_OFFERS_END_AT_HOURS_1, currentScreenshot_3);
+          BufferedImage createdHours_2Image = ocrHelper.getImageFromCoordinates(
+              mouseCoordinates.BUY_OFFERS_END_AT_HOURS_2, currentScreenshot_3);
+          BufferedImage createdMinutes_1Image = ocrHelper.getImageFromCoordinates(
+              mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_1, currentScreenshot_3);
+          BufferedImage createdMinutes_2Image = ocrHelper.getImageFromCoordinates(
+              mouseCoordinates.BUY_OFFERS_END_AT_MINUTES_2, currentScreenshot_3);
+          BufferedImage createdSeconds_1Image = ocrHelper.getImageFromCoordinates(
+              mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_1, currentScreenshot_3);
+          BufferedImage createdSeconds_2Image = ocrHelper.getImageFromCoordinates(
+              mouseCoordinates.BUY_OFFERS_END_AT_SECONDS_2, currentScreenshot_3);
 
-          String createdId = normalizeOCREntries
-              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdIdImage, 5)));
+          String createdDay = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdDayImage, 5)));
+          String createdHours_1 = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdHours_1Image, 5)));
+          String createdHours_2 = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdHours_2Image, 5)));
+          String createdMinutes_1 = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdMinutes_1Image, 5)));
+          String createdMinutes_2 = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdMinutes_2Image, 5)));
+          String createdSeconds_1 = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdSeconds_1Image, 5)));
+          String createdSeconds_2 = normalizeOCREntries
+              .newNormalizeId(ocrHelper.getText(ocrHelper.resizeImage(createdSeconds_2Image, 5)));
 
-          xml.updateItemId(createdId, item.getName());
+          String createdId =
+              "" + createdDay + "" + createdHours_1 + "" + createdHours_2 + "" + createdMinutes_1
+                  + "" + createdMinutes_2 + "" + createdSeconds_1 + "" + createdSeconds_2;
+
+          if (createdId.matches("^[0-9]{7}$")) {
+            xml.updateItemId(createdId, item.getName());
+          } else {
+            xml.updateItemId("0000000", item.getName());
+          }
 
           log.getLogger().info(log.getMessage(this,
               "Comprando " + item.getBuy() + " " + item.getName() + "s por " + price + "gp cada."));

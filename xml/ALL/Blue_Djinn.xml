@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Items>
+    <Item><id>000</id><name>Angelic Axe</name><price>5000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Blue Robe</name><price>10000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Bonelord Shield</name><price>1200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Boots of Haste</name><price>30000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Broadsword</name><price>500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Butcher's Axe</name><price>18000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Crown Armor</name><price>12000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Crown Helmet</name><price>2500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Crown Legs</name><price>12000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Crown Shield</name><price>8000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Crusader Helmet</name><price>6000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Dragon Lance</name><price>9000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Dragon Shield</name><price>4000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Earth Spike Sword</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Earth War Hammer</name><price>1200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Energy Spike Sword</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Energy War Hammer</name><price>1200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Fiery Spike Sword</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Fiery War Hammer</name><price>1200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Fire Axe</name><price>8000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Fire Sword</name><price>4000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Glorious Axe</name><price>3000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Guardian Shield</name><price>2000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Ice Rapier</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Icy Spike Sword</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Icy War Hammer</name><price>1200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Noble Armor</name><price>900</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Obsidian Lance</name><price>500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Phoenix Shield</name><price>16000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Queen's Sceptre</name><price>20000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Royal Helmet</name><price>30000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Shadow Sceptre</name><price>10000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Spike Sword</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Thaian Sword</name><price>16000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>War Hammer</name><price>1200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Orb</name><price>750</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Cosmic Energy</name><price>2000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Decay</name><price>1000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Defiance</name><price>6500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Draconia</name><price>1500</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Dragonbreath</name><price>200</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Everblazing</name><price>6000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Inferno</name><price>3000</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Starstorm</name><price>3600</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Voodoo</name><price>4400</price><buy>000</buy></Item>
+    <Item><id>000</id><name>Wand of Vortex</name><price>100</price><buy>000</buy></Item>
+</Items>

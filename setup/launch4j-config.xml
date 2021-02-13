@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\vandh\Workspace\DragonBot\target\dragonbot-1.9.5-jar-with-dependencies.jar</jar>
+  <jar>C:\Users\vandh\Workspace\DragonBot\target\dragonbot-2.0.0-jar-with-dependencies.jar</jar>
   <outfile>C:\Users\vandh\Workspace\DragonBot\setup\dragonbot.exe</outfile>
   <errTitle>DragonBot uses Java to be executed. Please download and install it.</errTitle>
   <cmdLine></cmdLine>
@@ -28,12 +28,12 @@
     <runtimeBits>64/32</runtimeBits>
   </jre>
   <versionInfo>
-    <fileVersion>1.9.5.0</fileVersion>
-    <txtFileVersion>1.9.5.0</txtFileVersion>
+    <fileVersion>2.0.0.0</fileVersion>
+    <txtFileVersion>2.0.0.0</txtFileVersion>
     <fileDescription>Um bot direcionado a nova geração de clientes do Tibia que são integrados ao sistema anti-cheat BattleEye.</fileDescription>
     <copyright>Vandhuy Martins</copyright>
-    <productVersion>1.9.5.0</productVersion>
-    <txtProductVersion>1.9.5.0</txtProductVersion>
+    <productVersion>2.0.0.0</productVersion>
+    <txtProductVersion>2.0.0.0</txtProductVersion>
     <productName>DragonBot</productName>
     <companyName></companyName>
     <internalName>DragonBot</internalName>
