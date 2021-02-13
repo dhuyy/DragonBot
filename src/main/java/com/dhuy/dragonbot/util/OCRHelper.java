@@ -47,13 +47,6 @@ public class OCRHelper {
     return resize(image, image.getWidth() * factor, image.getHeight() * factor);
   }
 
-  public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY,
-      BufferedImage currentScreenshot) throws IOException, TesseractException {
-    int[] rectangleSize = getSizeFromTwoPoints(topX, topY, bottomX, bottomY);
-
-    return currentScreenshot.getSubimage(topX, topY, rectangleSize[0], rectangleSize[1]);
-  }
-
   public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY)
       throws IOException, TesseractException {
     BufferedImage currentScreenshot = screenshotModule.execute(this);
@@ -61,6 +54,22 @@ public class OCRHelper {
     int[] rectangleSize = getSizeFromTwoPoints(topX, topY, bottomX, bottomY);
 
     return currentScreenshot.getSubimage(topX, topY, rectangleSize[0], rectangleSize[1]);
+  }
+
+  public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY,
+      BufferedImage currentScreenshot) throws IOException, TesseractException {
+    int[] rectangleSize = getSizeFromTwoPoints(topX, topY, bottomX, bottomY);
+
+    return currentScreenshot.getSubimage(topX, topY, rectangleSize[0], rectangleSize[1]);
+  }
+
+  public BufferedImage getImageFromCoordinates(int[] coordinates, BufferedImage currentScreenshot)
+      throws IOException, TesseractException {
+    int[] rectangleSize =
+        getSizeFromTwoPoints(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+
+    return currentScreenshot.getSubimage(coordinates[0], coordinates[1], rectangleSize[0],
+        rectangleSize[1]);
   }
 
   public BufferedImage getImageFromCoordinates(int topX, int topY, int bottomX, int bottomY,
@@ -92,6 +101,22 @@ public class OCRHelper {
     }
 
     return currentScreenshot.getSubimage(topX, recalculatedTopY, rectangleSize[0],
+        rectangleSize[1]);
+  }
+
+  public BufferedImage getImageFromCoordinates(int[] coordinates, int currentRow,
+      BufferedImage currentScreenshot) throws IOException, TesseractException {
+    int recalculatedTopY;
+    int[] rectangleSize =
+        getSizeFromTwoPoints(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+
+    if (currentRow == 0) {
+      recalculatedTopY = coordinates[1];
+    } else {
+      recalculatedTopY = coordinates[1] + (rectangleSize[1] * currentRow);
+    }
+
+    return currentScreenshot.getSubimage(coordinates[0], recalculatedTopY, rectangleSize[0],
         rectangleSize[1]);
   }
 

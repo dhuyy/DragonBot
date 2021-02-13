@@ -16,6 +16,6 @@ public class SQLQuery {
 
   public String getSelectAllWaypointsQuery() {
     return "SELECT * FROM waypoints";
-    // return "SELECT * FROM waypoints WHERE ID > 34";
+    // return "SELECT * FROM waypoints WHERE ID > 51";
   }
 }

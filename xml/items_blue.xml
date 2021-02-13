@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Items>
+    <Item><id>5070228</id><name>Angelic Axe</name><price>5000</price><buy>9</buy></Item>
+    <Item><id>3200137</id><name>Blue Robe</name><price>10000</price><buy>15</buy></Item>
+    <Item><id>4185236</id><name>Boots of Haste</name><price>30000</price><buy>15</buy></Item>
+    <Item><id>4185307</id><name>Broadsword</name><price>500</price><buy>27</buy></Item>
+    <Item><id>4185318</id><name>Butcher</name><price>18000</price><buy>8</buy></Item>
+    <Item><id>4185331</id><name>Crown Armor</name><price>12000</price><buy>15</buy></Item>
+    <Item><id>4221137</id><name>Crown Helmet</name><price>2500</price><buy>20</buy></Item>
+    <Item><id>4185401</id><name>Crown Legs</name><price>12000</price><buy>15</buy></Item>
+    <Item><id>4185425</id><name>Crown Shield</name><price>8000</price><buy>15</buy></Item>
+    <Item><id>4185448</id><name>Crusader Helmet</name><price>6000</price><buy>8</buy></Item>
+    <Item><id>4185501</id><name>Dragon Shield</name><price>4000</price><buy>15</buy></Item>
+    <Item><id>4104134</id><name>Fire Axe</name><price>8000</price><buy>15</buy></Item>
+    <Item><id>4104146</id><name>Fire Sword</name><price>4000</price><buy>20</buy></Item>
+    <Item><id>4221255</id><name>Glorious Axe</name><price>3000</price><buy>50</buy></Item>
+    <Item><id>4221349</id><name>Guardian Shield</name><price>2000</price><buy>20</buy></Item>
+    <Item><id>4221403</id><name>Ice Rapier</name><price>1000</price><buy>50</buy></Item>
+    <Item><id>4185606</id><name>Obsidian Lance</name><price>500</price><buy>17</buy></Item>
+    <Item><id>4185635</id><name>Royal Helmet</name><price>30000</price><buy>10</buy></Item>
+    <Item><id>4221424</id><name>Shadow Sceptre</name><price>10000</price><buy>20</buy></Item>
+    <Item><id>4185710</id><name>Wand of Cosmic Energy</name><price>2000</price><buy>50</buy></Item>
+    <Item><id>4185740</id><name>Wand of Decay</name><price>1000</price><buy>50</buy></Item>
+    <Item><id>4221539</id><name>Wand of Defiance</name><price>6500</price><buy>10</buy></Item>
+    <Item><id>4221636</id><name>Wand of Draconia</name><price>1500</price><buy>50</buy></Item>
+    <Item><id>4104541</id><name>Wand of Dragonbreath</name><price>200</price><buy>30</buy></Item>
+    <Item><id>4221651</id><name>Wand of Everblazing</name><price>6000</price><buy>3</buy></Item>
+    <Item><id>4221707</id><name>Wand of Inferno</name><price>3000</price><buy>50</buy></Item>
+    <Item><id>4221815</id><name>Wand of Starstorm</name><price>3600</price><buy>40</buy></Item>
+    <Item><id>3053132</id><name>Wand of Voodoo</name><price>4400</price><buy>30</buy></Item>
+    <Item><id>4221834</id><name>Alloy Legs</name><price>11000</price><buy>4</buy></Item>
+    <Item><id>4104723</id><name>Cowtana</name><price>2500</price><buy>5</buy></Item>
+    <Item><id>4190020</id><name>Gearwheel Chain</name><price>5000</price><buy>6</buy></Item>
+    <Item><id>4190050</id><name>Glooth Amulet</name><price>2000</price><buy>7</buy></Item>
+    <Item><id>0032106</id><name>Glooth Axe</name><price>1500</price><buy>8</buy></Item>
+    <Item><id>0032120</id><name>Glooth Blade</name><price>1500</price><buy>8</buy></Item>
+    <Item><id>3193926</id><name>Glooth Club</name><price>1500</price><buy>7</buy></Item>
+    <Item><id>4221907</id><name>Mino Lance</name><price>7000</price><buy>5</buy></Item>
+    <Item><id>4221917</id><name>Mino Shield</name><price>3000</price><buy>21</buy></Item>
+    <Item><id>4104909</id><name>Mooh</name><price>6000</price><buy>5</buy></Item>
+	<Item><id>4104920</id><name>Ancient Stone</name><price>200</price><buy>50</buy></Item>
+	<Item><id>4104933</id><name>Battle Stone</name><price>290</price><buy>50</buy></Item>
+	<Item><id>4221940</id><name>Broken Gladiator Shield</name><price>190</price><buy>60</buy></Item>
+	<Item><id>4104946</id><name>Crystalline Spikes</name><price>440</price><buy>30</buy></Item>
+	<Item><id>4222000</id><name>Gear Crystal</name><price>200</price><buy>40</buy></Item>
+	<Item><id>4222030</id><name>Huge Chunk of Crude Iron</name><price>15000</price><buy>10</buy></Item>
+	<Item><id>3095204</id><name>Magma Clump</name><price>570</price><buy>30</buy></Item>
+	<Item><id>4222104</id><name>Piece of Draconian Steel</name><price>3000</price><buy>30</buy></Item>
+	<Item><id>4105105</id><name>Piece of Hell Steel</name><price>500</price><buy>20</buy></Item>
+	<Item><id>4222120</id><name>Piece of Royal Steel</name><price>10000</price><buy>10</buy></Item>
+	<Item><id>4105128</id><name>Pulverized Ore</name><price>400</price><buy>20</buy></Item>
+	<Item><id>3095252</id><name>Shiny Stone</name><price>500</price><buy>20</buy></Item>
+	<Item><id>4105146</id><name>Sulphurous Stone</name><price>100</price><buy>100</buy></Item>
+	<Item><id>3095311</id><name>Vein of Ore</name><price>330</price><buy>20</buy></Item>
+	<Item><id>4105201</id><name>War Crystal</name><price>460</price><buy>20</buy></Item>
+	<Item><id>4105211</id><name>Crystal Pedestal</name><price>500</price><buy>20</buy></Item>
+	<Item><id>3105351</id><name>Broken Halberd</name><price>100</price><buy>50</buy></Item>
+	<Item><id>4105237</id><name>Cursed Shoulder Spikes</name><price>320</price><buy>50</buy></Item>
+	<Item><id>4105250</id><name>High Guard Shoulderplates</name><price>130</price><buy>50</buy></Item>
+	<Item><id>3095355</id><name>Red Lantern</name><price>250</price><buy>50</buy></Item>
+	<Item><id>4105307</id><name>Spiked Iron Ball</name><price>100</price><buy>50</buy></Item>
+	<Item><id>4105335</id><name>Cowbell</name><price>210</price><buy>50</buy></Item>
+	<Item><id>4105358</id><name>Glob of Glooth</name><price>125</price><buy>50</buy></Item>
+	<Item><id>4222251</id><name>Tah Shell</name><price>110</price><buy>50</buy></Item>
+	<Item><id>4105443</id><name>Poisoned Fang</name><price>130</price><buy>50</buy></Item>
+	<Item><id>4105510</id><name>Slime Heart</name><price>160</price><buy>50</buy></Item>
+</Items>

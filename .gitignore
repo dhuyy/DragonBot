@@ -21,7 +21,8 @@ scripts/*.mv.db
 
 # Logs
 logs/*.log
-logs/*.log.1
+logs/*.log.*
+logs/*.log.*.lck
 logs/*.log.lck
 
 # Setup

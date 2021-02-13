@@ -28,6 +28,10 @@ public class XMLHelper {
     ITEMS_LIST_XML_PATH = Store.getInstance().getChosenSellItemsXmlFileName();
   }
 
+  public XMLHelper(String xmlPath) {
+    ITEMS_LIST_XML_PATH = xmlPath;
+  }
+
   public List<Item> getItemsList() {
     List<Item> items = new ArrayList<Item>();
 

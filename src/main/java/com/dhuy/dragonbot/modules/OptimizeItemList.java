@@ -35,7 +35,7 @@ public class OptimizeItemList {
 
   public OptimizeItemList(boolean isRunningInVM) throws AWTException {
     log = Log.getInstance();
-    xml = new XMLHelper();
+    xml = new XMLHelper("xml\\ENHANCED\\Blue_Djinn.xml");
     mouse = new Mouse();
     keyboard = new Keyboard();
     normalizeOCREntries = new NormalizeOCREntries();

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Items>
+    <Item><id>000</id><name>Angelic Axe</name><price>5000</price><buy>9</buy></Item>
+    <Item><id>000</id><name>Blue Robe</name><price>10000</price><buy>21</buy></Item>
+    <Item><id>000</id><name>Boots of Haste</name><price>30000</price><buy>43</buy></Item>
+    <Item><id>000</id><name>Broadsword</name><price>500</price><buy>27</buy></Item>
+    <Item><id>000</id><name>Butcher</name><price>18000</price><buy>8</buy></Item>
+    <Item><id>000</id><name>Crown Armor</name><price>12000</price><buy>38</buy></Item>
+    <Item><id>000</id><name>Crown Helmet</name><price>2500</price><buy>47</buy></Item>
+    <Item><id>000</id><name>Crown Legs</name><price>12000</price><buy>19</buy></Item>
+    <Item><id>000</id><name>Crown Shield</name><price>8000</price><buy>16</buy></Item>
+    <Item><id>000</id><name>Crusader Helmet</name><price>6000</price><buy>11</buy></Item>
+    <Item><id>000</id><name>Dragon Shield</name><price>4000</price><buy>19</buy></Item>
+    <Item><id>000</id><name>Fire Axe</name><price>8000</price><buy>22</buy></Item>
+    <Item><id>000</id><name>Fire Sword</name><price>4000</price><buy>37</buy></Item>
+    <Item><id>000</id><name>Glorious Axe</name><price>3000</price><buy>73</buy></Item>
+    <Item><id>000</id><name>Guardian Shield</name><price>2000</price><buy>37</buy></Item>
+    <Item><id>000</id><name>Ice Rapier</name><price>1000</price><buy>47</buy></Item>
+    <Item><id>000</id><name>Obsidian Lance</name><price>500</price><buy>17</buy></Item>
+    <Item><id>000</id><name>Royal Helmet</name><price>30000</price><buy>13</buy></Item>
+    <Item><id>000</id><name>Shadow Sceptre</name><price>10000</price><buy>31</buy></Item>
+    <Item><id>000</id><name>Wand of Cosmic Energy</name><price>2000</price><buy>50</buy></Item>
+    <Item><id>000</id><name>Wand of Decay</name><price>1000</price><buy>31</buy></Item>
+    <Item><id>000</id><name>Wand of Defiance</name><price>6500</price><buy>15</buy></Item>
+    <Item><id>000</id><name>Wand of Draconia</name><price>1500</price><buy>33</buy></Item>
+    <Item><id>000</id><name>Wand of Dragonbreath</name><price>200</price><buy>11</buy></Item>
+    <Item><id>000</id><name>Wand of Everblazing</name><price>6000</price><buy>7</buy></Item>
+    <Item><id>000</id><name>Wand of Inferno</name><price>3000</price><buy>99</buy></Item>
+    <Item><id>000</id><name>Wand of Starstorm</name><price>3600</price><buy>55</buy></Item>
+    <Item><id>000</id><name>Wand of Voodoo</name><price>4400</price><buy>48</buy></Item>
+</Items>
