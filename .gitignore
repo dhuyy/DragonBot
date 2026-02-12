@@ -8,6 +8,12 @@
 *.iml
 *.iws
 
+# VS Code
+.vscode/
+
+# Claude Code
+.claude/
+
 # Mac
 .DS_Store
 
