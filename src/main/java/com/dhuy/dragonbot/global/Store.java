@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import com.dhuy.dragonbot.model.Waypoint;
+import com.dhuy.dragonbot.modules.MovementDetector;
 
 public class Store {
   private static Store instance = new Store();
@@ -44,8 +45,9 @@ public class Store {
 
   public static final int SPACING_FROM_CHARACTER_POSITION_TO_CLOSEST_SQM = 70;
   public static final int DEFAULT_DIRECTION = 4; // WEST
-  public static final int CHARACTER_SPEED_BASE = 270;
-  public static final int GRASS_TILE_SPEED_WALKING = 70;
+  public static final int MOVEMENT_SAMPLE_SIZE = 20;
+  public static final int MOVEMENT_SAMPLE_X = 43;
+  public static final int MOVEMENT_SAMPLE_Y = 44;
 
   private LinkedList<BufferedImage> numberImages;
   private LinkedList<Waypoint> waypointList;
@@ -63,9 +65,7 @@ public class Store {
   private BufferedImage battleListCrop;
   private String scriptName;
   private String characterName;
-  private int characterLevel;
-  private long startTimeWaypoint;
-  private long intervalToReachWaypoint;
+  private MovementDetector movementDetector;
   private int currentDirection;
   private long intervalAttackingMonster;
   private int chosenSettings;
@@ -95,9 +95,7 @@ public class Store {
     battleListCrop = null;
     scriptName = null;
     characterName = null;
-    characterLevel = 0;
-    startTimeWaypoint = 0;
-    intervalToReachWaypoint = -1;
+    movementDetector = null;
     currentDirection = DEFAULT_DIRECTION;
     intervalAttackingMonster = -1;
     chosenSettings = 0;
@@ -241,28 +239,12 @@ public class Store {
     this.characterName = characterName;
   }
 
-  public int getCharacterLevel() {
-    return characterLevel;
+  public MovementDetector getMovementDetector() {
+    return movementDetector;
   }
 
-  public void setCharacterLevel(int characterLevel) {
-    this.characterLevel = characterLevel;
-  }
-
-  public long getStartTimeWaypoint() {
-    return startTimeWaypoint;
-  }
-
-  public void setStartTimeWaypoint(long startTimeWaypoint) {
-    this.startTimeWaypoint = startTimeWaypoint;
-  }
-
-  public long getIntervalToReachWaypoint() {
-    return intervalToReachWaypoint;
-  }
-
-  public void setIntervalToReachWaypoint(long intervalToReachWaypoint) {
-    this.intervalToReachWaypoint = intervalToReachWaypoint;
+  public void setMovementDetector(MovementDetector movementDetector) {
+    this.movementDetector = movementDetector;
   }
 
   public long getIntervalAttackingMonster() {

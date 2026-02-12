@@ -17,6 +17,7 @@ public class Hunting {
   private Keyboard keyboard;
   private Screenshot screenshotModule;
   private Looting looting;
+  private MovementDetector movementDetector;
   private Log log;
 
   public Hunting() {
@@ -25,6 +26,8 @@ public class Hunting {
     keyboard = new Keyboard();
     screenshotModule = new Screenshot();
     looting = new Looting();
+    movementDetector = new MovementDetector();
+    store.setMovementDetector(movementDetector);
     log = Log.getInstance();
   }
 
@@ -51,17 +54,12 @@ public class Hunting {
       if (monsterLifeBarPixelHex.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR)) {
         log.getLogger().info(log.getMessage(this, "Não tem monstro no battle list"));
 
-        if (store.getIntervalToReachWaypoint() == -1) {
+        if (movementDetector.hasCharacterStopped(currentScreenshot)) {
           cavebot.execute(enableLooting);
-        } else {
-          long currentTime = (System.currentTimeMillis() - store.getStartTimeWaypoint());
-
-          if (store.getIntervalToReachWaypoint() <= currentTime) {
-            cavebot.execute(enableLooting);
-          }
         }
       } else {
         log.getLogger().info(log.getMessage(this, "Tem monstro no battle list"));
+        movementDetector.resetForNewWalk();
 
         if (!isThereAnyMonsterBeingAttacked(currentBattleWindow, battleWindowTitleCoord[0],
             battleWindowTitleCoord[1])) {
@@ -89,7 +87,7 @@ public class Hunting {
         }
       }
     } catch (Exception e) {
-      log.getLogger().log(Level.SEVERE, log.getMessage(this, null), e);
+      log.getLogger().log(Level.SEVERE, log.getMessage(this, e.getMessage()), e);
     }
   }
 

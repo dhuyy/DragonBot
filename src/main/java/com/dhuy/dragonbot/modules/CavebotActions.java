@@ -36,7 +36,6 @@ public class CavebotActions {
 
   public void executeWalkAction(int direction, boolean enableLooting) {
     Rectangle minimapArea = store.getMinimapArea();
-    BufferedImage currentCross = store.getMinimapCross();
 
     BufferedImage baseImage =
         store.getWaypointList().get(store.getCurrentWaypointIndex()).getBaseImage();
@@ -76,16 +75,6 @@ public class CavebotActions {
                 waypoint[1], Store.WAYPOINT_BLOCK_SIZE, Store.WAYPOINT_BLOCK_SIZE);
         break;
     }
-
-    int[] initialPoint = imageProcessor.findSubimage(currentMinimap, currentCross);
-    int[] finalPoint = imageProcessor.findSubimage(currentMinimap, currentGoalImage);
-
-    double distanceToReachWaypoint = Math.sqrt(
-        Math.pow(finalPoint[0] - (initialPoint[0] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL), 2)
-            + Math.pow(
-                finalPoint[1] - (initialPoint[1] - Store.WAYPOINT_CENTER_CROSS_TO_MATCH_PIXEL), 2));
-    long walkingSpeedInMilliseconds = character
-        .getWalkingSpeedInMilliseconds(Store.GRASS_TILE_SPEED_WALKING, distanceToReachWaypoint);
 
     double hasGoalImagesMatchedPercentage =
         imageProcessor.compareImages(goalImage, currentGoalImage) * 100;
@@ -135,8 +124,7 @@ public class CavebotActions {
       }
     }
 
-    store.setIntervalToReachWaypoint(walkingSpeedInMilliseconds);
-    store.setStartTimeWaypoint(System.currentTimeMillis());
+    store.getMovementDetector().resetForNewWalk();
   }
 
   public void executeRopeAction() {

@@ -13,15 +13,6 @@ public class Character {
     mouse = new Mouse();
   }
 
-  public long getWalkingSpeedInMilliseconds(int tileSpeedWalking, double distanceToReachWaypoint) {
-    double characterBaseSpeed =
-        Store.CHARACTER_SPEED_BASE + (2 * (Store.getInstance().getCharacterLevel() - 1));
-    double sqmPerSecond = tileSpeedWalking / characterBaseSpeed;
-    double walkingSpeed = sqmPerSecond * distanceToReachWaypoint;
-
-    return (long) (walkingSpeed * 1000);
-  }
-
   public void moveMouseToCharacterPosition() {
     Rectangle characterPosition = store.getCharacterPositionArea();
 

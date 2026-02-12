@@ -99,7 +99,6 @@ public class AppInitialization {
       store.setChosenSettings(chosenSettings);
 
       String characterName = "";
-      int characterLevel = 0;
 
       int chosenScript = 0;
       chosenScript = JOptionPane.showOptionDialog(null, "Escolha o script:", "",
@@ -118,16 +117,6 @@ public class AppInitialization {
           System.exit(0);
         }
 
-        try {
-          characterLevel =
-              Integer.parseInt(JOptionPane.showInputDialog("Qual o level do personagem?"));
-
-          store.setCharacterLevel(characterLevel);
-        } catch (NumberFormatException e) {
-          log.getLogger()
-              .info(log.getMessage(this, "Level do personagem inválido. Fechando bot..."));
-          System.exit(0);
-        }
       } else if (chosenSettings == 1) {
         try {
           DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -136,8 +125,6 @@ public class AppInitialization {
           document.getDocumentElement().normalize();
 
           characterName = document.getElementsByTagName("characterName").item(0).getTextContent();
-          characterLevel = Integer
-              .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent());
         } catch (Exception e) {
           log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
           System.exit(0);
@@ -199,8 +186,6 @@ public class AppInitialization {
 
         store.setCharacterName(
             document.getElementsByTagName("characterName").item(0).getTextContent());
-        store.setCharacterLevel((Integer
-            .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent())));
         store.setSpellCasterHotkey(
             document.getElementsByTagName("spellCasterHotkey").item(0).getTextContent());
         store.setSpellCasterInterval(Integer.parseInt(
@@ -396,8 +381,6 @@ public class AppInitialization {
 
         store.setCharacterName(
             document.getElementsByTagName("characterName").item(0).getTextContent());
-        store.setCharacterLevel((Integer
-            .parseInt(document.getElementsByTagName("characterLevel").item(0).getTextContent())));
       } catch (Exception e) {
         log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
         System.exit(0);

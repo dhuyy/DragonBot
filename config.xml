@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <config>
-    <characterName>Thor Gandolfi</characterName>
-    <characterLevel>100</characterLevel>
+    <characterName>Fuji Apfel</characterName>
     <spellCasterHotkey>F7</spellCasterHotkey>
     <spellCasterInterval>60000</spellCasterInterval>
     <spellCasterEnableCavebot>false</spellCasterEnableCavebot>
