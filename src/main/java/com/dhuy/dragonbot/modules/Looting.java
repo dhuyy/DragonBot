@@ -6,7 +6,7 @@ import com.dhuy.dragonbot.util.Character;
 import com.dhuy.dragonbot.util.Keyboard;
 
 public class Looting {
-  private static final int MINOR_ACTIONS_DELAY = 75;
+  private static final int MINOR_ACTIONS_DELAY = 40;
 
   private Log log;
   private Keyboard keyboard;
@@ -20,37 +20,41 @@ public class Looting {
   }
 
   public void execute() {
+    keyboard.pressShift();
+
     character.moveMouseToCharacterNorthWest();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterNorth();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterNorthEast();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterEast();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterSouthEast();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterSouth();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterSouthWest();
-    keyboard.pressShiftAndBackButton();
+    keyboard.rightClick();
     delay(MINOR_ACTIONS_DELAY);
 
     character.moveMouseToCharacterWest();
-    keyboard.pressShiftAndBackButton();
-    delay(MINOR_ACTIONS_DELAY * 2);
+    keyboard.rightClick();
+    delay(MINOR_ACTIONS_DELAY);
+
+    keyboard.releaseShift();
   }
 
   private void delay(int ms) {
