@@ -101,7 +101,7 @@ public class Setup {
       Rectangle battleWindowArea;
 
       if (store.getChosenSettings() == 1) {
-        battleWindowArea = new Rectangle(1737, 370, 37, 87);
+        battleWindowArea = new Rectangle(1737, 370, 37, 305);
       } else {
         battleWindowArea = areaSelector.getSelectedArea(currentScreenshot,
             "Selecione a área superior esquerda do Battle List");

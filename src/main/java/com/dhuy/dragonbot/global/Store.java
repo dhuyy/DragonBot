@@ -9,8 +9,7 @@ import com.dhuy.dragonbot.modules.MovementDetector;
 public class Store {
   private static Store instance = new Store();
 
-  public static final int SECONDS_UNTIL_SKIP_ATTACKING_MONSTER = 15000; // In milliseconds
-  public static final int AMOUNT_MONSTERS_VISIBLE_IN_BATTLE = 3;
+  public static final int AMOUNT_MONSTERS_VISIBLE_IN_BATTLE = 13;
 
   public static final int WAYPOINT_BLOCK_SIZE = 16;
   public static final int WAYPOINT_MATCH_PIXEL_TO_CENTER_CROSS = WAYPOINT_BLOCK_SIZE / 2 - 1;
@@ -67,7 +66,6 @@ public class Store {
   private String characterName;
   private MovementDetector movementDetector;
   private int currentDirection;
-  private long intervalAttackingMonster;
   private int chosenSettings;
   private String spellCasterHotkey;
   private int spellCasterInterval;
@@ -97,7 +95,6 @@ public class Store {
     characterName = null;
     movementDetector = null;
     currentDirection = DEFAULT_DIRECTION;
-    intervalAttackingMonster = -1;
     chosenSettings = 0;
     spellCasterHotkey = null;
     spellCasterInterval = 0;
@@ -245,14 +242,6 @@ public class Store {
 
   public void setMovementDetector(MovementDetector movementDetector) {
     this.movementDetector = movementDetector;
-  }
-
-  public long getIntervalAttackingMonster() {
-    return intervalAttackingMonster;
-  }
-
-  public void setIntervalAttackingMonster(long intervalAttackingMonster) {
-    this.intervalAttackingMonster = intervalAttackingMonster;
   }
 
   public int getCurrentDirection() {

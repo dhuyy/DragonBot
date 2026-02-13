@@ -19,6 +19,9 @@ public class Hunting {
   private Looting looting;
   private MovementDetector movementDetector;
   private Log log;
+  private boolean wasAttackingMonster = false;
+  private long monsterEngageSince = 0;
+  private static final long STUCK_MONSTER_TIMEOUT = 20000;
 
   public Hunting() {
     cavebot = new Cavebot();
@@ -51,38 +54,60 @@ public class Hunting {
       String monsterLifeBarPixelHex = imageProcessor.getHexFromColor(new Color(currentBattleWindow
           .getSubimage(monsterLifeBar[0], monsterLifeBar[1], 1, 1).getRGB(0, 0)));
 
-      if (monsterLifeBarPixelHex.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR)) {
+      boolean noMonstersVisible =
+          monsterLifeBarPixelHex.equals(Store.BATTLE_PIXEL_HEX_WITHOUT_MONSTER_VISIBLE_COLOR);
+
+      if (noMonstersVisible) {
+        if (wasAttackingMonster && enableLooting) {
+          log.getLogger().info(log.getMessage(this, "Monstro morreu, lootando..."));
+          looting.execute();
+        }
+        wasAttackingMonster = false;
+        monsterEngageSince = 0;
+
         log.getLogger().info(log.getMessage(this, "Não tem monstro no battle list"));
 
         if (movementDetector.hasCharacterStopped(currentScreenshot)) {
           cavebot.execute(enableLooting);
         }
       } else {
-        log.getLogger().info(log.getMessage(this, "Tem monstro no battle list"));
-        movementDetector.resetForNewWalk();
+        if (monsterEngageSince == 0) {
+          monsterEngageSince = System.currentTimeMillis();
+        }
 
-        if (!isThereAnyMonsterBeingAttacked(currentBattleWindow, battleWindowTitleCoord[0],
-            battleWindowTitleCoord[1])) {
-          log.getLogger().info(log.getMessage(this, "Atacando monstro..."));
+        long timeEngaged = System.currentTimeMillis() - monsterEngageSince;
+        boolean stuckMonster = timeEngaged > STUCK_MONSTER_TIMEOUT;
 
-          if (enableLooting) {
-            looting.execute();
+        if (stuckMonster) {
+          log.getLogger().info(log.getMessage(this,
+              "Monstro preso no battle, ignorando e continuando waypoints..."));
+          wasAttackingMonster = false;
+          monsterEngageSince = System.currentTimeMillis();
+
+          if (movementDetector.hasCharacterStopped(currentScreenshot)) {
+            cavebot.execute(enableLooting);
           }
-
-          keyboard.type("ESC");
-          keyboard.type("SPACE");
-
-          store.setIntervalAttackingMonster(System.currentTimeMillis());
         } else {
-          long timeAttacking = (System.currentTimeMillis() - store.getIntervalAttackingMonster());
+          log.getLogger().info(log.getMessage(this, "Tem monstro no battle list"));
+          movementDetector.resetForNewWalk();
 
-          if (timeAttacking > Store.SECONDS_UNTIL_SKIP_ATTACKING_MONSTER) {
-            log.getLogger().info(log.getMessage(this, "Mostro sendo atacado a mais de "
-                + (Store.SECONDS_UNTIL_SKIP_ATTACKING_MONSTER / 1000) + " segundos"));
+          if (!isThereAnyMonsterBeingAttacked(currentBattleWindow, battleWindowTitleCoord[0],
+              battleWindowTitleCoord[1])) {
+            if (wasAttackingMonster && enableLooting) {
+              log.getLogger().info(log.getMessage(this, "Monstro morreu, lootando..."));
+              looting.execute();
+              wasAttackingMonster = false;
+              monsterEngageSince = System.currentTimeMillis();
+              return;
+            }
 
+            log.getLogger().info(log.getMessage(this, "Atacando monstro..."));
+
+            keyboard.type("ESC");
+            Thread.sleep(100);
             keyboard.type("SPACE");
-
-            store.setIntervalAttackingMonster(System.currentTimeMillis());
+          } else {
+            wasAttackingMonster = true;
           }
         }
       }

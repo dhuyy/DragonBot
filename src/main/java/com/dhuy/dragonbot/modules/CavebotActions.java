@@ -19,7 +19,6 @@ public class CavebotActions {
   private Mouse mouse;
   private ImageProcessor imageProcessor;
   private Screenshot screenshotModule;
-  private Looting looting;
   private Log log;
 
   public CavebotActions() {
@@ -31,7 +30,6 @@ public class CavebotActions {
     keyboard = new Keyboard();
     imageProcessor = new ImageProcessor();
     screenshotModule = new Screenshot();
-    looting = new Looting();
   }
 
   public void executeWalkAction(int direction, boolean enableLooting) {
@@ -85,10 +83,6 @@ public class CavebotActions {
       setNextWaypointIndex();
     } else {
       log.getLogger().info(log.getMessage(this, "Ainda não chegou no waypoint"));
-
-      if (enableLooting) {
-        looting.execute();
-      }
 
       switch (direction) {
         case 1:
