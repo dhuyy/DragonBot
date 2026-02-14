@@ -67,9 +67,16 @@ public class AppInitialization {
         System.exit(0);
       }
 
-      String characterName = JOptionPane.showInputDialog("Qual o nome do personagem?");
-      if (characterName == null) {
-        log.getLogger().info(log.getMessage(this, "Nome de personagem inválido. Fechando bot..."));
+      String characterName = "";
+      try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
+        document.getDocumentElement().normalize();
+
+        characterName = document.getElementsByTagName("characterName").item(0).getTextContent();
+      } catch (Exception e) {
+        log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
         System.exit(0);
       }
 
@@ -91,12 +98,7 @@ public class AppInitialization {
        * [BEGIN] EXECUTE CAVEBOT MODE
        */
 
-      String[] questions = new String[] {"Manual", "Auto"};
-      int chosenSettings =
-          JOptionPane.showOptionDialog(null, "Em qual modo de configuração deseja executar?", "",
-              JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, questions, null);
-
-      store.setChosenSettings(chosenSettings);
+      store.setChosenSettings(1);
 
       String characterName = "";
 
@@ -109,29 +111,15 @@ public class AppInitialization {
         System.exit(0);
       }
 
-      if (chosenSettings == 0) {
-        characterName = JOptionPane.showInputDialog("Qual o nome do personagem?");
-        if (characterName == null) {
-          log.getLogger()
-              .info(log.getMessage(this, "Não escolheu o nome do personagem. Fechando bot..."));
-          System.exit(0);
-        }
+      try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
+        document.getDocumentElement().normalize();
 
-      } else if (chosenSettings == 1) {
-        try {
-          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-          DocumentBuilder builder = factory.newDocumentBuilder();
-          Document document = builder.parse(new File(Store.CONFIGURATION_FILE_PATH));
-          document.getDocumentElement().normalize();
-
-          characterName = document.getElementsByTagName("characterName").item(0).getTextContent();
-        } catch (Exception e) {
-          log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
-          System.exit(0);
-        }
-      } else {
-        log.getLogger()
-            .info(log.getMessage(this, "Não escolheu o título do script. Fechando bot..."));
+        characterName = document.getElementsByTagName("characterName").item(0).getTextContent();
+      } catch (Exception e) {
+        log.getLogger().info(log.getMessage(this, "Leitura do arquivo de configuração falhou."));
         System.exit(0);
       }
 

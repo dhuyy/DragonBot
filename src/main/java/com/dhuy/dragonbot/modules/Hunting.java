@@ -21,7 +21,7 @@ public class Hunting {
   private Log log;
   private boolean wasAttackingMonster = false;
   private long monsterEngageSince = 0;
-  private static final long STUCK_MONSTER_TIMEOUT = 20000;
+  private static final long STUCK_MONSTER_TIMEOUT = 30000;
 
   public Hunting() {
     cavebot = new Cavebot();
@@ -106,6 +106,7 @@ public class Hunting {
             keyboard.type("ESC");
             Thread.sleep(100);
             keyboard.type("SPACE");
+            wasAttackingMonster = true;
           } else {
             wasAttackingMonster = true;
           }
